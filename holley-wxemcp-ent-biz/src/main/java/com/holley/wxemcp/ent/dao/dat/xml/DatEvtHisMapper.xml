@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.holley.wxemcp.ent.dao.dat.DatEvtHisMapper" >
+  <resultMap id="BaseResultMap" type="com.holley.wxemcp.ent.model.dat.DatEvtHis" >
+    <id column="EVENTITEMID" property="eventitemid" jdbcType="SMALLINT" />
+    <id column="EVENTTIME" property="eventtime" jdbcType="TIMESTAMP" />
+    <id column="OBJID" property="objid" jdbcType="INTEGER" />
+    <id column="OBJTYPE" property="objtype" jdbcType="SMALLINT" />
+    <id column="STATUS" property="status" jdbcType="SMALLINT" />
+    <result column="EVENTNOTE" property="eventnote" jdbcType="VARCHAR" />
+    <result column="EVENTDATA" property="eventdata" jdbcType="VARCHAR" />
+    <result column="UPDATETIME" property="updatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    EVENTITEMID, EVENTTIME, OBJID, OBJTYPE, STATUS, EVENTNOTE, EVENTDATA, UPDATETIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.holley.wxemcp.ent.model.dat.DatEvtHisExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from dat_evt_his
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.holley.wxemcp.ent.model.dat.DatEvtHisKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from dat_evt_his
+    where EVENTITEMID = #{eventitemid,jdbcType=SMALLINT}
+      and EVENTTIME = #{eventtime,jdbcType=TIMESTAMP}
+      and OBJID = #{objid,jdbcType=INTEGER}
+      and OBJTYPE = #{objtype,jdbcType=SMALLINT}
+      and STATUS = #{status,jdbcType=SMALLINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.holley.wxemcp.ent.model.dat.DatEvtHisKey" >
+    delete from dat_evt_his
+    where EVENTITEMID = #{eventitemid,jdbcType=SMALLINT}
+      and EVENTTIME = #{eventtime,jdbcType=TIMESTAMP}
+      and OBJID = #{objid,jdbcType=INTEGER}
+      and OBJTYPE = #{objtype,jdbcType=SMALLINT}
+      and STATUS = #{status,jdbcType=SMALLINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.holley.wxemcp.ent.model.dat.DatEvtHisExample" >
+    delete from dat_evt_his
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.holley.wxemcp.ent.model.dat.DatEvtHis" >
+    insert into dat_evt_his (EVENTITEMID, EVENTTIME, OBJID, 
+      OBJTYPE, STATUS, EVENTNOTE, 
+      EVENTDATA, UPDATETIME)
+    values (#{eventitemid,jdbcType=SMALLINT}, #{eventtime,jdbcType=TIMESTAMP}, #{objid,jdbcType=INTEGER}, 
+      #{objtype,jdbcType=SMALLINT}, #{status,jdbcType=SMALLINT}, #{eventnote,jdbcType=VARCHAR}, 
+      #{eventdata,jdbcType=VARCHAR}, #{updatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.holley.wxemcp.ent.model.dat.DatEvtHis" >
+    insert into dat_evt_his
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="eventitemid != null" >
+        EVENTITEMID,
+      </if>
+      <if test="eventtime != null" >
+        EVENTTIME,
+      </if>
+      <if test="objid != null" >
+        OBJID,
+      </if>
+      <if test="objtype != null" >
+        OBJTYPE,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="eventnote != null" >
+        EVENTNOTE,
+      </if>
+      <if test="eventdata != null" >
+        EVENTDATA,
+      </if>
+      <if test="updatetime != null" >
+        UPDATETIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="eventitemid != null" >
+        #{eventitemid,jdbcType=SMALLINT},
+      </if>
+      <if test="eventtime != null" >
+        #{eventtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="objid != null" >
+        #{objid,jdbcType=INTEGER},
+      </if>
+      <if test="objtype != null" >
+        #{objtype,jdbcType=SMALLINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="eventnote != null" >
+        #{eventnote,jdbcType=VARCHAR},
+      </if>
+      <if test="eventdata != null" >
+        #{eventdata,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.holley.wxemcp.ent.model.dat.DatEvtHisExample" resultType="java.lang.Integer" >
+    select count(*) from dat_evt_his
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update dat_evt_his
+    <set >
+      <if test="record.eventitemid != null" >
+        EVENTITEMID = #{record.eventitemid,jdbcType=SMALLINT},
+      </if>
+      <if test="record.eventtime != null" >
+        EVENTTIME = #{record.eventtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.objid != null" >
+        OBJID = #{record.objid,jdbcType=INTEGER},
+      </if>
+      <if test="record.objtype != null" >
+        OBJTYPE = #{record.objtype,jdbcType=SMALLINT},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=SMALLINT},
+      </if>
+      <if test="record.eventnote != null" >
+        EVENTNOTE = #{record.eventnote,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eventdata != null" >
+        EVENTDATA = #{record.eventdata,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updatetime != null" >
+        UPDATETIME = #{record.updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update dat_evt_his
+    set EVENTITEMID = #{record.eventitemid,jdbcType=SMALLINT},
+      EVENTTIME = #{record.eventtime,jdbcType=TIMESTAMP},
+      OBJID = #{record.objid,jdbcType=INTEGER},
+      OBJTYPE = #{record.objtype,jdbcType=SMALLINT},
+      STATUS = #{record.status,jdbcType=SMALLINT},
+      EVENTNOTE = #{record.eventnote,jdbcType=VARCHAR},
+      EVENTDATA = #{record.eventdata,jdbcType=VARCHAR},
+      UPDATETIME = #{record.updatetime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.holley.wxemcp.ent.model.dat.DatEvtHis" >
+    update dat_evt_his
+    <set >
+      <if test="eventnote != null" >
+        EVENTNOTE = #{eventnote,jdbcType=VARCHAR},
+      </if>
+      <if test="eventdata != null" >
+        EVENTDATA = #{eventdata,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null" >
+        UPDATETIME = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where EVENTITEMID = #{eventitemid,jdbcType=SMALLINT}
+      and EVENTTIME = #{eventtime,jdbcType=TIMESTAMP}
+      and OBJID = #{objid,jdbcType=INTEGER}
+      and OBJTYPE = #{objtype,jdbcType=SMALLINT}
+      and STATUS = #{status,jdbcType=SMALLINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.holley.wxemcp.ent.model.dat.DatEvtHis" >
+    update dat_evt_his
+    set EVENTNOTE = #{eventnote,jdbcType=VARCHAR},
+      EVENTDATA = #{eventdata,jdbcType=VARCHAR},
+      UPDATETIME = #{updatetime,jdbcType=TIMESTAMP}
+    where EVENTITEMID = #{eventitemid,jdbcType=SMALLINT}
+      and EVENTTIME = #{eventtime,jdbcType=TIMESTAMP}
+      and OBJID = #{objid,jdbcType=INTEGER}
+      and OBJTYPE = #{objtype,jdbcType=SMALLINT}
+      and STATUS = #{status,jdbcType=SMALLINT}
+  </update>
+  <select id="selectPointWxSendEvent" resultType="com.holley.wxemcp.ent.model.def.EvtWxSendVo">
+  	SELECT his.EVENTTIME eventTime,point.NAME name,his.OBJTYPE objType,
+  	his.EVENTNOTE eventNote,his.STATUS status
+  	FROM dat_evt_his his
+	LEFT JOIN 
+	obj_point point
+	ON
+	his.OBJID = point.POINTID
+	WHERE
+	his.OBJTYPE = 23
+	AND
+	point.EID=#{eid}
+	AND
+	his.EVENTITEMID IN
+	<foreach collection="pointEventIds" index="index" item="pointEventId" open="(" separator="," close=")">
+         #{pointEventId}
+     </foreach>
+	<if test="dataTime != null">
+	AND
+	his.EVENTTIME &gt; #{dataTime}
+	</if>
+	ORDER BY EVENTTIME DESC
+	<if test="isOne == 1">
+		LIMIT 1
+	</if>
+  </select>
+  
+  <select id="selectRtuWxSendEvent" resultType="com.holley.wxemcp.ent.model.def.EvtWxSendVo">
+  	SELECT his.EVENTTIME eventTime,rtu.NAME name,his.OBJTYPE objType,
+  	his.EVENTNOTE eventNote,his.STATUS status
+  	FROM dat_evt_his his
+	LEFT JOIN 
+	obj_rtu rtu
+	ON
+	his.OBJID = rtu.RTUID
+	WHERE
+	his.OBJTYPE = 22
+	AND
+	rtu.EUUID=#{eid}
+	AND
+	his.EVENTITEMID IN
+	<foreach collection="rtuEventIds" index="index" item="rtuEventId" open="(" separator="," close=")">
+         #{rtuEventId}
+     </foreach>
+	<if test="dataTime != null">
+	AND
+	his.EVENTTIME &gt; #{dataTime}
+	</if>
+	ORDER BY his.EVENTTIME DESC
+	<if test="isOne == 1">
+		LIMIT 1
+	</if>
+  </select>
+  
+  <select id="selectRtuWxSendEventByEid" resultType="com.holley.wxemcp.ent.model.def.EvtWxSendVo">
+  SELECT t.* FROM(
+  	SELECT 
+  	his.EVENTTIME eventTime,rtu.NAME name,his.OBJID objId,his.OBJTYPE objType,
+  	his.EVENTNOTE eventNote,his.STATUS status,his.EVENTITEMID eventItemId
+  	FROM dat_evt_his his
+	LEFT JOIN 
+	obj_rtu rtu
+	ON
+	his.OBJID = rtu.RTUID
+	WHERE
+	his.OBJTYPE = 22
+	AND
+	rtu.EUUID=#{eid}
+	AND
+	his.EVENTITEMID IN
+	<foreach collection="rtuEventIds" index="index" item="rtuEventId" open="(" separator="," close=")">
+         #{rtuEventId}
+    </foreach>
+  	ORDER BY his.EVENTTIME DESC
+  	) t
+  	GROUP BY t.OBJID,t.OBJTYPE,t.EVENTITEMID
+  </select>
+  <select id="selectPointWxSendEventByEid" resultType="com.holley.wxemcp.ent.model.def.EvtWxSendVo">
+  	SELECT t.* FROM(
+  	SELECT
+  	his.EVENTTIME eventTime,point.NAME name,his.OBJID objId,his.OBJTYPE objType,
+  	his.EVENTNOTE eventNote,his.STATUS status,his.EVENTITEMID eventItemId
+  	FROM dat_evt_his his
+	LEFT JOIN
+	obj_point point
+	ON
+	his.OBJID = point.POINTID
+	WHERE
+	his.OBJTYPE = 23
+	AND
+	point.EID=#{eid}
+	AND
+	his.EVENTITEMID IN
+	<foreach collection="pointEventIds" index="index" item="pointEventId" open="(" separator="," close=")">
+         #{pointEventId}
+     </foreach>
+     	ORDER BY his.EVENTTIME DESC
+     ) t
+     GROUP BY t.OBJID,t.OBJTYPE,t.EVENTITEMID
+  </select>
+</mapper>

@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.holley.wxemcp.ent.dao.ppf.PpfSmsSendMapper" >
+  <resultMap id="BaseResultMap" type="com.holley.wxemcp.ent.model.ppf.PpfSmsSend" >
+    <id column="SMSID" property="smsid" jdbcType="INTEGER" />
+    <result column="CUSTOMERID" property="customerid" jdbcType="DECIMAL" />
+    <result column="PHONE" property="phone" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="SMALLINT" />
+    <result column="SENDTIME" property="sendtime" jdbcType="TIMESTAMP" />
+    <result column="CONTENT" property="content" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="DECIMAL" />
+    <result column="SENDTYPE" property="sendtype" jdbcType="SMALLINT" />
+    <result column="ACCOUNT" property="account" jdbcType="VARCHAR" />
+    <result column="ADDTIME" property="addtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    SMSID, CUSTOMERID, PHONE, TYPE, SENDTIME, CONTENT, STATUS, SENDTYPE, ACCOUNT, ADDTIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.holley.wxemcp.ent.model.ppf.PpfSmsSendExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ppf_sms_send
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ppf_sms_send
+    where SMSID = #{smsid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ppf_sms_send
+    where SMSID = #{smsid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.holley.wxemcp.ent.model.ppf.PpfSmsSendExample" >
+    delete from ppf_sms_send
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.holley.wxemcp.ent.model.ppf.PpfSmsSend" >
+    insert into ppf_sms_send (SMSID, CUSTOMERID, PHONE, 
+      TYPE, SENDTIME, CONTENT, 
+      STATUS, SENDTYPE, ACCOUNT, 
+      ADDTIME)
+    values (#{smsid,jdbcType=INTEGER}, #{customerid,jdbcType=DECIMAL}, #{phone,jdbcType=VARCHAR}, 
+      #{type,jdbcType=SMALLINT}, #{sendtime,jdbcType=TIMESTAMP}, #{content,jdbcType=VARCHAR}, 
+      #{status,jdbcType=DECIMAL}, #{sendtype,jdbcType=SMALLINT}, #{account,jdbcType=VARCHAR}, 
+      #{addtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.holley.wxemcp.ent.model.ppf.PpfSmsSend" >
+    insert into ppf_sms_send
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="smsid != null" >
+        SMSID,
+      </if>
+      <if test="customerid != null" >
+        CUSTOMERID,
+      </if>
+      <if test="phone != null" >
+        PHONE,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="sendtime != null" >
+        SENDTIME,
+      </if>
+      <if test="content != null" >
+        CONTENT,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="sendtype != null" >
+        SENDTYPE,
+      </if>
+      <if test="account != null" >
+        ACCOUNT,
+      </if>
+      <if test="addtime != null" >
+        ADDTIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="smsid != null" >
+        #{smsid,jdbcType=INTEGER},
+      </if>
+      <if test="customerid != null" >
+        #{customerid,jdbcType=DECIMAL},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=SMALLINT},
+      </if>
+      <if test="sendtime != null" >
+        #{sendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="sendtype != null" >
+        #{sendtype,jdbcType=SMALLINT},
+      </if>
+      <if test="account != null" >
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.holley.wxemcp.ent.model.ppf.PpfSmsSendExample" resultType="java.lang.Integer" >
+    select count(*) from ppf_sms_send
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ppf_sms_send
+    <set >
+      <if test="record.smsid != null" >
+        SMSID = #{record.smsid,jdbcType=INTEGER},
+      </if>
+      <if test="record.customerid != null" >
+        CUSTOMERID = #{record.customerid,jdbcType=DECIMAL},
+      </if>
+      <if test="record.phone != null" >
+        PHONE = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        TYPE = #{record.type,jdbcType=SMALLINT},
+      </if>
+      <if test="record.sendtime != null" >
+        SENDTIME = #{record.sendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.content != null" >
+        CONTENT = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=DECIMAL},
+      </if>
+      <if test="record.sendtype != null" >
+        SENDTYPE = #{record.sendtype,jdbcType=SMALLINT},
+      </if>
+      <if test="record.account != null" >
+        ACCOUNT = #{record.account,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addtime != null" >
+        ADDTIME = #{record.addtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ppf_sms_send
+    set SMSID = #{record.smsid,jdbcType=INTEGER},
+      CUSTOMERID = #{record.customerid,jdbcType=DECIMAL},
+      PHONE = #{record.phone,jdbcType=VARCHAR},
+      TYPE = #{record.type,jdbcType=SMALLINT},
+      SENDTIME = #{record.sendtime,jdbcType=TIMESTAMP},
+      CONTENT = #{record.content,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=DECIMAL},
+      SENDTYPE = #{record.sendtype,jdbcType=SMALLINT},
+      ACCOUNT = #{record.account,jdbcType=VARCHAR},
+      ADDTIME = #{record.addtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.holley.wxemcp.ent.model.ppf.PpfSmsSend" >
+    update ppf_sms_send
+    <set >
+      <if test="customerid != null" >
+        CUSTOMERID = #{customerid,jdbcType=DECIMAL},
+      </if>
+      <if test="phone != null" >
+        PHONE = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        TYPE = #{type,jdbcType=SMALLINT},
+      </if>
+      <if test="sendtime != null" >
+        SENDTIME = #{sendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        CONTENT = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="sendtype != null" >
+        SENDTYPE = #{sendtype,jdbcType=SMALLINT},
+      </if>
+      <if test="account != null" >
+        ACCOUNT = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="addtime != null" >
+        ADDTIME = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where SMSID = #{smsid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.holley.wxemcp.ent.model.ppf.PpfSmsSend" >
+    update ppf_sms_send
+    set CUSTOMERID = #{customerid,jdbcType=DECIMAL},
+      PHONE = #{phone,jdbcType=VARCHAR},
+      TYPE = #{type,jdbcType=SMALLINT},
+      SENDTIME = #{sendtime,jdbcType=TIMESTAMP},
+      CONTENT = #{content,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=DECIMAL},
+      SENDTYPE = #{sendtype,jdbcType=SMALLINT},
+      ACCOUNT = #{account,jdbcType=VARCHAR},
+      ADDTIME = #{addtime,jdbcType=TIMESTAMP}
+    where SMSID = #{smsid,jdbcType=INTEGER}
+  </update>
+  <select id="selectMessagesByPage" resultType="com.holley.wxemcp.ent.model.def.MessageVo">
+	  SELECT a.PHONE phone,a.ADDTIME time,a.TYPE msgType,
+	  a.SENDTYPE sendType,b.HM hm,a.Account account
+	  FROM ppf_sms_send a 
+	  LEFT JOIN ppf_customer b
+	  ON a.CUSTOMERID=b.CUSTOMERID
+	  WHERE
+	  b.EID=#{eid,jdbcType=INTEGER}
+	  <if test="sendType != null" >
+	  	AND a.SENDTYPE=#{sendType,jdbcType=INTEGER}
+	  </if>
+	  <if test="firstDayOfMonth != null" >
+	  	AND a.ADDTIME &gt;= #{firstDayOfMonth} 
+	  </if>
+	  <if test="lastDayOfMonth != null">
+	   	AND a.ADDTIME &lt;= #{lastDayOfMonth}
+	  </if>
+	    ORDER BY a.ADDTIME DESC
+  </select>
+  
+  <select id="queryNewMessageCount" resultType="java.lang.Integer">
+     SELECT COUNT(1)
+	  FROM ppf_sms_send a 
+	  LEFT JOIN ppf_customer b 
+	  ON a.CUSTOMERID=b.CUSTOMERID
+	  WHERE
+	  b.EID=#{eid,jdbcType=INTEGER}
+	  <if test="messageUpdateTime != null">
+	  	AND a.ADDTIME &gt;#{messageUpdateTime}
+	  </if>
+  </select>
+  
+  <select id="queryCuifeiCount" resultType="java.lang.Integer">
+     SELECT COUNT(*)
+	  FROM ppf_sms_send a 
+	  LEFT JOIN ppf_customer b 
+	  ON a.CUSTOMERID=b.CUSTOMERID
+	  WHERE
+	  b.EID=#{eid,jdbcType=INTEGER}
+	  AND a.TYPE=#{type} and  a.ADDTIME&gt;=#{tobeg} AND a.ADDTIME &lt;=#{toend}
+  </select>
+
+  <select id="queryLACuiFeiCount" resultType="java.lang.Integer">
+   SELECT COUNT(*)
+	  FROM ppf_sms_send a 
+	  LEFT JOIN ppf_customer b 
+	  ON a.CUSTOMERID=b.CUSTOMERID
+	  WHERE
+	  b.EID=#{eid,jdbcType=INTEGER}
+	  AND a.TYPE=#{type} and  a.ADDTIME&gt;=#{labeg} and a.ADDTIME&lt;#{tobeg}
+  </select>
+  <select id="queryLALACuiFeiCount" resultType="java.lang.Integer">
+    SELECT COUNT(*)
+	  FROM ppf_sms_send a 
+	  LEFT JOIN ppf_customer b 
+	  ON a.CUSTOMERID=b.CUSTOMERID
+	  WHERE
+	  b.EID=#{eid,jdbcType=INTEGER}
+	  AND a.TYPE=#{type} and  a.ADDTIME&gt;=#{latobeg} and a.ADDTIME&lt;=#{latoend}
+  </select>
+</mapper>

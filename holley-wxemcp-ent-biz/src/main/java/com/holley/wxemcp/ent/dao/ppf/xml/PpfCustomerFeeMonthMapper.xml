@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.holley.wxemcp.ent.dao.ppf.PpfCustomerFeeMonthMapper" >
+  <resultMap id="BaseResultMap" type="com.holley.wxemcp.ent.model.ppf.PpfCustomerFeeMonth" >
+    <id column="CUSTOMERID" property="customerid" jdbcType="DECIMAL" />
+    <id column="DATATIME" property="datatime" jdbcType="TIMESTAMP" />
+    <result column="ACTUALFEE" property="actualfee" jdbcType="DECIMAL" />
+    <result column="FEE" property="fee" jdbcType="DECIMAL" />
+    <result column="BASEFEE" property="basefee" jdbcType="DECIMAL" />
+    <result column="FUNDFEE" property="fundfee" jdbcType="DECIMAL" />
+    <result column="PFFEE" property="pffee" jdbcType="DECIMAL" />
+    <result column="STATUS" property="status" jdbcType="SMALLINT" />
+    <result column="USABLEMONEY" property="usablemoney" jdbcType="DECIMAL" />
+    <result column="ADDTIME" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="BILLTIME" property="billtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    CUSTOMERID, DATATIME, ACTUALFEE, FEE, BASEFEE, FUNDFEE, PFFEE, STATUS, USABLEMONEY, 
+    ADDTIME, BILLTIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.holley.wxemcp.ent.model.ppf.PpfCustomerFeeMonthExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ppf_customer_fee_month
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from ppf_customer_fee_month
+    where CUSTOMERID = #{customerid,jdbcType=DECIMAL}
+      and DATATIME = #{month,jdbcType=TIMESTAMP}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.holley.wxemcp.ent.model.ppf.PpfCustomerFeeMonthKey" >
+    delete from ppf_customer_fee_month
+    where CUSTOMERID = #{customerid,jdbcType=DECIMAL}
+      and DATATIME = #{datatime,jdbcType=TIMESTAMP}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.holley.wxemcp.ent.model.ppf.PpfCustomerFeeMonthExample" >
+    delete from ppf_customer_fee_month
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.holley.wxemcp.ent.model.ppf.PpfCustomerFeeMonth" >
+    insert into ppf_customer_fee_month (CUSTOMERID, DATATIME, ACTUALFEE, 
+      FEE, BASEFEE, FUNDFEE, 
+      PFFEE, STATUS, USABLEMONEY, 
+      ADDTIME, BILLTIME)
+    values (#{customerid,jdbcType=DECIMAL}, #{datatime,jdbcType=TIMESTAMP}, #{actualfee,jdbcType=DECIMAL}, 
+      #{fee,jdbcType=DECIMAL}, #{basefee,jdbcType=DECIMAL}, #{fundfee,jdbcType=DECIMAL}, 
+      #{pffee,jdbcType=DECIMAL}, #{status,jdbcType=SMALLINT}, #{usablemoney,jdbcType=DECIMAL}, 
+      #{addtime,jdbcType=TIMESTAMP}, #{billtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.holley.wxemcp.ent.model.ppf.PpfCustomerFeeMonth" >
+    insert into ppf_customer_fee_month
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="customerid != null" >
+        CUSTOMERID,
+      </if>
+      <if test="datatime != null" >
+        DATATIME,
+      </if>
+      <if test="actualfee != null" >
+        ACTUALFEE,
+      </if>
+      <if test="fee != null" >
+        FEE,
+      </if>
+      <if test="basefee != null" >
+        BASEFEE,
+      </if>
+      <if test="fundfee != null" >
+        FUNDFEE,
+      </if>
+      <if test="pffee != null" >
+        PFFEE,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="usablemoney != null" >
+        USABLEMONEY,
+      </if>
+      <if test="addtime != null" >
+        ADDTIME,
+      </if>
+      <if test="billtime != null" >
+        BILLTIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="customerid != null" >
+        #{customerid,jdbcType=DECIMAL},
+      </if>
+      <if test="datatime != null" >
+        #{datatime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actualfee != null" >
+        #{actualfee,jdbcType=DECIMAL},
+      </if>
+      <if test="fee != null" >
+        #{fee,jdbcType=DECIMAL},
+      </if>
+      <if test="basefee != null" >
+        #{basefee,jdbcType=DECIMAL},
+      </if>
+      <if test="fundfee != null" >
+        #{fundfee,jdbcType=DECIMAL},
+      </if>
+      <if test="pffee != null" >
+        #{pffee,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="usablemoney != null" >
+        #{usablemoney,jdbcType=DECIMAL},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="billtime != null" >
+        #{billtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.holley.wxemcp.ent.model.ppf.PpfCustomerFeeMonthExample" resultType="java.lang.Integer" >
+    select count(*) from ppf_customer_fee_month
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ppf_customer_fee_month
+    <set >
+      <if test="record.customerid != null" >
+        CUSTOMERID = #{record.customerid,jdbcType=DECIMAL},
+      </if>
+      <if test="record.datatime != null" >
+        DATATIME = #{record.datatime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.actualfee != null" >
+        ACTUALFEE = #{record.actualfee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.fee != null" >
+        FEE = #{record.fee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.basefee != null" >
+        BASEFEE = #{record.basefee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.fundfee != null" >
+        FUNDFEE = #{record.fundfee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.pffee != null" >
+        PFFEE = #{record.pffee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=SMALLINT},
+      </if>
+      <if test="record.usablemoney != null" >
+        USABLEMONEY = #{record.usablemoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.addtime != null" >
+        ADDTIME = #{record.addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.billtime != null" >
+        BILLTIME = #{record.billtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ppf_customer_fee_month
+    set CUSTOMERID = #{record.customerid,jdbcType=DECIMAL},
+      DATATIME = #{record.datatime,jdbcType=TIMESTAMP},
+      ACTUALFEE = #{record.actualfee,jdbcType=DECIMAL},
+      FEE = #{record.fee,jdbcType=DECIMAL},
+      BASEFEE = #{record.basefee,jdbcType=DECIMAL},
+      FUNDFEE = #{record.fundfee,jdbcType=DECIMAL},
+      PFFEE = #{record.pffee,jdbcType=DECIMAL},
+      STATUS = #{record.status,jdbcType=SMALLINT},
+      USABLEMONEY = #{record.usablemoney,jdbcType=DECIMAL},
+      ADDTIME = #{record.addtime,jdbcType=TIMESTAMP},
+      BILLTIME = #{record.billtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.holley.wxemcp.ent.model.ppf.PpfCustomerFeeMonth" >
+    update ppf_customer_fee_month
+    <set >
+      <if test="actualfee != null" >
+        ACTUALFEE = #{actualfee,jdbcType=DECIMAL},
+      </if>
+      <if test="fee != null" >
+        FEE = #{fee,jdbcType=DECIMAL},
+      </if>
+      <if test="basefee != null" >
+        BASEFEE = #{basefee,jdbcType=DECIMAL},
+      </if>
+      <if test="fundfee != null" >
+        FUNDFEE = #{fundfee,jdbcType=DECIMAL},
+      </if>
+      <if test="pffee != null" >
+        PFFEE = #{pffee,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="usablemoney != null" >
+        USABLEMONEY = #{usablemoney,jdbcType=DECIMAL},
+      </if>
+      <if test="addtime != null" >
+        ADDTIME = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="billtime != null" >
+        BILLTIME = #{billtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CUSTOMERID = #{customerid,jdbcType=DECIMAL}
+      and DATATIME = #{datatime,jdbcType=TIMESTAMP}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.holley.wxemcp.ent.model.ppf.PpfCustomerFeeMonth" >
+    update ppf_customer_fee_month
+    set ACTUALFEE = #{actualfee,jdbcType=DECIMAL},
+      FEE = #{fee,jdbcType=DECIMAL},
+      BASEFEE = #{basefee,jdbcType=DECIMAL},
+      FUNDFEE = #{fundfee,jdbcType=DECIMAL},
+      PFFEE = #{pffee,jdbcType=DECIMAL},
+      STATUS = #{status,jdbcType=SMALLINT},
+      USABLEMONEY = #{usablemoney,jdbcType=DECIMAL},
+      ADDTIME = #{addtime,jdbcType=TIMESTAMP},
+      BILLTIME = #{billtime,jdbcType=TIMESTAMP}
+    where CUSTOMERID = #{customerid,jdbcType=DECIMAL}
+      and DATATIME = #{datatime,jdbcType=TIMESTAMP}
+  </update>
+</mapper>

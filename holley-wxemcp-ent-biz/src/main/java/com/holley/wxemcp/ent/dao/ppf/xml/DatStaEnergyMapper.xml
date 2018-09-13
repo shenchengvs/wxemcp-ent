@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.holley.wxemcp.ent.dao.ppf.DatStaEnergyMapper" >
+  <resultMap id="BaseResultMap" type="com.holley.wxemcp.ent.model.ppf.DatStaEnergy" >
+    <id column="CIRCLETYPEID" property="circletypeid" jdbcType="DECIMAL" />
+    <id column="DATATIME" property="datatime" jdbcType="TIMESTAMP" />
+    <id column="OBJID" property="objid" jdbcType="DECIMAL" />
+    <id column="OBJTYPE" property="objtype" jdbcType="DECIMAL" />
+    <id column="TARRIFTYPEID" property="tarriftypeid" jdbcType="DECIMAL" />
+    <result column="ENERGY_Q" property="energyQ" jdbcType="DECIMAL" />
+    <result column="ENERGY_P" property="energyP" jdbcType="DECIMAL" />
+    <result column="P_INPUT" property="pInput" jdbcType="DECIMAL" />
+    <result column="P_OUTPUT" property="pOutput" jdbcType="DECIMAL" />
+    <result column="Q_INPUT" property="qInput" jdbcType="DECIMAL" />
+    <result column="Q_OUTPUT" property="qOutput" jdbcType="DECIMAL" />
+    <result column="PROP" property="prop" jdbcType="DECIMAL" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    CIRCLETYPEID, DATATIME, OBJID, OBJTYPE, TARRIFTYPEID, ENERGY_Q, ENERGY_P, P_INPUT, 
+    P_OUTPUT, Q_INPUT, Q_OUTPUT, PROP, REMARK
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.holley.wxemcp.ent.model.ppf.DatStaEnergyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from dat_sta_energy
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.holley.wxemcp.ent.model.ppf.DatStaEnergyKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from dat_sta_energy
+    where CIRCLETYPEID = #{circletypeid,jdbcType=DECIMAL}
+      and DATATIME = #{datatime,jdbcType=TIMESTAMP}
+      and OBJID = #{objid,jdbcType=DECIMAL}
+      and OBJTYPE = #{objtype,jdbcType=DECIMAL}
+      and TARRIFTYPEID = #{tarriftypeid,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.holley.wxemcp.ent.model.ppf.DatStaEnergyKey" >
+    delete from dat_sta_energy
+    where CIRCLETYPEID = #{circletypeid,jdbcType=DECIMAL}
+      and DATATIME = #{datatime,jdbcType=TIMESTAMP}
+      and OBJID = #{objid,jdbcType=DECIMAL}
+      and OBJTYPE = #{objtype,jdbcType=DECIMAL}
+      and TARRIFTYPEID = #{tarriftypeid,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.holley.wxemcp.ent.model.ppf.DatStaEnergyExample" >
+    delete from dat_sta_energy
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.holley.wxemcp.ent.model.ppf.DatStaEnergy" >
+    insert into dat_sta_energy (CIRCLETYPEID, DATATIME, OBJID, 
+      OBJTYPE, TARRIFTYPEID, ENERGY_Q, 
+      ENERGY_P, P_INPUT, P_OUTPUT, 
+      Q_INPUT, Q_OUTPUT, PROP, 
+      REMARK)
+    values (#{circletypeid,jdbcType=DECIMAL}, #{datatime,jdbcType=TIMESTAMP}, #{objid,jdbcType=DECIMAL}, 
+      #{objtype,jdbcType=DECIMAL}, #{tarriftypeid,jdbcType=DECIMAL}, #{energyQ,jdbcType=DECIMAL}, 
+      #{energyP,jdbcType=DECIMAL}, #{pInput,jdbcType=DECIMAL}, #{pOutput,jdbcType=DECIMAL}, 
+      #{qInput,jdbcType=DECIMAL}, #{qOutput,jdbcType=DECIMAL}, #{prop,jdbcType=DECIMAL}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.holley.wxemcp.ent.model.ppf.DatStaEnergy" >
+    insert into dat_sta_energy
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="circletypeid != null" >
+        CIRCLETYPEID,
+      </if>
+      <if test="datatime != null" >
+        DATATIME,
+      </if>
+      <if test="objid != null" >
+        OBJID,
+      </if>
+      <if test="objtype != null" >
+        OBJTYPE,
+      </if>
+      <if test="tarriftypeid != null" >
+        TARRIFTYPEID,
+      </if>
+      <if test="energyQ != null" >
+        ENERGY_Q,
+      </if>
+      <if test="energyP != null" >
+        ENERGY_P,
+      </if>
+      <if test="pInput != null" >
+        P_INPUT,
+      </if>
+      <if test="pOutput != null" >
+        P_OUTPUT,
+      </if>
+      <if test="qInput != null" >
+        Q_INPUT,
+      </if>
+      <if test="qOutput != null" >
+        Q_OUTPUT,
+      </if>
+      <if test="prop != null" >
+        PROP,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="circletypeid != null" >
+        #{circletypeid,jdbcType=DECIMAL},
+      </if>
+      <if test="datatime != null" >
+        #{datatime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="objid != null" >
+        #{objid,jdbcType=DECIMAL},
+      </if>
+      <if test="objtype != null" >
+        #{objtype,jdbcType=DECIMAL},
+      </if>
+      <if test="tarriftypeid != null" >
+        #{tarriftypeid,jdbcType=DECIMAL},
+      </if>
+      <if test="energyQ != null" >
+        #{energyQ,jdbcType=DECIMAL},
+      </if>
+      <if test="energyP != null" >
+        #{energyP,jdbcType=DECIMAL},
+      </if>
+      <if test="pInput != null" >
+        #{pInput,jdbcType=DECIMAL},
+      </if>
+      <if test="pOutput != null" >
+        #{pOutput,jdbcType=DECIMAL},
+      </if>
+      <if test="qInput != null" >
+        #{qInput,jdbcType=DECIMAL},
+      </if>
+      <if test="qOutput != null" >
+        #{qOutput,jdbcType=DECIMAL},
+      </if>
+      <if test="prop != null" >
+        #{prop,jdbcType=DECIMAL},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.holley.wxemcp.ent.model.ppf.DatStaEnergyExample" resultType="java.lang.Integer" >
+    select count(*) from dat_sta_energy
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update dat_sta_energy
+    <set >
+      <if test="record.circletypeid != null" >
+        CIRCLETYPEID = #{record.circletypeid,jdbcType=DECIMAL},
+      </if>
+      <if test="record.datatime != null" >
+        DATATIME = #{record.datatime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.objid != null" >
+        OBJID = #{record.objid,jdbcType=DECIMAL},
+      </if>
+      <if test="record.objtype != null" >
+        OBJTYPE = #{record.objtype,jdbcType=DECIMAL},
+      </if>
+      <if test="record.tarriftypeid != null" >
+        TARRIFTYPEID = #{record.tarriftypeid,jdbcType=DECIMAL},
+      </if>
+      <if test="record.energyQ != null" >
+        ENERGY_Q = #{record.energyQ,jdbcType=DECIMAL},
+      </if>
+      <if test="record.energyP != null" >
+        ENERGY_P = #{record.energyP,jdbcType=DECIMAL},
+      </if>
+      <if test="record.pInput != null" >
+        P_INPUT = #{record.pInput,jdbcType=DECIMAL},
+      </if>
+      <if test="record.pOutput != null" >
+        P_OUTPUT = #{record.pOutput,jdbcType=DECIMAL},
+      </if>
+      <if test="record.qInput != null" >
+        Q_INPUT = #{record.qInput,jdbcType=DECIMAL},
+      </if>
+      <if test="record.qOutput != null" >
+        Q_OUTPUT = #{record.qOutput,jdbcType=DECIMAL},
+      </if>
+      <if test="record.prop != null" >
+        PROP = #{record.prop,jdbcType=DECIMAL},
+      </if>
+      <if test="record.remark != null" >
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update dat_sta_energy
+    set CIRCLETYPEID = #{record.circletypeid,jdbcType=DECIMAL},
+      DATATIME = #{record.datatime,jdbcType=TIMESTAMP},
+      OBJID = #{record.objid,jdbcType=DECIMAL},
+      OBJTYPE = #{record.objtype,jdbcType=DECIMAL},
+      TARRIFTYPEID = #{record.tarriftypeid,jdbcType=DECIMAL},
+      ENERGY_Q = #{record.energyQ,jdbcType=DECIMAL},
+      ENERGY_P = #{record.energyP,jdbcType=DECIMAL},
+      P_INPUT = #{record.pInput,jdbcType=DECIMAL},
+      P_OUTPUT = #{record.pOutput,jdbcType=DECIMAL},
+      Q_INPUT = #{record.qInput,jdbcType=DECIMAL},
+      Q_OUTPUT = #{record.qOutput,jdbcType=DECIMAL},
+      PROP = #{record.prop,jdbcType=DECIMAL},
+      REMARK = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.holley.wxemcp.ent.model.ppf.DatStaEnergy" >
+    update dat_sta_energy
+    <set >
+      <if test="energyQ != null" >
+        ENERGY_Q = #{energyQ,jdbcType=DECIMAL},
+      </if>
+      <if test="energyP != null" >
+        ENERGY_P = #{energyP,jdbcType=DECIMAL},
+      </if>
+      <if test="pInput != null" >
+        P_INPUT = #{pInput,jdbcType=DECIMAL},
+      </if>
+      <if test="pOutput != null" >
+        P_OUTPUT = #{pOutput,jdbcType=DECIMAL},
+      </if>
+      <if test="qInput != null" >
+        Q_INPUT = #{qInput,jdbcType=DECIMAL},
+      </if>
+      <if test="qOutput != null" >
+        Q_OUTPUT = #{qOutput,jdbcType=DECIMAL},
+      </if>
+      <if test="prop != null" >
+        PROP = #{prop,jdbcType=DECIMAL},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CIRCLETYPEID = #{circletypeid,jdbcType=DECIMAL}
+      and DATATIME = #{datatime,jdbcType=TIMESTAMP}
+      and OBJID = #{objid,jdbcType=DECIMAL}
+      and OBJTYPE = #{objtype,jdbcType=DECIMAL}
+      and TARRIFTYPEID = #{tarriftypeid,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.holley.wxemcp.ent.model.ppf.DatStaEnergy" >
+    update dat_sta_energy
+    set ENERGY_Q = #{energyQ,jdbcType=DECIMAL},
+      ENERGY_P = #{energyP,jdbcType=DECIMAL},
+      P_INPUT = #{pInput,jdbcType=DECIMAL},
+      P_OUTPUT = #{pOutput,jdbcType=DECIMAL},
+      Q_INPUT = #{qInput,jdbcType=DECIMAL},
+      Q_OUTPUT = #{qOutput,jdbcType=DECIMAL},
+      PROP = #{prop,jdbcType=DECIMAL},
+      REMARK = #{remark,jdbcType=VARCHAR}
+    where CIRCLETYPEID = #{circletypeid,jdbcType=DECIMAL}
+      and DATATIME = #{datatime,jdbcType=TIMESTAMP}
+      and OBJID = #{objid,jdbcType=DECIMAL}
+      and OBJTYPE = #{objtype,jdbcType=DECIMAL}
+      and TARRIFTYPEID = #{tarriftypeid,jdbcType=DECIMAL}
+  </update>
+  <select id="queryNowSum" resultType="java.lang.Double">
+   select IFNULL(SUM(ENERGY_Q),0) 
+   from dat_sta_energy  
+   where OBJTYPE=11 
+   and OBJID=#{eid} 
+   and TARRIFTYPEID=0 
+   and circletypeid=#{type} 
+   and 	DATATIME&gt;=#{tobeg}
+  </select>
+  <select id="queryNowSumTwo" resultType="java.lang.Double">
+   select IFNULL(ENERGY_Q,0) 
+   from dat_sta_energy  
+   where OBJTYPE=11 
+   and OBJID=#{eid} 
+   and TARRIFTYPEID=0 
+   and circletypeid=#{type}
+   and DATATIME=#{tobeg} 
+  </select>
+  
+  <select id="queryLastSum" resultType="java.lang.Double">
+   select IFNULL(ENERGY_Q,0) 
+   from dat_sta_energy  
+   where OBJTYPE=11 
+   and OBJID=#{eid} 
+   and TARRIFTYPEID=0 
+   and circletypeid=#{type}
+   and DATATIME=#{labeg} 
+  </select>
+  <select id="queryLaLaSum" resultType="java.lang.Double">
+   select IFNULL(ENERGY_Q,0) 
+   from dat_sta_energy
+   where OBJTYPE=11 
+   and OBJID=#{eid} 
+   and TARRIFTYPEID=0 
+   and circletypeid=#{type}
+   and DATATIME =#{latobeg}
+  </select>
+ 
+  <select id="queryDepartmentUse" resultType="com.holley.wxemcp.ent.model.def.DepartmentUseVo">
+  	SELECT b.energy_q  energyuse,a.NAME NAME 
+  	FROM 
+  	(SELECT * FROM obj_subeuu WHERE FIND_IN_SET(CONCAT(SUBEUUID,'@12'), Getchildlst(#{eid}, 4))) a 
+  	LEFT JOIN dat_sta_energy b 
+  	ON a.SUBEUUID=b.OBJID 
+	WHERE b.TARRIFTYPEID=0  
+	AND b.OBJTYPE=12 
+	AND b.CIRCLETYPEID=#{type}
+	AND b.DATATIME =#{tobeg}
+	ORDER BY b.ENERGY_Q DESC 
+	LIMIT 5
+  </select>
+  <select id="queryDepartmentUseNow" resultType="com.holley.wxemcp.ent.model.def.DepartmentUseVo">
+    SELECT IFNULL(SUM(b.ENERGY_Q),0) energyuse,a.NAME NAME 
+    FROM (
+    	SELECT * FROM obj_subeuu 
+    	WHERE FIND_IN_SET(CONCAT(SUBEUUID,'@12'), Getchildlst(#{eid}, 4))
+    	) a 
+	LEFT JOIN  dat_sta_energy b 
+	ON a.SUBEUUID=b.OBJID 
+	WHERE b.TARRIFTYPEID=0  AND b.OBJTYPE=12 
+	AND b.CIRCLETYPEID=#{type}
+	AND b.DATATIME &gt;= #{tobeg}
+	GROUP BY b.OBJID 
+	ORDER BY energyuse DESC 
+	LIMIT 5
+    </select>
+  <select id="queryAllDepartmentUseDetailsOne" resultType="com.holley.wxemcp.ent.model.def.DepartmentUseDetailsVo">
+   	SELECT  a.OBJID objid,a.DATATIME datatime,a.ENERGY_Q energy,b.NAME name
+   	FROM (
+   		SELECT * FROM obj_subeuu 
+		WHERE FIND_IN_SET(CONCAT(SUBEUUID,'@12'), Getchildlst(#{eid}, 4))
+		) b  
+	LEFT JOIN  dat_sta_energy a ON a.OBJID=b.SUBEUUID  
+	WHERE a.OBJTYPE=12 
+	AND a.TARRIFTYPEID=0 
+	AND a.CIRCLETYPEID=#{type} 
+	AND (
+     	a.DATATIME=#{tobeg} OR 
+		a.DATATIME=#{labeg} OR 
+		a.DATATIME=#{latobeg}
+		)
+  </select>
+  <select id="queryAllDepartmentUseDetailsToday" resultType="com.holley.wxemcp.ent.model.def.DepartmentUseDetailsVo">
+  	SELECT a.OBJID objid,IFNULL(SUM(a.ENERGY_Q),0) energy,b.NAME NAME 
+  	FROM (
+  		SELECT *	FROM obj_subeuu 
+		WHERE FIND_IN_SET(CONCAT(SUBEUUID,'@12'), Getchildlst(#{eid}, 4))
+		) b  
+	LEFT JOIN  dat_sta_energy a 
+	ON a.OBJID=b.SUBEUUID  
+	WHERE a.OBJTYPE=12 
+	AND a.TARRIFTYPEID=0 
+	AND  a.CIRCLETYPEID=1 
+	AND a.DATATIME &gt; #{tobeg}
+	GROUP BY a.OBJID
+  </select>
+  
+  <!-- add by sc -->
+  <select id="selectCurStaEnergyByDateTime" resultType="com.holley.wxemcp.ent.model.def.DepartmentUseDetailsVo">
+    SELECT 
+    sta.OBJID objid,IFNULL(SUM(sta.ENERGY_Q),0) energy,subeuu.NAME NAME FROM 
+    (SELECT * FROM obj_subeuu 
+	 WHERE FIND_IN_SET(CONCAT(SUBEUUID,'@12'), Getchildlst(#{eid}, 4))) subeuu  
+	 LEFT JOIN  dat_sta_energy sta 
+	 ON sta.OBJID=subeuu.SUBEUUID  
+	 WHERE sta.OBJTYPE=12 
+	 AND sta.TARRIFTYPEID=0 
+	 AND sta.CIRCLETYPEID=#{circleType}
+	 <if test="startTime != null">
+	 	AND sta.DATATIME &gt;= #{startTime}
+	 </if>
+	 <if test="endTime != null">
+	 	AND sta.DATATIME &lt;= #{endTime}
+	 </if>
+	 GROUP BY sta.OBJID
+  </select>
+</mapper>

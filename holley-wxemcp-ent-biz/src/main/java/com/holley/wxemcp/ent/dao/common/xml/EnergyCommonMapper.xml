@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.holley.wxemcp.ent.dao.common.EnergyCommonMapper">
+	
+	<sql id="EntBase_Column_List" >
+	    e.EID, e.DISC,e.ABBR, e.OWNERID, e.OWNERTYPE
+  	</sql>
+  	<sql id="Ent_Column_List" >
+	   e.EID, e.DISC, e.CITY,e.BUSINESS,e.ACTIVITIES,e.LINKMAN,e.TELEPHONE,e.FAX,e.EMAIL,e.LEGALPERSON,e.GRADE,e.OWNERID
+	</sql>
+  	<sql id="Station_Column_List" >
+	    s.ID, s.NAME, s.TYPE, s.STATUS,s.HEIGHT, s.OWNERID, s.OWNERTYPE, s.PROPRIETORID, s.DEVID, s.PROVINCE, s.CITY, 
+	    s.ADDRESS, s.OPERATIONTIME, s.SCALE, s.INVERTERFACTORY, s.COMPONENTPROVIDER, s.AZIMUTH, s.SLANT, 
+	    s.POSTCODE, s.TIMEZONE, s.LNG, s.LAT, s.CO2, s.SO2, s.NOX, s.C, s.COAL, s.TREEWEIGHT, s.PICTURE, s.UPDATETIME
+    </sql>
+    <sql id="Device_Column_List" >
+	    d.ID, d.NAME, d.TYPE, d.STATUS, d.FACTORYID, d.OWNERID, d.OWNERTYPE, d.DEVADDR, d.COMMADDR, d.COMMSUBADDR, 
+	    d.PROTOCOLID, d.CIRCUITNUM, d.INSTALLPOWER, d.INSTALLADDR, d.UPDATETIME
+	  </sql>
+	  <sql id="Unit_Column_List">
+	  u.ID,u.NAME,u.TYPE,u.STATUS,u.OWNERID,u.OWNERTYPE,u.UPDATETIME
+	  </sql>
+    
+  	<!-- 查询企业Sql//////////////////////////////////////////////////////////////////////-->
+  	<!-- 根据企业编码查询旗下所有子企业，包括自己企业 -->
+	<sql id="selectChildEntSelfSql">
+		SELECT <include refid="com.holley.wxemcp.ent.dao.common.EnergyCommonMapper.EntBase_Column_List"/> 
+		FROM obj_enterprise e 
+		WHERE Find_In_Set(concat(eid,'@11'), Getchildlst(#{eid}, 5))
+	</sql>
+	
+	<sql id="selectChildEntInfoSelfSql">
+		SELECT <include refid="com.holley.wxemcp.ent.dao.common.EnergyCommonMapper.Ent_Column_List"/> 
+		FROM obj_enterprise e 
+		WHERE Find_In_Set(concat(eid,'@11'), Getchildlst(#{eid}, 5))
+	</sql>
+	<!-- 根据企业编码查询旗下所有子企业，不包括自己企业 -->
+	<sql id="selectChildEntSql">
+		SELECT <include refid="com.holley.wxemcp.ent.dao.common.EnergyCommonMapper.EntBase_Column_List"/> 
+		FROM obj_enterprise e 
+		WHERE Find_In_Set(concat(eid,'@11'), Getchildlst(#{eid}, 5))
+		AND e.eid != #{eid}
+	</sql>
+	<sql id="selectChildEntInfoSql">
+		SELECT <include refid="com.holley.wxemcp.ent.dao.common.EnergyCommonMapper.Ent_Column_List"/> 
+		FROM obj_enterprise e 
+		WHERE Find_In_Set(concat(eid,'@11'), Getchildlst(#{eid}, 5))
+		AND e.eid != #{eid}
+	</sql>
+	<!-- 查询企业电站Sql//////////////////////////////////////////////////////////////////////-->
+	<!-- 根据企业编码查询自己及旗下所有企业的电站 -->
+	<sql id="selectStationByEntSelfSql">
+		SELECT <include refid="com.holley.wxemcp.ent.dao.common.EnergyCommonMapper.Station_Column_List"/>,e.disc as ownername
+		FROM (<include refid="com.holley.wxemcp.ent.dao.common.EnergyCommonMapper.selectChildEntSelfSql"/>) e,pv_station s
+		WHERE e.EID = s.OWNERID
+		AND s.OWNERTYPE = 11
+		AND s.STATUS = 1
+	</sql>
+	<!-- 查询电站下的所有电站单元 -->
+	<sql id="selectUnitByStationid">
+		SELECT <include refid="com.holley.wxemcp.ent.dao.common.EnergyCommonMapper.Unit_Column_List"/>,s.`NAME` as ownername
+		FROM pv_unit u,pv_station s
+		WHERE s.id = #{id}
+		AND u.OWNERTYPE = 14
+		AND u.`STATUS` = 1
+		AND u.OWNERID = s.ID
+		AND s.OWNERTYPE = 11
+		AND s.`STATUS` = 1
+	</sql>
+	<!-- 查询电站下所有逆变器Sql//////////////////////////////////////////////////////////////////////-->
+	<sql id="selectInverterByStationid">
+		SELECT <include refid="com.holley.wxemcp.ent.dao.common.EnergyCommonMapper.Device_Column_List"/>,u.`NAME` as ownername
+		FROM pv_unit u,pv_device d
+		WHERE u.OWNERID = #{stationid}
+		AND u.OWNERTYPE = 14
+		AND u.`STATUS` = 1
+		AND d.OWNERID = u.ID
+		AND d.OWNERTYPE = 15
+		AND d.`STATUS` = 1
+		AND d.TYPE = 1
+	</sql>
+	<!-- 查询电站下所有汇流箱Sql//////////////////////////////////////////////////////////////////////-->
+	<sql id="selectCombinerboxByStationid">
+		SELECT <include refid="com.holley.wxemcp.ent.dao.common.EnergyCommonMapper.Device_Column_List"/>,d1.`NAME` as ownername
+		FROM pv_unit u,pv_device d1,pv_device d
+		WHERE u.OWNERID = #{stationid}
+		AND u.OWNERTYPE = 14
+		AND u.`STATUS` = 1
+		AND d1.OWNERID = u.ID
+		AND d1.OWNERTYPE = 15
+		AND d1.`STATUS` = 1
+		AND d1.TYPE = 1
+		AND d.OWNERID = d1.ID
+		AND d.OWNERTYPE = 16
+		AND d.`STATUS` = 1
+		AND d.TYPE = 3
+	</sql>
+	<!-- 查询电站下所有环境监测仪Sql//////////////////////////////////////////////////////////////////////-->
+	<sql id="selectEmiByStationid">
+		SELECT <include refid="com.holley.wxemcp.ent.dao.common.EnergyCommonMapper.Device_Column_List"/>,s.`NAME` as ownername
+		FROM pv_station s,pv_device d
+		WHERE s.DEVID = d.id
+		AND s.ID = #{stationid}
+		AND s.`STATUS` = 1
+		AND d.`STATUS` = 1
+		AND d.TYPE = 2
+	</sql>
+	<!-- 根据企业编码查询旗下所有企业的电站 -->
+	<sql id="selectStationByAccountSql">
+		SELECT <include refid="com.holley.wxemcp.ent.dao.common.EnergyCommonMapper.Station_Column_List"/>,e.disc as ownername
+		FROM (<include refid="com.holley.wxemcp.ent.dao.common.EnergyCommonMapper.selectChildEntSql"/>) e,pv_station s
+		WHERE e.EID = s.OWNERID
+		AND s.OWNERTYPE = 11
+		AND s.STATUS = 1
+	</sql>
+	<!-- 查询电站单元下所有逆变器Sql//////////////////////////////////////////////////////////////////////-->
+	<sql id="selectInserverByUnitid">
+		SELECT <include refid="com.holley.wxemcp.ent.dao.common.EnergyCommonMapper.Device_Column_List"/>,u.`NAME` as ownername
+		FROM pv_unit u,pv_device d
+		WHERE u.ID = #{unitid}
+		AND u.OWNERTYPE = 14
+		AND u.`STATUS` = 1
+		AND d.OWNERID = u.ID
+		AND d.OWNERTYPE = 15
+		AND d.`STATUS` = 1
+		AND d.TYPE = 1
+	</sql>
+	<!-- 根据企业编码查询自己及旗下所有企业的环境监测仪 -->
+	<sql id="selectEmiByEntSelfSql">
+		SELECT <include refid="com.holley.wxemcp.ent.dao.common.EnergyCommonMapper.Device_Column_List"/>,e.DISC as disc
+		FROM (<include refid="com.holley.wxemcp.ent.dao.common.EnergyCommonMapper.selectChildEntSelfSql"/>) e,pv_device d
+		WHERE e.EID = d.OWNERID
+		AND d.OWNERTYPE = 11
+		AND d.STATUS = 1
+		AND d.TYPE = 2
+	</sql>
+	
+	<!-- 数据参数设置与数据召读sql//////////////////////////////////////////////////////////////////////// -->
+	<!-- 根据企业编码查询自己及旗下所有企业的逆变器 -->
+	<sql id="selectInverterByEid">
+		SELECT <include refid="com.holley.wxemcp.ent.dao.common.EnergyCommonMapper.Device_Column_List"/>,s.NAME as ownername,e.DISC
+		FROM(<include refid="com.holley.wxemcp.ent.dao.common.EnergyCommonMapper.selectChildEntSelfSql"/>) e,
+		pv_station s,pv_unit u,pv_device d
+		WHERE e.EID = s.OWNERID
+		AND s.STATUS = 1
+		AND s.ID = u.OWNERID
+		AND u.STATUS = 1
+		AND u.ID = d.OWNERID
+		AND d.TYPE = 1
+		AND d.STATUS = 1
+	</sql>
+	<!-- 根据企业编码查询自己及旗下所有企业的汇流箱-->
+	<sql id="selectCombinerboxByEid">
+		SELECT <include refid="com.holley.wxemcp.ent.dao.common.EnergyCommonMapper.Device_Column_List"/>,s.NAME as ownername,e.DISC
+		FROM(<include refid="com.holley.wxemcp.ent.dao.common.EnergyCommonMapper.selectChildEntSelfSql"/>) e,
+		pv_station s,pv_unit u,pv_device d1,pv_device d
+		WHERE e.EID = s.OWNERID
+		AND s.STATUS = 1
+		AND s.ID = u.OWNERID
+		AND u.STATUS = 1
+		AND u.ID = d1.OWNERID
+		AND d1.TYPE = 1
+		AND d1.STATUS = 1
+		AND d1.ID = d.OWNERID
+		AND d.TYPE = 3
+		AND d.STATUS = 1
+	</sql>
+	<!-- 根据企业编码查询自己及旗下所有企业的环境监测仪（通过电站查询环境监测仪）-->
+	<sql id="selectEmiByEid">
+		SELECT <include refid="com.holley.wxemcp.ent.dao.common.EnergyCommonMapper.Device_Column_List"/>,s.NAME as ownername,e.DISC
+		FROM(<include refid="com.holley.wxemcp.ent.dao.common.EnergyCommonMapper.selectChildEntSelfSql"/>) e,
+		pv_station s,pv_device d
+		WHERE e.EID = s.OWNERID
+		AND s.STATUS = 1
+		AND s.DEVID = d.ID
+		AND d.STATUS = 1
+	</sql>
+</mapper>

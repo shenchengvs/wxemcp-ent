@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.holley.wxemcp.ent.dao.ppf.PpfCustomerFeeMonthOtherMapper" >
+  <resultMap id="BaseResultMap" type="com.holley.wxemcp.ent.model.ppf.PpfCustomerFeeMonthOther" >
+    <id column="CUSTOMERID" property="customerid" jdbcType="INTEGER" />
+    <id column="DATATIME" property="datatime" jdbcType="TIMESTAMP" />
+    <id column="ENERGYTYPE" property="energytype" jdbcType="SMALLINT" />
+    <result column="FEE" property="fee" jdbcType="DECIMAL" />
+    <result column="STATUS" property="status" jdbcType="SMALLINT" />
+    <result column="USABLEMONEY" property="usablemoney" jdbcType="DECIMAL" />
+    <result column="ADDTIME" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="BILLTIME" property="billtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    CUSTOMERID, DATATIME, ENERGYTYPE, FEE, STATUS, USABLEMONEY, ADDTIME, BILLTIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.holley.wxemcp.ent.model.ppf.PpfCustomerFeeMonthOtherExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ppf_customer_fee_month_other
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from ppf_customer_fee_month_other
+    where CUSTOMERID = #{customerid,jdbcType=INTEGER}
+      and DATATIME = #{month,jdbcType=TIMESTAMP}
+      and ENERGYTYPE = #{energytype,jdbcType=SMALLINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.holley.wxemcp.ent.model.ppf.PpfCustomerFeeMonthOtherKey" >
+    delete from ppf_customer_fee_month_other
+    where CUSTOMERID = #{customerid,jdbcType=INTEGER}
+      and DATATIME = #{datatime,jdbcType=TIMESTAMP}
+      and ENERGYTYPE = #{energytype,jdbcType=SMALLINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.holley.wxemcp.ent.model.ppf.PpfCustomerFeeMonthOtherExample" >
+    delete from ppf_customer_fee_month_other
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.holley.wxemcp.ent.model.ppf.PpfCustomerFeeMonthOther" >
+    insert into ppf_customer_fee_month_other (CUSTOMERID, DATATIME, ENERGYTYPE, 
+      FEE, STATUS, USABLEMONEY, 
+      ADDTIME, BILLTIME)
+    values (#{customerid,jdbcType=INTEGER}, #{datatime,jdbcType=TIMESTAMP}, #{energytype,jdbcType=SMALLINT}, 
+      #{fee,jdbcType=DECIMAL}, #{status,jdbcType=SMALLINT}, #{usablemoney,jdbcType=DECIMAL}, 
+      #{addtime,jdbcType=TIMESTAMP}, #{billtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.holley.wxemcp.ent.model.ppf.PpfCustomerFeeMonthOther" >
+    insert into ppf_customer_fee_month_other
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="customerid != null" >
+        CUSTOMERID,
+      </if>
+      <if test="datatime != null" >
+        DATATIME,
+      </if>
+      <if test="energytype != null" >
+        ENERGYTYPE,
+      </if>
+      <if test="fee != null" >
+        FEE,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="usablemoney != null" >
+        USABLEMONEY,
+      </if>
+      <if test="addtime != null" >
+        ADDTIME,
+      </if>
+      <if test="billtime != null" >
+        BILLTIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="customerid != null" >
+        #{customerid,jdbcType=INTEGER},
+      </if>
+      <if test="datatime != null" >
+        #{datatime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="energytype != null" >
+        #{energytype,jdbcType=SMALLINT},
+      </if>
+      <if test="fee != null" >
+        #{fee,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="usablemoney != null" >
+        #{usablemoney,jdbcType=DECIMAL},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="billtime != null" >
+        #{billtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.holley.wxemcp.ent.model.ppf.PpfCustomerFeeMonthOtherExample" resultType="java.lang.Integer" >
+    select count(*) from ppf_customer_fee_month_other
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ppf_customer_fee_month_other
+    <set >
+      <if test="record.customerid != null" >
+        CUSTOMERID = #{record.customerid,jdbcType=INTEGER},
+      </if>
+      <if test="record.datatime != null" >
+        DATATIME = #{record.datatime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.energytype != null" >
+        ENERGYTYPE = #{record.energytype,jdbcType=SMALLINT},
+      </if>
+      <if test="record.fee != null" >
+        FEE = #{record.fee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=SMALLINT},
+      </if>
+      <if test="record.usablemoney != null" >
+        USABLEMONEY = #{record.usablemoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.addtime != null" >
+        ADDTIME = #{record.addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.billtime != null" >
+        BILLTIME = #{record.billtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ppf_customer_fee_month_other
+    set CUSTOMERID = #{record.customerid,jdbcType=INTEGER},
+      DATATIME = #{record.datatime,jdbcType=TIMESTAMP},
+      ENERGYTYPE = #{record.energytype,jdbcType=SMALLINT},
+      FEE = #{record.fee,jdbcType=DECIMAL},
+      STATUS = #{record.status,jdbcType=SMALLINT},
+      USABLEMONEY = #{record.usablemoney,jdbcType=DECIMAL},
+      ADDTIME = #{record.addtime,jdbcType=TIMESTAMP},
+      BILLTIME = #{record.billtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.holley.wxemcp.ent.model.ppf.PpfCustomerFeeMonthOther" >
+    update ppf_customer_fee_month_other
+    <set >
+      <if test="fee != null" >
+        FEE = #{fee,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="usablemoney != null" >
+        USABLEMONEY = #{usablemoney,jdbcType=DECIMAL},
+      </if>
+      <if test="addtime != null" >
+        ADDTIME = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="billtime != null" >
+        BILLTIME = #{billtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CUSTOMERID = #{customerid,jdbcType=INTEGER}
+      and DATATIME = #{datatime,jdbcType=TIMESTAMP}
+      and ENERGYTYPE = #{energytype,jdbcType=SMALLINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.holley.wxemcp.ent.model.ppf.PpfCustomerFeeMonthOther" >
+    update ppf_customer_fee_month_other
+    set FEE = #{fee,jdbcType=DECIMAL},
+      STATUS = #{status,jdbcType=SMALLINT},
+      USABLEMONEY = #{usablemoney,jdbcType=DECIMAL},
+      ADDTIME = #{addtime,jdbcType=TIMESTAMP},
+      BILLTIME = #{billtime,jdbcType=TIMESTAMP}
+    where CUSTOMERID = #{customerid,jdbcType=INTEGER}
+      and DATATIME = #{datatime,jdbcType=TIMESTAMP}
+      and ENERGYTYPE = #{energytype,jdbcType=SMALLINT}
+  </update>
+</mapper>

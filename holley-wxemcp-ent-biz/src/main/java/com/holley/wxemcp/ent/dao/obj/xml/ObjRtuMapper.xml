@@ -1,0 +1,479 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.holley.wxemcp.ent.dao.obj.ObjRtuMapper" >
+  <resultMap id="BaseResultMap" type="com.holley.wxemcp.ent.model.obj.ObjRtu" >
+    <id column="RTUID" property="rtuid" jdbcType="INTEGER" />
+    <result column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="EUUID" property="euuid" jdbcType="DECIMAL" />
+    <result column="COMMADDR" property="commaddr" jdbcType="VARCHAR" />
+    <result column="PROTOCOLID" property="protocolid" jdbcType="DECIMAL" />
+    <result column="SCHEMEID" property="schemeid" jdbcType="DECIMAL" />
+    <result column="CHANNELID1" property="channelid1" jdbcType="DECIMAL" />
+    <result column="IP" property="ip" jdbcType="VARCHAR" />
+    <result column="PORT" property="port" jdbcType="DECIMAL" />
+    <result column="RTUIP" property="rtuip" jdbcType="VARCHAR" />
+    <result column="CHANNELID2" property="channelid2" jdbcType="DECIMAL" />
+    <result column="READSCHEMEID" property="readschemeid" jdbcType="DECIMAL" />
+    <result column="MODEL" property="model" jdbcType="VARCHAR" />
+    <result column="QTID" property="qtid" jdbcType="DECIMAL" />
+    <result column="PASSWORD1" property="password1" jdbcType="VARCHAR" />
+    <result column="PASSWORD2" property="password2" jdbcType="VARCHAR" />
+    <result column="FACTORYID" property="factoryid" jdbcType="DECIMAL" />
+    <result column="INSTALLTIME" property="installtime" jdbcType="TIMESTAMP" />
+    <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+    <result column="REGISTETYPE" property="registetype" jdbcType="SMALLINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    RTUID, CODE, NAME, EUUID, COMMADDR, PROTOCOLID, SCHEMEID, CHANNELID1, IP, PORT, RTUIP, 
+    CHANNELID2, READSCHEMEID, MODEL, QTID, PASSWORD1, PASSWORD2, FACTORYID, INSTALLTIME, 
+    ADDRESS, REGISTETYPE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.holley.wxemcp.ent.model.obj.ObjRtuExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from obj_rtu
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from obj_rtu
+    where RTUID = #{rtuid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from obj_rtu
+    where RTUID = #{rtuid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.holley.wxemcp.ent.model.obj.ObjRtuExample" >
+    delete from obj_rtu
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.holley.wxemcp.ent.model.obj.ObjRtu" >
+    insert into obj_rtu (RTUID, CODE, NAME, 
+      EUUID, COMMADDR, PROTOCOLID, 
+      SCHEMEID, CHANNELID1, IP, 
+      PORT, RTUIP, CHANNELID2, 
+      READSCHEMEID, MODEL, QTID, 
+      PASSWORD1, PASSWORD2, FACTORYID, 
+      INSTALLTIME, ADDRESS, REGISTETYPE
+      )
+    values (#{rtuid,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{euuid,jdbcType=DECIMAL}, #{commaddr,jdbcType=VARCHAR}, #{protocolid,jdbcType=DECIMAL}, 
+      #{schemeid,jdbcType=DECIMAL}, #{channelid1,jdbcType=DECIMAL}, #{ip,jdbcType=VARCHAR}, 
+      #{port,jdbcType=DECIMAL}, #{rtuip,jdbcType=VARCHAR}, #{channelid2,jdbcType=DECIMAL}, 
+      #{readschemeid,jdbcType=DECIMAL}, #{model,jdbcType=VARCHAR}, #{qtid,jdbcType=DECIMAL}, 
+      #{password1,jdbcType=VARCHAR}, #{password2,jdbcType=VARCHAR}, #{factoryid,jdbcType=DECIMAL}, 
+      #{installtime,jdbcType=TIMESTAMP}, #{address,jdbcType=VARCHAR}, #{registetype,jdbcType=SMALLINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.holley.wxemcp.ent.model.obj.ObjRtu" >
+    insert into obj_rtu
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rtuid != null" >
+        RTUID,
+      </if>
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="euuid != null" >
+        EUUID,
+      </if>
+      <if test="commaddr != null" >
+        COMMADDR,
+      </if>
+      <if test="protocolid != null" >
+        PROTOCOLID,
+      </if>
+      <if test="schemeid != null" >
+        SCHEMEID,
+      </if>
+      <if test="channelid1 != null" >
+        CHANNELID1,
+      </if>
+      <if test="ip != null" >
+        IP,
+      </if>
+      <if test="port != null" >
+        PORT,
+      </if>
+      <if test="rtuip != null" >
+        RTUIP,
+      </if>
+      <if test="channelid2 != null" >
+        CHANNELID2,
+      </if>
+      <if test="readschemeid != null" >
+        READSCHEMEID,
+      </if>
+      <if test="model != null" >
+        MODEL,
+      </if>
+      <if test="qtid != null" >
+        QTID,
+      </if>
+      <if test="password1 != null" >
+        PASSWORD1,
+      </if>
+      <if test="password2 != null" >
+        PASSWORD2,
+      </if>
+      <if test="factoryid != null" >
+        FACTORYID,
+      </if>
+      <if test="installtime != null" >
+        INSTALLTIME,
+      </if>
+      <if test="address != null" >
+        ADDRESS,
+      </if>
+      <if test="registetype != null" >
+        REGISTETYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rtuid != null" >
+        #{rtuid,jdbcType=INTEGER},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="euuid != null" >
+        #{euuid,jdbcType=DECIMAL},
+      </if>
+      <if test="commaddr != null" >
+        #{commaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="protocolid != null" >
+        #{protocolid,jdbcType=DECIMAL},
+      </if>
+      <if test="schemeid != null" >
+        #{schemeid,jdbcType=DECIMAL},
+      </if>
+      <if test="channelid1 != null" >
+        #{channelid1,jdbcType=DECIMAL},
+      </if>
+      <if test="ip != null" >
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="port != null" >
+        #{port,jdbcType=DECIMAL},
+      </if>
+      <if test="rtuip != null" >
+        #{rtuip,jdbcType=VARCHAR},
+      </if>
+      <if test="channelid2 != null" >
+        #{channelid2,jdbcType=DECIMAL},
+      </if>
+      <if test="readschemeid != null" >
+        #{readschemeid,jdbcType=DECIMAL},
+      </if>
+      <if test="model != null" >
+        #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="qtid != null" >
+        #{qtid,jdbcType=DECIMAL},
+      </if>
+      <if test="password1 != null" >
+        #{password1,jdbcType=VARCHAR},
+      </if>
+      <if test="password2 != null" >
+        #{password2,jdbcType=VARCHAR},
+      </if>
+      <if test="factoryid != null" >
+        #{factoryid,jdbcType=DECIMAL},
+      </if>
+      <if test="installtime != null" >
+        #{installtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="registetype != null" >
+        #{registetype,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.holley.wxemcp.ent.model.obj.ObjRtuExample" resultType="java.lang.Integer" >
+    select count(*) from obj_rtu
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update obj_rtu
+    <set >
+      <if test="record.rtuid != null" >
+        RTUID = #{record.rtuid,jdbcType=INTEGER},
+      </if>
+      <if test="record.code != null" >
+        CODE = #{record.code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        NAME = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.euuid != null" >
+        EUUID = #{record.euuid,jdbcType=DECIMAL},
+      </if>
+      <if test="record.commaddr != null" >
+        COMMADDR = #{record.commaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.protocolid != null" >
+        PROTOCOLID = #{record.protocolid,jdbcType=DECIMAL},
+      </if>
+      <if test="record.schemeid != null" >
+        SCHEMEID = #{record.schemeid,jdbcType=DECIMAL},
+      </if>
+      <if test="record.channelid1 != null" >
+        CHANNELID1 = #{record.channelid1,jdbcType=DECIMAL},
+      </if>
+      <if test="record.ip != null" >
+        IP = #{record.ip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.port != null" >
+        PORT = #{record.port,jdbcType=DECIMAL},
+      </if>
+      <if test="record.rtuip != null" >
+        RTUIP = #{record.rtuip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channelid2 != null" >
+        CHANNELID2 = #{record.channelid2,jdbcType=DECIMAL},
+      </if>
+      <if test="record.readschemeid != null" >
+        READSCHEMEID = #{record.readschemeid,jdbcType=DECIMAL},
+      </if>
+      <if test="record.model != null" >
+        MODEL = #{record.model,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qtid != null" >
+        QTID = #{record.qtid,jdbcType=DECIMAL},
+      </if>
+      <if test="record.password1 != null" >
+        PASSWORD1 = #{record.password1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password2 != null" >
+        PASSWORD2 = #{record.password2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.factoryid != null" >
+        FACTORYID = #{record.factoryid,jdbcType=DECIMAL},
+      </if>
+      <if test="record.installtime != null" >
+        INSTALLTIME = #{record.installtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.address != null" >
+        ADDRESS = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registetype != null" >
+        REGISTETYPE = #{record.registetype,jdbcType=SMALLINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update obj_rtu
+    set RTUID = #{record.rtuid,jdbcType=INTEGER},
+      CODE = #{record.code,jdbcType=VARCHAR},
+      NAME = #{record.name,jdbcType=VARCHAR},
+      EUUID = #{record.euuid,jdbcType=DECIMAL},
+      COMMADDR = #{record.commaddr,jdbcType=VARCHAR},
+      PROTOCOLID = #{record.protocolid,jdbcType=DECIMAL},
+      SCHEMEID = #{record.schemeid,jdbcType=DECIMAL},
+      CHANNELID1 = #{record.channelid1,jdbcType=DECIMAL},
+      IP = #{record.ip,jdbcType=VARCHAR},
+      PORT = #{record.port,jdbcType=DECIMAL},
+      RTUIP = #{record.rtuip,jdbcType=VARCHAR},
+      CHANNELID2 = #{record.channelid2,jdbcType=DECIMAL},
+      READSCHEMEID = #{record.readschemeid,jdbcType=DECIMAL},
+      MODEL = #{record.model,jdbcType=VARCHAR},
+      QTID = #{record.qtid,jdbcType=DECIMAL},
+      PASSWORD1 = #{record.password1,jdbcType=VARCHAR},
+      PASSWORD2 = #{record.password2,jdbcType=VARCHAR},
+      FACTORYID = #{record.factoryid,jdbcType=DECIMAL},
+      INSTALLTIME = #{record.installtime,jdbcType=TIMESTAMP},
+      ADDRESS = #{record.address,jdbcType=VARCHAR},
+      REGISTETYPE = #{record.registetype,jdbcType=SMALLINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.holley.wxemcp.ent.model.obj.ObjRtu" >
+    update obj_rtu
+    <set >
+      <if test="code != null" >
+        CODE = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="euuid != null" >
+        EUUID = #{euuid,jdbcType=DECIMAL},
+      </if>
+      <if test="commaddr != null" >
+        COMMADDR = #{commaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="protocolid != null" >
+        PROTOCOLID = #{protocolid,jdbcType=DECIMAL},
+      </if>
+      <if test="schemeid != null" >
+        SCHEMEID = #{schemeid,jdbcType=DECIMAL},
+      </if>
+      <if test="channelid1 != null" >
+        CHANNELID1 = #{channelid1,jdbcType=DECIMAL},
+      </if>
+      <if test="ip != null" >
+        IP = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="port != null" >
+        PORT = #{port,jdbcType=DECIMAL},
+      </if>
+      <if test="rtuip != null" >
+        RTUIP = #{rtuip,jdbcType=VARCHAR},
+      </if>
+      <if test="channelid2 != null" >
+        CHANNELID2 = #{channelid2,jdbcType=DECIMAL},
+      </if>
+      <if test="readschemeid != null" >
+        READSCHEMEID = #{readschemeid,jdbcType=DECIMAL},
+      </if>
+      <if test="model != null" >
+        MODEL = #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="qtid != null" >
+        QTID = #{qtid,jdbcType=DECIMAL},
+      </if>
+      <if test="password1 != null" >
+        PASSWORD1 = #{password1,jdbcType=VARCHAR},
+      </if>
+      <if test="password2 != null" >
+        PASSWORD2 = #{password2,jdbcType=VARCHAR},
+      </if>
+      <if test="factoryid != null" >
+        FACTORYID = #{factoryid,jdbcType=DECIMAL},
+      </if>
+      <if test="installtime != null" >
+        INSTALLTIME = #{installtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="address != null" >
+        ADDRESS = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="registetype != null" >
+        REGISTETYPE = #{registetype,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where RTUID = #{rtuid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.holley.wxemcp.ent.model.obj.ObjRtu" >
+    update obj_rtu
+    set CODE = #{code,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      EUUID = #{euuid,jdbcType=DECIMAL},
+      COMMADDR = #{commaddr,jdbcType=VARCHAR},
+      PROTOCOLID = #{protocolid,jdbcType=DECIMAL},
+      SCHEMEID = #{schemeid,jdbcType=DECIMAL},
+      CHANNELID1 = #{channelid1,jdbcType=DECIMAL},
+      IP = #{ip,jdbcType=VARCHAR},
+      PORT = #{port,jdbcType=DECIMAL},
+      RTUIP = #{rtuip,jdbcType=VARCHAR},
+      CHANNELID2 = #{channelid2,jdbcType=DECIMAL},
+      READSCHEMEID = #{readschemeid,jdbcType=DECIMAL},
+      MODEL = #{model,jdbcType=VARCHAR},
+      QTID = #{qtid,jdbcType=DECIMAL},
+      PASSWORD1 = #{password1,jdbcType=VARCHAR},
+      PASSWORD2 = #{password2,jdbcType=VARCHAR},
+      FACTORYID = #{factoryid,jdbcType=DECIMAL},
+      INSTALLTIME = #{installtime,jdbcType=TIMESTAMP},
+      ADDRESS = #{address,jdbcType=VARCHAR},
+      REGISTETYPE = #{registetype,jdbcType=SMALLINT}
+    where RTUID = #{rtuid,jdbcType=INTEGER}
+  </update>
+  
+  <select id="selectRtuStatusInfosByPage" resultType="com.holley.wxemcp.ent.model.def.RtuStatusInfoVo">
+  	SELECT rtu.NAME name,rtu.COMMADDR commaddr,rtuStatus.ONLINETIME onlineTime,rtuStatus.CURSTATUS status 
+  	FROM dcs_rtucurstatus rtuStatus
+	LEFT JOIN
+	obj_rtu rtu
+	ON
+	rtuStatus.RTUID = rtu.RTUID
+	WHERE
+	rtu.EUUID = #{eid}
+	<if test="rtuStatus != null">
+		AND rtuStatus.CURSTATUS = #{rtuStatus}
+	</if>
+  </select>
+</mapper>

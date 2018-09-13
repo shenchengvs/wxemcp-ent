@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<!-- 
+	properties属性
+  settings设置
+  typeAliases类型命名
+  typeHandlers类型处理器
+  objectFactory对象工厂
+  plugins插件
+  environments环境
+  	**environment环境变量
+  		***transactionManager事务管理器
+  		***dataSource数据源		
+	 -->
+	 
+	 <settings> 
+	 	<!-- 这个配置使全局的映射器启用或禁用缓存。 -->
+	 	<setting name="cacheEnabled" value="true"/>	 	
+	 	<!-- 全局启用或禁用延迟加载。当禁用时，所有关联对象都会即时加载 
+	 	<setting name="lazyLoadingEnabled" value="true"/>-->
+	 	<!-- 当启用时，有延迟加载属性的对象在被调用时将会完全加载任意属性。否则，每种属性将会按需要加载。 -->
+	 	<setting name="aggressiveLazyLoading" value="true"/>
+	 	<!-- 允许或不允许多种结果集从一个单独的语句中返回（需要适合的驱动）。 -->
+	 	<setting name="multipleResultSetsEnabled" value="true"/>
+	 	<!-- 使用列标签代替列名。不同的驱动在这方便表现不同 -->
+	 	<setting name="useColumnLabel" value="true"/>
+	 	<!-- 允许JDBC支持生成的键。需要适合的驱动。如果设置为true则这个设置强制生成的键被使用 -->
+	 	<setting name="useGeneratedKeys" value="false"/>	 	
+	 	<!--指定MyBatis如何自动映射列到字段/属性。PARTIAL只会自动映射简单，没有嵌套的结果。FULL会自动映射任意复杂的结果  -->
+	 	<setting name="autoMappingBehavior" value="PARTIAL"/>
+	 	<!--配置默认的执行器。SIMPLE执行器没有什么特别之处。REUSE执行器重用预处理语句。BATCH执行器重用语句和批量更新  -->
+	 	<setting name="defaultExecutorType" value="SIMPLE"/>
+	 	<!-- 设置超时时间 -->
+	 	<setting name="defaultStatementTimeout" value="25000"/>
+	 </settings>
+	 
+     <typeAliases>
+		<typeAlias alias="ComboxBean" type="com.holley.platform.common.dataobject.ComboxBean"/>	
+	 </typeAliases>
+	<!-- 
+	 Executor (update, query, flushStatements, commit, rollback, getTransaction, close, isClosed)
+	 ParameterHandler (getParameterObject, setParameters)
+	 ResultSetHandler (handleResultSets, handleOutputParameters)
+	 StatementHandler (prepare, parameterize, batch, update, query)
+	 -->
+	<plugins>
+		<plugin interceptor="com.holley.platform.common.db.MybatisPagePlugin">
+			<property name="dialect" value="mysql" />
+			<property name="pageSqlId" value=".*ByPage" />
+		</plugin>
+	</plugins>
+
+	<mappers>
+	
+	<mapper resource="com/holley/wxemcp/ent/common/data/xml/DataMapper.xml"/>
+	<!-- common -->	
+	<mapper resource="com/holley/platform/dao/common/xml/CommonMapper.xml"/>
+	<mapper resource="com/holley/wxemcp/ent/dao/common/xml/EnergyCommonMapper.xml"/>
+	
+	<!-- dic -->
+	<mapper resource="com/holley/wxemcp/ent/dao/dic/xml/DicCityMapper.xml"/>
+	<mapper resource="com/holley/wxemcp/ent/dao/dic/xml/DicBusinessTypeMapper.xml"/>
+	<mapper resource="com/holley/wxemcp/ent/dao/dic/xml/DicDetectorProtocolMapper.xml"/>
+	
+	<!-- sys -->
+	<mapper resource="com/holley/platform/dao/sys/xml/SysAccountMapper.xml"/>
+	<mapper resource="com/holley/wxemcp/ent/dao/sys/xml/SysUnregisterAccountMapper.xml"/>
+	<!-- <mapper resource="com/holley/platform/dao/sys/xml/SysAccountRoleMapper.xml"/>
+	<mapper resource="com/holley/platform/dao/sys/xml/SysButtondefMapper.xml"/>
+	<mapper resource="com/holley/platform/dao/sys/xml/SysHostlogMapper.xml"/>
+	<mapper resource="com/holley/platform/dao/sys/xml/SysModuledefMapper.xml"/>
+	<mapper resource="com/holley/platform/dao/sys/xml/SysRoleButtonMapper.xml"/>
+	<mapper resource="com/holley/platform/dao/sys/xml/SysRoleMapper.xml"/>
+	<mapper resource="com/holley/platform/dao/sys/xml/SysRoleModuleMapper.xml"/>
+	<mapper resource="com/holley/platform/dao/sys/xml/SysWeblogMapper.xml"/>
+	<mapper resource="com/holley/platform/dao/sys/xml/SysRuleMapper.xml"/> -->
+	
+	<!-- obj -->
+	<mapper resource="com/holley/wxemcp/ent/dao/obj/xml/ObjEnterpriseMapper.xml"/>
+	<mapper resource="com/holley/wxemcp/ent/dao/obj/xml/ObjSubeuuMapper.xml"/>
+	<mapper resource="com/holley/wxemcp/ent/dao/obj/xml/ObjPointMapper.xml"/>
+	<mapper resource="com/holley/wxemcp/ent/dao/obj/xml/ObjRtuMapper.xml"/>
+	<!-- ppf -->
+	<mapper resource="com/holley/wxemcp/ent/dao/ppf/xml/PpfCustomerFeeMonthMapper.xml"/>
+	<mapper resource="com/holley/wxemcp/ent/dao/ppf/xml/PpfCustomerFeeMonthOtherMapper.xml"/>
+	<mapper resource="com/holley/wxemcp/ent/dao/ppf/xml/PpfPriceRuleMapper.xml"/>
+	<mapper resource="com/holley/wxemcp/ent/dao/ppf/xml/PpfPriceRuleOtherMapper.xml"/>
+	<mapper resource="com/holley/wxemcp/ent/dao/ppf/xml/PpfRechargeMapper.xml"/>
+	<mapper resource="com/holley/wxemcp/ent/dao/ppf/xml/PpfSmsSendMapper.xml"/>
+	<mapper resource="com/holley/wxemcp/ent/dao/ppf/xml/PpfControlCmdMapper.xml"/>
+	<mapper resource="com/holley/wxemcp/ent/dao/ppf/xml/EvtRecordMapper.xml"/>
+	<mapper resource="com/holley/wxemcp/ent/dao/ppf/xml/DatStaEnergyMapper.xml"/>
+	<mapper resource="com/holley/wxemcp/ent/dao/ppf/xml/DatStaItemUsedMapper.xml"/>
+	<mapper resource="com/holley/wxemcp/ent/dao/ppf/xml/PpfCustomerAccountMapper.xml"/>
+	<mapper resource="com/holley/wxemcp/ent/dao/ppf/xml/PpfEnterpriseWechatMapper.xml"/>	
+	<mapper resource="com/holley/wxemcp/ent/dao/dat/xml/DatEvtHisMapper.xml"/>
+	</mappers>
+
+</configuration>

@@ -1,0 +1,703 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.holley.wxemcp.ent.dao.obj.ObjEnterpriseMapper">
+  <resultMap id="BaseResultMap" type="com.holley.wxemcp.ent.model.obj.ObjEnterprise">
+    <id column="EID" jdbcType="DECIMAL" property="eid" />
+    <result column="DISC" jdbcType="VARCHAR" property="disc" />
+    <result column="ABBR" jdbcType="VARCHAR" property="abbr" />
+    <result column="ECODE" jdbcType="VARCHAR" property="ecode" />
+    <result column="CORPORATIONID" jdbcType="VARCHAR" property="corporationid" />
+    <result column="BUSINESS" jdbcType="DECIMAL" property="business" />
+    <result column="GRADE" jdbcType="DECIMAL" property="grade" />
+    <result column="ACTIVITIES" jdbcType="VARCHAR" property="activities" />
+    <result column="CITY" jdbcType="DECIMAL" property="city" />
+    <result column="REGISTERNUM" jdbcType="VARCHAR" property="registernum" />
+    <result column="REGISTERADDRESS" jdbcType="VARCHAR" property="registeraddress" />
+    <result column="PRODUCTIONADDRESS" jdbcType="VARCHAR" property="productionaddress" />
+    <result column="LINKMAN" jdbcType="VARCHAR" property="linkman" />
+    <result column="TELEPHONE" jdbcType="VARCHAR" property="telephone" />
+    <result column="MOBILE" jdbcType="VARCHAR" property="mobile" />
+    <result column="EMAIL" jdbcType="VARCHAR" property="email" />
+    <result column="FAX" jdbcType="VARCHAR" property="fax" />
+    <result column="ZIPCODE" jdbcType="VARCHAR" property="zipcode" />
+    <result column="LEGALPERSON" jdbcType="VARCHAR" property="legalperson" />
+    <result column="PASSAUTHENTICATION" jdbcType="DECIMAL" property="passauthentication" />
+    <result column="HASCERTIFICATE" jdbcType="DECIMAL" property="hascertificate" />
+    <result column="GETTIME" jdbcType="VARCHAR" property="gettime" />
+    <result column="ANNUALSALES" jdbcType="VARCHAR" property="annualsales" />
+    <result column="ANNUALTAX" jdbcType="VARCHAR" property="annualtax" />
+    <result column="ANNUALADDEDENERGY" jdbcType="DECIMAL" property="annualaddedenergy" />
+    <result column="ANNUALENERGY" jdbcType="DECIMAL" property="annualenergy" />
+    <result column="LONGITUDE" jdbcType="DECIMAL" property="longitude" />
+    <result column="LATITUDE" jdbcType="DECIMAL" property="latitude" />
+    <result column="ETYPE" jdbcType="DECIMAL" property="etype" />
+    <result column="OWNERID" jdbcType="DECIMAL" property="ownerid" />
+    <result column="OWNERTYPE" jdbcType="DECIMAL" property="ownertype" />
+    <result column="UPDATETIME" jdbcType="TIMESTAMP" property="updatetime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    EID, DISC, ABBR, ECODE, CORPORATIONID, BUSINESS, GRADE, ACTIVITIES, CITY, REGISTERNUM, 
+    REGISTERADDRESS, PRODUCTIONADDRESS, LINKMAN, TELEPHONE, MOBILE, EMAIL, FAX, ZIPCODE, 
+    LEGALPERSON, PASSAUTHENTICATION, HASCERTIFICATE, GETTIME, ANNUALSALES, ANNUALTAX, 
+    ANNUALADDEDENERGY, ANNUALENERGY, LONGITUDE, LATITUDE, ETYPE, OWNERID, OWNERTYPE, 
+    UPDATETIME
+  </sql>
+  <select id="selectByExample" parameterType="com.holley.wxemcp.ent.model.obj.ObjEnterpriseExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from obj_enterprise
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from obj_enterprise
+    where EID = #{eid,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from obj_enterprise
+    where EID = #{eid,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.holley.wxemcp.ent.model.obj.ObjEnterpriseExample">
+    delete from obj_enterprise
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.holley.wxemcp.ent.model.obj.ObjEnterprise" useGeneratedKeys="true" keyProperty="eid">
+    insert into obj_enterprise (EID, DISC, ABBR, 
+      ECODE, CORPORATIONID, BUSINESS, 
+      GRADE, ACTIVITIES, CITY, 
+      REGISTERNUM, REGISTERADDRESS, PRODUCTIONADDRESS, 
+      LINKMAN, TELEPHONE, MOBILE, 
+      EMAIL, FAX, ZIPCODE, 
+      LEGALPERSON, PASSAUTHENTICATION, HASCERTIFICATE, 
+      GETTIME, ANNUALSALES, ANNUALTAX, 
+      ANNUALADDEDENERGY, ANNUALENERGY, LONGITUDE, 
+      LATITUDE, ETYPE, OWNERID, 
+      OWNERTYPE, UPDATETIME)
+    values (#{eid,jdbcType=DECIMAL}, #{disc,jdbcType=VARCHAR}, #{abbr,jdbcType=VARCHAR}, 
+      #{ecode,jdbcType=VARCHAR}, #{corporationid,jdbcType=VARCHAR}, #{business,jdbcType=DECIMAL}, 
+      #{grade,jdbcType=DECIMAL}, #{activities,jdbcType=VARCHAR}, #{city,jdbcType=DECIMAL}, 
+      #{registernum,jdbcType=VARCHAR}, #{registeraddress,jdbcType=VARCHAR}, #{productionaddress,jdbcType=VARCHAR}, 
+      #{linkman,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{fax,jdbcType=VARCHAR}, #{zipcode,jdbcType=VARCHAR}, 
+      #{legalperson,jdbcType=VARCHAR}, #{passauthentication,jdbcType=DECIMAL}, #{hascertificate,jdbcType=DECIMAL}, 
+      #{gettime,jdbcType=VARCHAR}, #{annualsales,jdbcType=VARCHAR}, #{annualtax,jdbcType=VARCHAR}, 
+      #{annualaddedenergy,jdbcType=DECIMAL}, #{annualenergy,jdbcType=DECIMAL}, #{longitude,jdbcType=DECIMAL}, 
+      #{latitude,jdbcType=DECIMAL}, #{etype,jdbcType=DECIMAL}, #{ownerid,jdbcType=DECIMAL}, 
+      #{ownertype,jdbcType=DECIMAL}, #{updatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.holley.wxemcp.ent.model.obj.ObjEnterprise" useGeneratedKeys="true" keyProperty="eid">
+    insert into obj_enterprise
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="eid != null">
+        EID,
+      </if>
+      <if test="disc != null">
+        DISC,
+      </if>
+      <if test="abbr != null">
+        ABBR,
+      </if>
+      <if test="ecode != null">
+        ECODE,
+      </if>
+      <if test="corporationid != null">
+        CORPORATIONID,
+      </if>
+      <if test="business != null">
+        BUSINESS,
+      </if>
+      <if test="grade != null">
+        GRADE,
+      </if>
+      <if test="activities != null">
+        ACTIVITIES,
+      </if>
+      <if test="city != null">
+        CITY,
+      </if>
+      <if test="registernum != null">
+        REGISTERNUM,
+      </if>
+      <if test="registeraddress != null">
+        REGISTERADDRESS,
+      </if>
+      <if test="productionaddress != null">
+        PRODUCTIONADDRESS,
+      </if>
+      <if test="linkman != null">
+        LINKMAN,
+      </if>
+      <if test="telephone != null">
+        TELEPHONE,
+      </if>
+      <if test="mobile != null">
+        MOBILE,
+      </if>
+      <if test="email != null">
+        EMAIL,
+      </if>
+      <if test="fax != null">
+        FAX,
+      </if>
+      <if test="zipcode != null">
+        ZIPCODE,
+      </if>
+      <if test="legalperson != null">
+        LEGALPERSON,
+      </if>
+      <if test="passauthentication != null">
+        PASSAUTHENTICATION,
+      </if>
+      <if test="hascertificate != null">
+        HASCERTIFICATE,
+      </if>
+      <if test="gettime != null">
+        GETTIME,
+      </if>
+      <if test="annualsales != null">
+        ANNUALSALES,
+      </if>
+      <if test="annualtax != null">
+        ANNUALTAX,
+      </if>
+      <if test="annualaddedenergy != null">
+        ANNUALADDEDENERGY,
+      </if>
+      <if test="annualenergy != null">
+        ANNUALENERGY,
+      </if>
+      <if test="longitude != null">
+        LONGITUDE,
+      </if>
+      <if test="latitude != null">
+        LATITUDE,
+      </if>
+      <if test="etype != null">
+        ETYPE,
+      </if>
+      <if test="ownerid != null">
+        OWNERID,
+      </if>
+      <if test="ownertype != null">
+        OWNERTYPE,
+      </if>
+      <if test="updatetime != null">
+        UPDATETIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="eid != null">
+        #{eid,jdbcType=DECIMAL},
+      </if>
+      <if test="disc != null">
+        #{disc,jdbcType=VARCHAR},
+      </if>
+      <if test="abbr != null">
+        #{abbr,jdbcType=VARCHAR},
+      </if>
+      <if test="ecode != null">
+        #{ecode,jdbcType=VARCHAR},
+      </if>
+      <if test="corporationid != null">
+        #{corporationid,jdbcType=VARCHAR},
+      </if>
+      <if test="business != null">
+        #{business,jdbcType=DECIMAL},
+      </if>
+      <if test="grade != null">
+        #{grade,jdbcType=DECIMAL},
+      </if>
+      <if test="activities != null">
+        #{activities,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=DECIMAL},
+      </if>
+      <if test="registernum != null">
+        #{registernum,jdbcType=VARCHAR},
+      </if>
+      <if test="registeraddress != null">
+        #{registeraddress,jdbcType=VARCHAR},
+      </if>
+      <if test="productionaddress != null">
+        #{productionaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="linkman != null">
+        #{linkman,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null">
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null">
+        #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="zipcode != null">
+        #{zipcode,jdbcType=VARCHAR},
+      </if>
+      <if test="legalperson != null">
+        #{legalperson,jdbcType=VARCHAR},
+      </if>
+      <if test="passauthentication != null">
+        #{passauthentication,jdbcType=DECIMAL},
+      </if>
+      <if test="hascertificate != null">
+        #{hascertificate,jdbcType=DECIMAL},
+      </if>
+      <if test="gettime != null">
+        #{gettime,jdbcType=VARCHAR},
+      </if>
+      <if test="annualsales != null">
+        #{annualsales,jdbcType=VARCHAR},
+      </if>
+      <if test="annualtax != null">
+        #{annualtax,jdbcType=VARCHAR},
+      </if>
+      <if test="annualaddedenergy != null">
+        #{annualaddedenergy,jdbcType=DECIMAL},
+      </if>
+      <if test="annualenergy != null">
+        #{annualenergy,jdbcType=DECIMAL},
+      </if>
+      <if test="longitude != null">
+        #{longitude,jdbcType=DECIMAL},
+      </if>
+      <if test="latitude != null">
+        #{latitude,jdbcType=DECIMAL},
+      </if>
+      <if test="etype != null">
+        #{etype,jdbcType=DECIMAL},
+      </if>
+      <if test="ownerid != null">
+        #{ownerid,jdbcType=DECIMAL},
+      </if>
+      <if test="ownertype != null">
+        #{ownertype,jdbcType=DECIMAL},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.holley.wxemcp.ent.model.obj.ObjEnterpriseExample" resultType="java.lang.Integer">
+    select count(*) from obj_enterprise
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update obj_enterprise
+    <set>
+      <if test="record.eid != null">
+        EID = #{record.eid,jdbcType=DECIMAL},
+      </if>
+      <if test="record.disc != null">
+        DISC = #{record.disc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.abbr != null">
+        ABBR = #{record.abbr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ecode != null">
+        ECODE = #{record.ecode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.corporationid != null">
+        CORPORATIONID = #{record.corporationid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.business != null">
+        BUSINESS = #{record.business,jdbcType=DECIMAL},
+      </if>
+      <if test="record.grade != null">
+        GRADE = #{record.grade,jdbcType=DECIMAL},
+      </if>
+      <if test="record.activities != null">
+        ACTIVITIES = #{record.activities,jdbcType=VARCHAR},
+      </if>
+      <if test="record.city != null">
+        CITY = #{record.city,jdbcType=DECIMAL},
+      </if>
+      <if test="record.registernum != null">
+        REGISTERNUM = #{record.registernum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registeraddress != null">
+        REGISTERADDRESS = #{record.registeraddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productionaddress != null">
+        PRODUCTIONADDRESS = #{record.productionaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.linkman != null">
+        LINKMAN = #{record.linkman,jdbcType=VARCHAR},
+      </if>
+      <if test="record.telephone != null">
+        TELEPHONE = #{record.telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobile != null">
+        MOBILE = #{record.mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null">
+        EMAIL = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fax != null">
+        FAX = #{record.fax,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zipcode != null">
+        ZIPCODE = #{record.zipcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.legalperson != null">
+        LEGALPERSON = #{record.legalperson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.passauthentication != null">
+        PASSAUTHENTICATION = #{record.passauthentication,jdbcType=DECIMAL},
+      </if>
+      <if test="record.hascertificate != null">
+        HASCERTIFICATE = #{record.hascertificate,jdbcType=DECIMAL},
+      </if>
+      <if test="record.gettime != null">
+        GETTIME = #{record.gettime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.annualsales != null">
+        ANNUALSALES = #{record.annualsales,jdbcType=VARCHAR},
+      </if>
+      <if test="record.annualtax != null">
+        ANNUALTAX = #{record.annualtax,jdbcType=VARCHAR},
+      </if>
+      <if test="record.annualaddedenergy != null">
+        ANNUALADDEDENERGY = #{record.annualaddedenergy,jdbcType=DECIMAL},
+      </if>
+      <if test="record.annualenergy != null">
+        ANNUALENERGY = #{record.annualenergy,jdbcType=DECIMAL},
+      </if>
+      <if test="record.longitude != null">
+        LONGITUDE = #{record.longitude,jdbcType=DECIMAL},
+      </if>
+      <if test="record.latitude != null">
+        LATITUDE = #{record.latitude,jdbcType=DECIMAL},
+      </if>
+      <if test="record.etype != null">
+        ETYPE = #{record.etype,jdbcType=DECIMAL},
+      </if>
+      <if test="record.ownerid != null">
+        OWNERID = #{record.ownerid,jdbcType=DECIMAL},
+      </if>
+      <if test="record.ownertype != null">
+        OWNERTYPE = #{record.ownertype,jdbcType=DECIMAL},
+      </if>
+      <if test="record.updatetime != null">
+        UPDATETIME = #{record.updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update obj_enterprise
+    set EID = #{record.eid,jdbcType=DECIMAL},
+      DISC = #{record.disc,jdbcType=VARCHAR},
+      ABBR = #{record.abbr,jdbcType=VARCHAR},
+      ECODE = #{record.ecode,jdbcType=VARCHAR},
+      CORPORATIONID = #{record.corporationid,jdbcType=VARCHAR},
+      BUSINESS = #{record.business,jdbcType=DECIMAL},
+      GRADE = #{record.grade,jdbcType=DECIMAL},
+      ACTIVITIES = #{record.activities,jdbcType=VARCHAR},
+      CITY = #{record.city,jdbcType=DECIMAL},
+      REGISTERNUM = #{record.registernum,jdbcType=VARCHAR},
+      REGISTERADDRESS = #{record.registeraddress,jdbcType=VARCHAR},
+      PRODUCTIONADDRESS = #{record.productionaddress,jdbcType=VARCHAR},
+      LINKMAN = #{record.linkman,jdbcType=VARCHAR},
+      TELEPHONE = #{record.telephone,jdbcType=VARCHAR},
+      MOBILE = #{record.mobile,jdbcType=VARCHAR},
+      EMAIL = #{record.email,jdbcType=VARCHAR},
+      FAX = #{record.fax,jdbcType=VARCHAR},
+      ZIPCODE = #{record.zipcode,jdbcType=VARCHAR},
+      LEGALPERSON = #{record.legalperson,jdbcType=VARCHAR},
+      PASSAUTHENTICATION = #{record.passauthentication,jdbcType=DECIMAL},
+      HASCERTIFICATE = #{record.hascertificate,jdbcType=DECIMAL},
+      GETTIME = #{record.gettime,jdbcType=VARCHAR},
+      ANNUALSALES = #{record.annualsales,jdbcType=VARCHAR},
+      ANNUALTAX = #{record.annualtax,jdbcType=VARCHAR},
+      ANNUALADDEDENERGY = #{record.annualaddedenergy,jdbcType=DECIMAL},
+      ANNUALENERGY = #{record.annualenergy,jdbcType=DECIMAL},
+      LONGITUDE = #{record.longitude,jdbcType=DECIMAL},
+      LATITUDE = #{record.latitude,jdbcType=DECIMAL},
+      ETYPE = #{record.etype,jdbcType=DECIMAL},
+      OWNERID = #{record.ownerid,jdbcType=DECIMAL},
+      OWNERTYPE = #{record.ownertype,jdbcType=DECIMAL},
+      UPDATETIME = #{record.updatetime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.holley.wxemcp.ent.model.obj.ObjEnterprise">
+    update obj_enterprise
+    <set>
+      <if test="disc != null">
+        DISC = #{disc,jdbcType=VARCHAR},
+      </if>
+      <if test="abbr != null">
+        ABBR = #{abbr,jdbcType=VARCHAR},
+      </if>
+      <if test="ecode != null">
+        ECODE = #{ecode,jdbcType=VARCHAR},
+      </if>
+      <if test="corporationid != null">
+        CORPORATIONID = #{corporationid,jdbcType=VARCHAR},
+      </if>
+      <if test="business != null">
+        BUSINESS = #{business,jdbcType=DECIMAL},
+      </if>
+      <if test="grade != null">
+        GRADE = #{grade,jdbcType=DECIMAL},
+      </if>
+      <if test="activities != null">
+        ACTIVITIES = #{activities,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        CITY = #{city,jdbcType=DECIMAL},
+      </if>
+      <if test="registernum != null">
+        REGISTERNUM = #{registernum,jdbcType=VARCHAR},
+      </if>
+      <if test="registeraddress != null">
+        REGISTERADDRESS = #{registeraddress,jdbcType=VARCHAR},
+      </if>
+      <if test="productionaddress != null">
+        PRODUCTIONADDRESS = #{productionaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="linkman != null">
+        LINKMAN = #{linkman,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null">
+        TELEPHONE = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        MOBILE = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null">
+        FAX = #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="zipcode != null">
+        ZIPCODE = #{zipcode,jdbcType=VARCHAR},
+      </if>
+      <if test="legalperson != null">
+        LEGALPERSON = #{legalperson,jdbcType=VARCHAR},
+      </if>
+      <if test="passauthentication != null">
+        PASSAUTHENTICATION = #{passauthentication,jdbcType=DECIMAL},
+      </if>
+      <if test="hascertificate != null">
+        HASCERTIFICATE = #{hascertificate,jdbcType=DECIMAL},
+      </if>
+      <if test="gettime != null">
+        GETTIME = #{gettime,jdbcType=VARCHAR},
+      </if>
+      <if test="annualsales != null">
+        ANNUALSALES = #{annualsales,jdbcType=VARCHAR},
+      </if>
+      <if test="annualtax != null">
+        ANNUALTAX = #{annualtax,jdbcType=VARCHAR},
+      </if>
+      <if test="annualaddedenergy != null">
+        ANNUALADDEDENERGY = #{annualaddedenergy,jdbcType=DECIMAL},
+      </if>
+      <if test="annualenergy != null">
+        ANNUALENERGY = #{annualenergy,jdbcType=DECIMAL},
+      </if>
+      <if test="longitude != null">
+        LONGITUDE = #{longitude,jdbcType=DECIMAL},
+      </if>
+      <if test="latitude != null">
+        LATITUDE = #{latitude,jdbcType=DECIMAL},
+      </if>
+      <if test="etype != null">
+        ETYPE = #{etype,jdbcType=DECIMAL},
+      </if>
+      <if test="ownerid != null">
+        OWNERID = #{ownerid,jdbcType=DECIMAL},
+      </if>
+      <if test="ownertype != null">
+        OWNERTYPE = #{ownertype,jdbcType=DECIMAL},
+      </if>
+      <if test="updatetime != null">
+        UPDATETIME = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where EID = #{eid,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.holley.wxemcp.ent.model.obj.ObjEnterprise">
+    update obj_enterprise
+    set DISC = #{disc,jdbcType=VARCHAR},
+      ABBR = #{abbr,jdbcType=VARCHAR},
+      ECODE = #{ecode,jdbcType=VARCHAR},
+      CORPORATIONID = #{corporationid,jdbcType=VARCHAR},
+      BUSINESS = #{business,jdbcType=DECIMAL},
+      GRADE = #{grade,jdbcType=DECIMAL},
+      ACTIVITIES = #{activities,jdbcType=VARCHAR},
+      CITY = #{city,jdbcType=DECIMAL},
+      REGISTERNUM = #{registernum,jdbcType=VARCHAR},
+      REGISTERADDRESS = #{registeraddress,jdbcType=VARCHAR},
+      PRODUCTIONADDRESS = #{productionaddress,jdbcType=VARCHAR},
+      LINKMAN = #{linkman,jdbcType=VARCHAR},
+      TELEPHONE = #{telephone,jdbcType=VARCHAR},
+      MOBILE = #{mobile,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      FAX = #{fax,jdbcType=VARCHAR},
+      ZIPCODE = #{zipcode,jdbcType=VARCHAR},
+      LEGALPERSON = #{legalperson,jdbcType=VARCHAR},
+      PASSAUTHENTICATION = #{passauthentication,jdbcType=DECIMAL},
+      HASCERTIFICATE = #{hascertificate,jdbcType=DECIMAL},
+      GETTIME = #{gettime,jdbcType=VARCHAR},
+      ANNUALSALES = #{annualsales,jdbcType=VARCHAR},
+      ANNUALTAX = #{annualtax,jdbcType=VARCHAR},
+      ANNUALADDEDENERGY = #{annualaddedenergy,jdbcType=DECIMAL},
+      ANNUALENERGY = #{annualenergy,jdbcType=DECIMAL},
+      LONGITUDE = #{longitude,jdbcType=DECIMAL},
+      LATITUDE = #{latitude,jdbcType=DECIMAL},
+      ETYPE = #{etype,jdbcType=DECIMAL},
+      OWNERID = #{ownerid,jdbcType=DECIMAL},
+      OWNERTYPE = #{ownertype,jdbcType=DECIMAL},
+      UPDATETIME = #{updatetime,jdbcType=TIMESTAMP}
+    where EID = #{eid,jdbcType=DECIMAL}
+  </update>
+  <!-- 根据eid，查询子企业，包括自己 -->
+	<select id="selectChildEntSelf" parameterType="java.lang.Integer" resultType="com.holley.platform.model.def.EntBaseInfo">
+		<include refid="com.holley.wxemcp.ent.dao.common.EnergyCommonMapper.selectChildEntSelfSql"/>
+	</select>
+	<!-- 根据eid，查询子企业，不包括自己 -->
+	<select id="selectChildEnt" parameterType="java.lang.Integer" resultType="com.holley.platform.model.def.EntBaseInfo">
+		<include refid="com.holley.wxemcp.ent.dao.common.EnergyCommonMapper.selectChildEntSql"/>
+	</select>
+    <select id="selectChildEntInfoByEid"  parameterType="java.lang.Integer" resultType="com.holley.wxemcp.ent.model.def.Enterprise">
+ 		<include refid="com.holley.wxemcp.ent.dao.common.EnergyCommonMapper.selectChildEntInfoSql"/>
+    </select>
+    <!-- 分页搜索企业 -->
+  <select id="searchEnterpriseByPage" parameterType="java.util.Map" resultType="com.holley.wxemcp.ent.model.def.EntInfo">
+  	SELECT e.eid, e.disc, e.city
+	  FROM obj_enterprise e,(<include refid="com.holley.wxemcp.ent.dao.common.EnergyCommonMapper.selectChildEntSelfSql"/>)t
+	 WHERE e.eid = t.eid
+	  <if test="keyword != null">
+	   	 AND e.disc like '%${keyword}%'
+	  </if>
+	   <if test="cityid != null">
+	     AND e.city in (
+	     	SELECT di.cityid FROM dic_city di
+	   		 WHERE FIND_IN_SET(di.cityid, getChildLst(#{cityid},0))
+	     )
+	   </if>
+  </select>
+  <!-- 查询当前企业 -->
+  <select id="selectEidSelf" parameterType="java.lang.Integer" resultType="com.holley.platform.model.def.EntBaseInfo">
+  select  e.EID, e.DISC, e.OWNERID, e.OWNERTYPE
+  from obj_enterprise e
+  where e.OWNERID =#{ownerid}
+  </select>
+  <!-- add by sc 分页查询子企业，包括自己-->
+  <select id="selectChildEntSelfByPage" parameterType="java.util.Map" resultType="com.holley.platform.model.def.EntBaseInfo">
+  		SELECT 
+  		<include refid="com.holley.wxemcp.ent.dao.common.EnergyCommonMapper.EntBase_Column_List"/> 
+		FROM obj_enterprise e
+		WHERE Find_In_Set(concat(eid,'@11'), Getchildlst(#{eid}, 5))
+		<if test="keyword != null">
+		 AND e.DISC like CONCAT('%',#{keyword},'%')
+		</if>
+		<if test="city != null">
+		 AND e.CITY =#{city}
+		</if>
+  </select>
+  
+  <select id="selectSingleEntById" parameterType="java.lang.Integer"  resultType="com.holley.wxemcp.ent.model.def.Enterprise">
+	  SELECT ent.*,city.NAME cityname,bustype.NAME businessname
+	  FROM obj_enterprise ent
+	  LEFT JOIN dic_city city
+	  ON ent.CITY = city.CITYID
+	  LEFT JOIN dic_businesstype bustype
+	  ON ent.BUSINESS = bustype.BUSINESSTYPEID
+	  WHERE ent.EID = #{eid}
+  </select>
+  
+  <select id="selectEntInfoByEid" parameterType="java.lang.Integer"  resultType="com.holley.wxemcp.ent.model.def.Enterprise">
+	  SELECT ent.*,city.NAME cityname,bustype.NAME businessname
+	  FROM obj_enterprise ent
+	  LEFT JOIN dic_city city
+	  ON ent.CITY = city.CITYID
+	  LEFT JOIN dic_businesstype bustype
+	  ON ent.BUSINESS = bustype.BUSINESSTYPEID
+	  WHERE Find_In_Set(concat(eid,'@11'), Getchildlst(#{eid}, 5))
+  </select>
+</mapper>

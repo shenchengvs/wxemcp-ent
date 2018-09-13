@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.holley.wxemcp.ent.dao.ppf.PpfControlCmdMapper" >
+  <resultMap id="BaseResultMap" type="com.holley.wxemcp.ent.model.ppf.PpfControlCmd" >
+    <id column="CMDTIME" property="cmdtime" jdbcType="TIMESTAMP" />
+    <id column="POINTID" property="pointid" jdbcType="DECIMAL" />
+    <result column="CMDTYPE" property="cmdtype" jdbcType="SMALLINT" />
+    <result column="PARAMS" property="params" jdbcType="VARCHAR" />
+    <result column="OPERATETYPE" property="operatetype" jdbcType="SMALLINT" />
+    <result column="OPERATETIME" property="operatetime" jdbcType="TIMESTAMP" />
+    <result column="RESULT" property="result" jdbcType="SMALLINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    CMDTIME, POINTID, CMDTYPE, PARAMS, OPERATETYPE, OPERATETIME, RESULT
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.holley.wxemcp.ent.model.ppf.PpfControlCmdExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ppf_control_cmd
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.holley.wxemcp.ent.model.ppf.PpfControlCmdKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from ppf_control_cmd
+    where CMDTIME = #{cmdtime,jdbcType=TIMESTAMP}
+      and POINTID = #{pointid,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.holley.wxemcp.ent.model.ppf.PpfControlCmdKey" >
+    delete from ppf_control_cmd
+    where CMDTIME = #{cmdtime,jdbcType=TIMESTAMP}
+      and POINTID = #{pointid,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.holley.wxemcp.ent.model.ppf.PpfControlCmdExample" >
+    delete from ppf_control_cmd
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.holley.wxemcp.ent.model.ppf.PpfControlCmd" >
+    insert into ppf_control_cmd (CMDTIME, POINTID, CMDTYPE, 
+      PARAMS, OPERATETYPE, OPERATETIME, 
+      RESULT)
+    values (#{cmdtime,jdbcType=TIMESTAMP}, #{pointid,jdbcType=DECIMAL}, #{cmdtype,jdbcType=SMALLINT}, 
+      #{params,jdbcType=VARCHAR}, #{operatetype,jdbcType=SMALLINT}, #{operatetime,jdbcType=TIMESTAMP}, 
+      #{result,jdbcType=SMALLINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.holley.wxemcp.ent.model.ppf.PpfControlCmd" >
+    insert into ppf_control_cmd
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cmdtime != null" >
+        CMDTIME,
+      </if>
+      <if test="pointid != null" >
+        POINTID,
+      </if>
+      <if test="cmdtype != null" >
+        CMDTYPE,
+      </if>
+      <if test="params != null" >
+        PARAMS,
+      </if>
+      <if test="operatetype != null" >
+        OPERATETYPE,
+      </if>
+      <if test="operatetime != null" >
+        OPERATETIME,
+      </if>
+      <if test="result != null" >
+        RESULT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cmdtime != null" >
+        #{cmdtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pointid != null" >
+        #{pointid,jdbcType=DECIMAL},
+      </if>
+      <if test="cmdtype != null" >
+        #{cmdtype,jdbcType=SMALLINT},
+      </if>
+      <if test="params != null" >
+        #{params,jdbcType=VARCHAR},
+      </if>
+      <if test="operatetype != null" >
+        #{operatetype,jdbcType=SMALLINT},
+      </if>
+      <if test="operatetime != null" >
+        #{operatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="result != null" >
+        #{result,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.holley.wxemcp.ent.model.ppf.PpfControlCmdExample" resultType="java.lang.Integer" >
+    select count(*) from ppf_control_cmd
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ppf_control_cmd
+    <set >
+      <if test="record.cmdtime != null" >
+        CMDTIME = #{record.cmdtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.pointid != null" >
+        POINTID = #{record.pointid,jdbcType=DECIMAL},
+      </if>
+      <if test="record.cmdtype != null" >
+        CMDTYPE = #{record.cmdtype,jdbcType=SMALLINT},
+      </if>
+      <if test="record.params != null" >
+        PARAMS = #{record.params,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operatetype != null" >
+        OPERATETYPE = #{record.operatetype,jdbcType=SMALLINT},
+      </if>
+      <if test="record.operatetime != null" >
+        OPERATETIME = #{record.operatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.result != null" >
+        RESULT = #{record.result,jdbcType=SMALLINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ppf_control_cmd
+    set CMDTIME = #{record.cmdtime,jdbcType=TIMESTAMP},
+      POINTID = #{record.pointid,jdbcType=DECIMAL},
+      CMDTYPE = #{record.cmdtype,jdbcType=SMALLINT},
+      PARAMS = #{record.params,jdbcType=VARCHAR},
+      OPERATETYPE = #{record.operatetype,jdbcType=SMALLINT},
+      OPERATETIME = #{record.operatetime,jdbcType=TIMESTAMP},
+      RESULT = #{record.result,jdbcType=SMALLINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.holley.wxemcp.ent.model.ppf.PpfControlCmd" >
+    update ppf_control_cmd
+    <set >
+      <if test="cmdtype != null" >
+        CMDTYPE = #{cmdtype,jdbcType=SMALLINT},
+      </if>
+      <if test="params != null" >
+        PARAMS = #{params,jdbcType=VARCHAR},
+      </if>
+      <if test="operatetype != null" >
+        OPERATETYPE = #{operatetype,jdbcType=SMALLINT},
+      </if>
+      <if test="operatetime != null" >
+        OPERATETIME = #{operatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="result != null" >
+        RESULT = #{result,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where CMDTIME = #{cmdtime,jdbcType=TIMESTAMP}
+      and POINTID = #{pointid,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.holley.wxemcp.ent.model.ppf.PpfControlCmd" >
+    update ppf_control_cmd
+    set CMDTYPE = #{cmdtype,jdbcType=SMALLINT},
+      PARAMS = #{params,jdbcType=VARCHAR},
+      OPERATETYPE = #{operatetype,jdbcType=SMALLINT},
+      OPERATETIME = #{operatetime,jdbcType=TIMESTAMP},
+      RESULT = #{result,jdbcType=SMALLINT}
+    where CMDTIME = #{cmdtime,jdbcType=TIMESTAMP}
+      and POINTID = #{pointid,jdbcType=DECIMAL}
+  </update>
+  <select id="selectRemotesByPage" resultType="com.holley.wxemcp.ent.model.def.PpfControlCmdVo">
+    SELECT a.CMDTIME time,a.cmdtype,a.operatetype,p.`NAME` point
+    FROM ppf_control_cmd  a 
+    LEFT JOIN
+    view_point b 
+    ON a.POINTID=b.pointid
+    LEFT JOIN obj_point p
+	ON p.POINTID=a.POINTID
+    WHERE 
+    b.objid= #{eid} 
+    AND b.objtype=11
+    <if test="remoteType  !=null">
+    	AND a.CMDTYPE=#{cmdtype} AND a.OPERATETYPE=#{operatetype}
+    </if>
+    <if test="firstDayOfMonth != null" >
+    	AND a.CMDTIME &gt;= #{firstDayOfMonth} 
+    </if>
+    <if test="lastDayOfMonth != null">
+    	AND a.CMDTIME &lt;= #{lastDayOfMonth}
+    </if>
+    ORDER BY a.CMDTIME DESC
+  </select>
+  <select id="queryLazhaCount" resultType="java.lang.Integer">
+    SELECT Count(*)
+    FROM ppf_control_cmd  a 
+    LEFT JOIN view_point b 
+    ON a.POINTID=b.pointid 
+    WHERE b.objid= #{eid} 
+    AND b.objtype=11 
+    AND a.CMDTIME &gt;= #{tobeg} 
+    AND a.CMDTIME &lt;= #{toend}
+  </select>
+  <select id="queryLAlazhaCount" resultType="java.lang.Integer" >
+    SELECT Count(*)
+    FROM ppf_control_cmd  a 
+    LEFT JOIN view_point b 
+    ON a.POINTID=b.pointid 
+    WHERE b.objid= #{eid} 
+    AND b.objtype=11 
+    AND a.CMDTIME &gt;= #{labeg} 
+    AND a.CMDTIME &lt;#{tobeg}
+  
+  </select>
+   <select id="queryLALAlazhaCount" resultType="java.lang.Integer" >
+    SELECT Count(*)
+    FROM ppf_control_cmd  a 
+    LEFT JOIN view_point b 
+    ON a.POINTID=b.pointid 
+    WHERE b.objid= #{eid} 
+    AND b.objtype=11 
+    AND a.CMDTIME &gt;= #{latobeg} 
+    AND a.CMDTIME &lt;=#{latoend}
+  </select>
+  
+  <select id="queryNewRemoteCount" resultType="java.lang.Integer">
+   	SELECT Count(1)
+	FROM ppf_control_cmd  a 
+	LEFT JOIN view_point b 
+	ON a.POINTID=b.pointid 
+	WHERE b.objid= #{eid} 
+	AND b.objtype=11
+	<if test="remoteUpdateTime != null">
+	  AND a.CMDTIME &gt; #{remoteUpdateTime}
+	</if> 
+  </select>
+</mapper>

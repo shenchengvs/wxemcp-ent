@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.holley.wxemcp.ent.dao.obj.ObjSubeuuMapper" >
+  <resultMap id="BaseResultMap" type="com.holley.wxemcp.ent.model.obj.ObjSubeuu" >
+    <id column="SUBEUUID" property="subeuuid" jdbcType="INTEGER" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="OWNERID" property="ownerid" jdbcType="DECIMAL" />
+    <result column="OWNERTYPE" property="ownertype" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    SUBEUUID, NAME, OWNERID, OWNERTYPE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.holley.wxemcp.ent.model.obj.ObjSubeuuExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from obj_subeuu
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from obj_subeuu
+    where SUBEUUID = #{subeuuid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from obj_subeuu
+    where SUBEUUID = #{subeuuid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.holley.wxemcp.ent.model.obj.ObjSubeuuExample" >
+    delete from obj_subeuu
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.holley.wxemcp.ent.model.obj.ObjSubeuu" >
+    insert into obj_subeuu (SUBEUUID, NAME, OWNERID, 
+      OWNERTYPE)
+    values (#{subeuuid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{ownerid,jdbcType=DECIMAL}, 
+      #{ownertype,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.holley.wxemcp.ent.model.obj.ObjSubeuu" >
+    insert into obj_subeuu
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="subeuuid != null" >
+        SUBEUUID,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="ownerid != null" >
+        OWNERID,
+      </if>
+      <if test="ownertype != null" >
+        OWNERTYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="subeuuid != null" >
+        #{subeuuid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerid != null" >
+        #{ownerid,jdbcType=DECIMAL},
+      </if>
+      <if test="ownertype != null" >
+        #{ownertype,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.holley.wxemcp.ent.model.obj.ObjSubeuuExample" resultType="java.lang.Integer" >
+    select count(*) from obj_subeuu
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update obj_subeuu
+    <set >
+      <if test="record.subeuuid != null" >
+        SUBEUUID = #{record.subeuuid,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null" >
+        NAME = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ownerid != null" >
+        OWNERID = #{record.ownerid,jdbcType=DECIMAL},
+      </if>
+      <if test="record.ownertype != null" >
+        OWNERTYPE = #{record.ownertype,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update obj_subeuu
+    set SUBEUUID = #{record.subeuuid,jdbcType=INTEGER},
+      NAME = #{record.name,jdbcType=VARCHAR},
+      OWNERID = #{record.ownerid,jdbcType=DECIMAL},
+      OWNERTYPE = #{record.ownertype,jdbcType=DECIMAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.holley.wxemcp.ent.model.obj.ObjSubeuu" >
+    update obj_subeuu
+    <set >
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerid != null" >
+        OWNERID = #{ownerid,jdbcType=DECIMAL},
+      </if>
+      <if test="ownertype != null" >
+        OWNERTYPE = #{ownertype,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where SUBEUUID = #{subeuuid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.holley.wxemcp.ent.model.obj.ObjSubeuu" >
+    update obj_subeuu
+    set NAME = #{name,jdbcType=VARCHAR},
+      OWNERID = #{ownerid,jdbcType=DECIMAL},
+      OWNERTYPE = #{ownertype,jdbcType=DECIMAL}
+    where SUBEUUID = #{subeuuid,jdbcType=INTEGER}
+  </update>
+  <select id="selectFirstSubeuuByExample" parameterType="com.holley.wxemcp.ent.model.obj.ObjSubeuuExample" resultType="com.holley.wxemcp.ent.model.def.SubEuuFirst">
+  	select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from obj_subeuu
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

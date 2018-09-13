@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.holley.wxemcp.ent.common.data.DataMapper">
+	
+  <!-- real -->
+  <select id="selectRealElecByPage" parameterType="java.util.Map" resultType="com.holley.wxemcp.ent.model.def.RealVo">
+	SELECT 
+		p.`NAME` point, b.ZYBM data, b.DATATIME time, vp.ownername ownername
+	FROM dat_power_bm_real b, view_point vp, obj_point p
+	WHERE b.PHASETYPE = 0
+	AND b.TARRIFTYPEID = 0
+	AND b.POINTID = vp.pointid
+	AND vp.objid = #{ownerid,jdbcType=DECIMAL}
+	AND vp.objtype = #{ownertype,jdbcType=DECIMAL}
+	AND p.POINTID = vp.pointid
+	<if test="keyword != null">
+	AND (
+	 	p.`NAME` LIKE CONCAT('%',#{keyword,jdbcType=VARCHAR},'%')
+		OR vp.ownername LIKE CONCAT('%',#{keyword,jdbcType=VARCHAR},'%')
+	)
+	</if>
+  </select>
+  <select id="selectRealWaterByPage" parameterType="java.util.Map" resultType="com.holley.wxemcp.ent.model.def.RealVo">
+	SELECT 
+		p.`NAME` point, b.BM data, b.DATATIME time, vp.ownername ownername
+	FROM dat_bm_real b, view_point vp, obj_point p
+	WHERE b.ENERGYTYPE = 2
+	AND b.DATAITEM = 30
+	AND b.POINTID = vp.pointid
+	AND vp.objid = #{ownerid,jdbcType=DECIMAL}
+	AND vp.objtype = #{ownertype,jdbcType=DECIMAL}
+	AND p.POINTID = vp.pointid
+	<if test="keyword != null">
+	AND (
+		p.`NAME` LIKE CONCAT('%',#{keyword,jdbcType=VARCHAR},'%')
+		OR vp.ownername LIKE CONCAT('%',#{keyword,jdbcType=VARCHAR},'%')
+	)
+	</if>
+  </select>
+  
+  <!-- query -->
+  <select id="selectHistoryElecByPage" parameterType="java.util.Map" resultType="com.holley.wxemcp.ent.model.def.QueryVo">
+	SELECT 
+	b1.NAME point, b1.ZYBM startBm, b2.ZYBM endBm, r.RATE multiplyingPower, 
+	(b2.ZYBM - b1.ZYBM) * r.RATE data
+	FROM (
+      SELECT * FROM
+      (SELECT p.NAME,bm.POINTID, bm.ZYBM, bm.DATATIME
+	    FROM 
+	    <choose>
+	        <when test="extendEid !=null">
+	            dat_power_bm_#{extendEid} bm
+	        </when>
+	        <otherwise>
+	            dat_power_bm bm
+	        </otherwise>
+    	</choose>
+	    LEFT JOIN 
+	    view_point vp
+	    ON bm.POINTID = vp.pointid
+	    LEFT JOIN
+		obj_point p
+		ON p.POINTID=vp.pointid
+		WHERE vp.objtype = #{ownertype}
+        AND vp.objid = #{ownerid}
+        AND bm.PHASETYPE = 0
+		AND bm.TARRIFTYPEID = 0
+	    AND bm.DATATIME &gt;= #{starttime}
+		AND bm.DATATIME &lt;= #{endtime}
+		ORDER BY bm.DATATIME asc) a
+      GROUP BY a.pointid
+	) b1, (
+	SELECT * FROM
+	(SELECT bm.POINTID, bm.ZYBM, bm.DATATIME
+	 FROM 
+	 	<choose>
+	        <when test="extendEid !=null">
+	            dat_power_bm_#{extendEid} bm
+	        </when>
+	        <otherwise>
+	            dat_power_bm bm
+	        </otherwise>
+    	</choose>
+	 LEFT JOIN 
+	 view_point vp
+	 ON bm.POINTID = vp.pointid	
+	 WHERE vp.objtype = #{ownertype}
+     AND vp.objid = #{ownerid}
+     AND bm.PHASETYPE = 0
+	 AND bm.TARRIFTYPEID = 0
+	 AND bm.DATATIME &gt;= #{starttime}
+	 AND bm.DATATIME &lt;= #{endtime}
+	 ORDER BY bm.DATATIME desc) a
+     GROUP BY a.pointid
+	) b2,
+	(SELECT * FROM (
+			SELECT rate.* FROM obj_pointratechange rate
+			LEFT JOIN obj_point p
+			ON rate.POINTID = p.POINTID
+			LEFT JOIN 
+	    	view_point vp
+			ON rate.POINTID = vp.pointid
+			WHERE vp.objtype = #{ownertype}
+      		AND vp.objid = #{ownerid}
+			AND p.ENERGYTYPEID=1
+			ORDER BY rate.CHANGETIME DESC
+			) x GROUP BY x.POINTID
+		) r
+	<!-- (
+	  SELECT * FROM (
+			SELECT * FROM obj_pointratechange 
+			ORDER BY CHANGETIME DESC
+		) x GROUP BY x.POINTID
+	) r -->
+	
+  	WHERE b1.POINTID = b2.POINTID
+    AND r.POINTID = b1.POINTID
+  <if test="keyword != null">
+		AND b1.NAME LIKE CONCAT('%',#{keyword,jdbcType=VARCHAR},'%')
+  </if>
+  </select>
+  <select id="selectHistoryWaterByPage" parameterType="java.util.Map" resultType="com.holley.wxemcp.ent.model.def.QueryVo">
+	SELECT 
+		b1.NAME point, b1.BM startBm, b2.BM endBm, r.RATE multiplyingPower, 
+		(b2.BM - b1.BM) * r.RATE data
+	FROM (
+		SELECT * FROM (
+			SELECT p.NAME,bm.POINTID, bm.BM, bm.DATATIME
+			FROM dat_bm bm
+	    LEFT JOIN 
+	    view_point vp
+	    ON bm.POINTID = vp.pointid
+	    LEFT JOIN
+			obj_point p
+			ON p.POINTID=vp.pointid
+     		WHERE vp.objtype = #{ownertype}
+      		AND vp.objid = #{ownerid}
+			AND bm.ENERGYTYPE = 2
+			AND bm.DATAITEM = 30
+			AND bm.DATATIME &gt;= #{starttime}
+			AND bm.DATATIME &lt;= #{endtime}
+			ORDER BY bm.DATATIME ASC
+		) a GROUP BY a.pointid) b1, (
+		SELECT * FROM (
+			SELECT bm.POINTID, bm.BM, bm.DATATIME
+			FROM dat_bm bm
+	    	LEFT JOIN 
+	    	view_point vp
+	    	ON bm.POINTID = vp.pointid
+      		WHERE vp.objtype = #{ownertype}
+      		AND vp.objid = #{ownerid}
+			AND bm.ENERGYTYPE = 2
+			AND bm.DATAITEM = 30
+			AND bm.DATATIME &gt;= #{starttime}
+			AND bm.DATATIME &lt;= #{endtime}
+			ORDER BY bm.DATATIME DESC
+		) a GROUP BY a.pointid) b2, 
+  		(SELECT * FROM (
+			SELECT rate.* FROM obj_pointratechange rate
+			LEFT JOIN obj_point p
+			ON rate.POINTID = p.POINTID
+			LEFT JOIN 
+	    	view_point vp
+			ON rate.POINTID = vp.pointid
+			WHERE vp.objtype = #{ownertype}
+      		AND vp.objid = #{ownerid}
+			AND p.ENERGYTYPEID=2
+			ORDER BY rate.CHANGETIME DESC
+			) x GROUP BY x.POINTID
+		) r
+	  	WHERE b1.POINTID = b2.POINTID
+	    AND r.POINTID = b1.POINTID
+	<if test="keyword != null">
+		AND b1.NAME LIKE CONCAT('%',#{keyword,jdbcType=VARCHAR},'%')
+	</if>
+  </select>
+  
+  <!-- fee -->
+  <select id="selectCurMonthElecFeeByPage" parameterType="java.util.Map" resultType="com.holley.wxemcp.ent.model.def.FeeVo">
+	SELECT * FROM (SELECT c.customerid, c.hm, SUM(d.TOTALFEE * d.PERCENT / 100.00) fee, MAX(d.ENDTIME) time, 
+		a.USABLEMONEY usableMoney, TRUNCATE(a.USABLEMONEY / v.FEEDAYAVG, 2) usableDay
+	FROM ppf_customer_fee_month_detail d, ppf_customer_used_avg v, ppf_customer_account a,
+		(SELECT CUSTOMERID customerid, HM hm FROM ppf_customer
+			WHERE EID = #{eid,jdbcType=INTEGER}
+			AND `STATUS` = 1
+			<if test="keyword != null">
+			AND ( HM LIKE CONCAT('%',#{keyword,jdbcType=VARCHAR},'%')
+			OR HH LIKE CONCAT('%',#{keyword,jdbcType=VARCHAR},'%')
+			OR PHONE LIKE CONCAT('%',#{keyword,jdbcType=VARCHAR},'%') )
+			</if>
+		) c
+	WHERE d.CUSTOMERID = c.customerid
+	AND a.CUSTOMERID = c.customerid
+	AND v.CUSTOMERID = c.customerid
+	<if test="month != null">
+		AND d.DATATIME = #{month,jdbcType=TIMESTAMP}
+	</if>
+	GROUP BY d.CUSTOMERID) x
+	<if test="orderType == 1">
+		ORDER BY x.usableDay
+	</if>
+	<if test="orderType == 2">
+		ORDER BY x.fee
+	</if>
+	<if test="orderType == 3">
+		ORDER BY x.usableMoney
+	</if>
+  </select>
+  <select id="selectPastMonthElecFeeByPage" parameterType="java.util.Map" resultType="com.holley.wxemcp.ent.model.def.FeeVo">
+	SELECT * FROM (SELECT c.customerid, c.hm, m.FEE fee, m.ADDTIME time
+	FROM ppf_customer_fee_month m, 
+		(SELECT CUSTOMERID customerid, HM hm FROM ppf_customer
+			WHERE EID = #{eid,jdbcType=INTEGER}
+			AND `STATUS` = 1
+			<if test="keyword != null">
+			AND ( HM LIKE CONCAT('%',#{keyword,jdbcType=VARCHAR},'%')
+			OR HH LIKE CONCAT('%',#{keyword,jdbcType=VARCHAR},'%')
+			OR PHONE LIKE CONCAT('%',#{keyword,jdbcType=VARCHAR},'%') )
+			</if>
+		) c
+	WHERE m.CUSTOMERID = c.customerid
+	<if test="month != null">
+	AND m.DATATIME = #{month,jdbcType=TIMESTAMP}
+	</if>
+	GROUP BY m.CUSTOMERID) x
+	ORDER BY x.fee
+  </select>
+  <select id="selectCurMonthWaterFeeByPage" parameterType="java.util.Map" resultType="com.holley.wxemcp.ent.model.def.FeeVo">
+  	SELECT * FROM (SELECT c.customerid, c.hm, SUM(d.FEE) fee, MAX(d.ENDTIME) time, 
+		a.USABLEMONEY usableMoney, TRUNCATE(a.USABLEMONEY / v.FEEDAYAVG, 2) usableDay
+	FROM ppf_customer_fee_month_detail_other d, ppf_customer_used_avg v, ppf_customer_account a,
+		(SELECT CUSTOMERID customerid, HM hm FROM ppf_customer
+			WHERE EID = #{eid,jdbcType=INTEGER}
+			AND `STATUS` = 1
+			<if test="keyword != null">
+			AND ( HM LIKE CONCAT('%',#{keyword,jdbcType=VARCHAR},'%')
+			OR HH LIKE CONCAT('%',#{keyword,jdbcType=VARCHAR},'%')
+			OR PHONE LIKE CONCAT('%',#{keyword,jdbcType=VARCHAR},'%') )
+			</if>
+		) c
+	WHERE d.CUSTOMERID = c.customerid
+	AND a.CUSTOMERID = c.customerid
+	AND v.CUSTOMERID = c.customerid
+	<if test="month != null">
+		AND d.DATATIME = #{month,jdbcType=TIMESTAMP}
+	</if>
+	GROUP BY d.CUSTOMERID) x
+	<if test="orderType == 1">
+		ORDER BY x.usableDay
+	</if>
+	<if test="orderType == 2">
+		ORDER BY x.fee
+	</if>
+	<if test="orderType == 3">
+		ORDER BY x.usableMoney
+	</if>
+  </select>
+  <select id="selectPastMonthWaterFeeByPage" parameterType="java.util.Map" resultType="com.holley.wxemcp.ent.model.def.FeeVo">
+  	SELECT * FROM (SELECT c.customerid, c.hm, m.FEE fee, m.ADDTIME time
+	FROM ppf_customer_fee_month_other m, 
+		(SELECT CUSTOMERID customerid, HM hm FROM ppf_customer
+			WHERE EID = #{eid,jdbcType=INTEGER}
+			AND `STATUS` = 1
+			<if test="keyword != null">
+			AND ( HM LIKE CONCAT('%',#{keyword,jdbcType=VARCHAR},'%')
+			OR HH LIKE CONCAT('%',#{keyword,jdbcType=VARCHAR},'%')
+			OR PHONE LIKE CONCAT('%',#{keyword,jdbcType=VARCHAR},'%') )
+			</if>
+		) c
+	WHERE m.CUSTOMERID = c.customerid
+	<if test="month != null">
+		AND m.DATATIME = #{month,jdbcType=TIMESTAMP}
+	</if>
+	GROUP BY m.CUSTOMERID) x
+	ORDER BY x.fee
+  </select>
+  
+  <!-- detail -->
+  <select id="selectBaseMonthPastDetailElecByParam" parameterType="java.util.Map" resultType="com.holley.wxemcp.ent.model.def.DataElecDetail">
+  	SELECT c.HM hm, c.HH hh, c.PHONE phone, c.LINKMAN linkman, ch.money ztFee, m.USABLEMONEY usableMoney,
+		m.FEE ddFee, m.BASEFEE jbFee, m.FUNDFEE jjFee, m.PFFEE llFee, m.ACTUALFEE fee
+	FROM ppf_customer c, ppf_customer_fee_month m,
+		(SELECT SUM(MONEY) money FROM ppf_customer_fee_change
+		<if test="month != null">
+			WHERE DATATIME = #{month,jdbcType=TIMESTAMP}
+		</if>
+		AND CUSTOMERID = #{customerid,jdbcType=INTEGER}) ch
+	WHERE c.CUSTOMERID = #{customerid,jdbcType=INTEGER}
+	AND c.`STATUS` = 1
+	AND m.CUSTOMERID = c.CUSTOMERID
+	<if test="month != null">
+		AND m.DATATIME = #{month,jdbcType=TIMESTAMP}
+	</if>
+  </select>
+  <select id="selectBaseMonthCurDetailElecByParam" parameterType="java.util.Map" resultType="com.holley.wxemcp.ent.model.def.DataElecDetail">
+  	SELECT c.HM hm, c.HH hh, c.PHONE phone, c.LINKMAN linkman, SUM(d.ENERGYZONG) used,
+		a.TOTALMONEY total, a.FREEZEMONEY freeze, a.USABLEMONEY usable
+	FROM ppf_customer c, ppf_customer_fee_month_detail d, ppf_customer_account a
+	WHERE c.CUSTOMERID = #{customerid,jdbcType=INTEGER}
+	AND c.`STATUS` = 1
+	AND d.CUSTOMERID = c.CUSTOMERID
+	<if test="month != null">
+		AND d.DATATIME = #{month,jdbcType=TIMESTAMP}
+	</if>
+	AND a.CUSTOMERID = c.CUSTOMERID
+  </select>
+  <select id="selectDetailElecMonthBillByCustomerId" parameterType="java.util.Map" resultType="com.holley.wxemcp.ent.model.def.DetailElecVo">
+  	SELECT 
+  		d.CUSTOMERID, d.DATATIME, d.POINTID, d.STARTTIME, d.ENDTIME, d.ENERGYZONG, d.ENERGYJIAN, d.ENERGYFENG, 
+	    d.ENERGYPING, d.ENERGYGU, d.TOTALFEE, d.FEE, d.PERCENT, d.PRICEID, d.STARTBMTIME, d.STARTBMZONGZY, 
+	    d.STARTBMJIANZY, d.STARTBMFENGZY, d.STARTBMPINGZY, d.STARTBMGUZY, d.ENDBMTIME, d.ENDBMZONGZY, 
+	    d.ENDBMJIANZY, d.ENDBMFENGZY, d.ENDBMPINGZY, d.ENDBMGUZY, d.RATE, d.UPDATETIME
+  		, p.NAME pointname, vp.objname ownername
+	FROM ppf_customer_fee_month_detail d, obj_point p, view_point vp
+	WHERE d.CUSTOMERID = #{customerid, jdbcType=DECIMAL}
+	<if test="month != null">
+		AND d.DATATIME = #{month, jdbcType=TIMESTAMP}
+	</if>
+	AND p.POINTID = d.POINTID
+	AND vp.objtype = p.OWNERTYPE
+	AND vp.objid = p.OWNERID
+	AND vp.pointid = d.POINTID
+  </select>
+  <select id="selectBaseMonthPastDetailWaterByParam" parameterType="java.util.Map" resultType="com.holley.wxemcp.ent.model.def.DataWaterDetail">
+  	SELECT c.HM hm, c.HH hh, c.PHONE phone, c.LINKMAN linkman, ch.money ztFee, 
+  		m.USABLEMONEY usableMoney, m.FEE fee
+	FROM ppf_customer c, ppf_customer_fee_month_other m,
+		(SELECT SUM(MONEY) money FROM ppf_customer_fee_change
+		<if test="month != null">
+			WHERE DATATIME = #{month,jdbcType=TIMESTAMP}
+		</if>
+		AND CUSTOMERID = #{customerid,jdbcType=INTEGER}) ch
+	WHERE c.CUSTOMERID = #{customerid,jdbcType=INTEGER}
+	AND m.ENERGYTYPE = 2
+	AND c.`STATUS` = 1
+	AND m.CUSTOMERID = c.CUSTOMERID
+	<if test="month != null">
+		AND m.DATATIME = #{month,jdbcType=TIMESTAMP}
+	</if>
+  </select>
+  <select id="selectBaseMonthCurDetailWaterByParam" parameterType="java.util.Map" resultType="com.holley.wxemcp.ent.model.def.DataWaterDetail">
+  	SELECT c.HM hm, c.HH hh, c.PHONE phone, c.LINKMAN linkman, SUM(d.USED) used,
+		a.TOTALMONEY total, a.FREEZEMONEY freeze, a.USABLEMONEY usable
+	FROM ppf_customer c, ppf_customer_fee_month_detail_other d, ppf_customer_account a
+	WHERE c.CUSTOMERID = #{customerid,jdbcType=INTEGER}
+	AND c.`STATUS` = 1
+	AND d.CUSTOMERID = c.CUSTOMERID
+	<if test="month != null">
+		AND d.DATATIME = #{month,jdbcType=TIMESTAMP}
+	</if>
+	AND a.CUSTOMERID = c.CUSTOMERID
+  </select>
+  <select id="selectDetailWaterMonthBillByCustomerId" parameterType="java.util.Map" resultType="com.holley.wxemcp.ent.model.def.DetailWaterVo">
+  	SELECT 
+  		d.CUSTOMERID, d.DATATIME, d.POINTID, d.STARTTIME, d.ENDTIME, d.USED, d.FEE, d.PERCENT, d.PRICEID, d.STARTBMTIME, 
+    	d.STARTBM, d.ENDBMTIME, d.ENDBM, d.RATE, d.STATUS, d.ENERGYTYPE, d.UPDATETIME
+  		, p.NAME pointname, vp.objname ownername
+	FROM ppf_customer_fee_month_detail_other d, obj_point p, view_point vp
+	WHERE d.CUSTOMERID = #{customerid, jdbcType=DECIMAL}
+	<if test="month != null">
+		AND d.DATATIME = #{month, jdbcType=TIMESTAMP}
+	</if>
+	AND p.POINTID = d.POINTID
+	AND vp.objtype = p.OWNERTYPE
+	AND vp.objid = p.OWNERID
+	AND vp.pointid = d.POINTID
+  </select>
+  
+  <!-- count -->
+  <select id="countUnRealPointElecByEid" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+  	SELECT COUNT(r.POINTID) count
+	FROM dat_power_bm_real r, view_point vp
+	WHERE r.POINTID = vp.pointid
+	AND r.PHASETYPE = 0
+	AND r.TARRIFTYPEID = 0
+	AND vp.objid = #{eid,jdbcType=INTEGER}
+	AND vp.objtype = 11
+	AND r.DATATIME &lt; CURDATE()
+  </select>
+  <select id="countUnRealPointWaterByEid" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+  	SELECT COUNT(r.POINTID) count
+	FROM dat_bm_real r, view_point vp
+	WHERE r.POINTID = vp.pointid
+	AND r.ENERGYTYPE = 2
+	AND r.DATAITEM = 30
+	AND vp.objid = #{eid,jdbcType=INTEGER}
+	AND vp.objtype = 11
+	AND r.DATATIME &lt; CURDATE()
+  </select>
+  <select id="selectOtherCountByEid" parameterType="java.util.Map" resultType="com.holley.wxemcp.ent.model.def.DataCount">
+  	SELECT rtu.id rtuCount, vp.id pointCount, st.id onlineRtuCount FROM
+	(SELECT COUNT(RTUID) id FROM obj_rtu WHERE EUUID = #{eid,jdbcType=INTEGER}) rtu,
+	(SELECT COUNT(v.pointid) id FROM view_point v, obj_point p WHERE v.objid = #{eid,jdbcType=INTEGER} AND v.objtype = 11
+		AND v.pointid = p.POINTID AND p.ENERGYTYPEID = #{type,jdbcType=INTEGER}) vp,
+	(SELECT COUNT(s.RTUID) id FROM dcs_rtucurstatus s, obj_rtu r WHERE r.EUUID = #{eid,jdbcType=INTEGER} AND r.RTUID = s.RTUID AND s.CURSTATUS = 1) st
+  </select>
+</mapper>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:flex="http://www.springframework.org/schema/flex"
+	xsi:schemaLocation="       
+      http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd       
+      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd       
+      http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd       
+      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd       
+      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+      http://www.springframework.org/schema/flex http://www.springframework.org/schema/flex/spring-flex-1.5.xsd"
+	default-autowire="byName">
+	
+	<!-- 公共 -->
+	<bean id="searchCommAction" class="com.holley.wxemcp.ent.common.action.SearchCommAction" scope="prototype"/>
+	<bean id="treeCommAction" class="com.holley.wxemcp.ent.common.action.TreeCommAction" scope="prototype"/>
+	<bean id="commonAction" class="com.holley.wxemcp.ent.common.action.CommonAction" scope="prototype"/>
+	
+	<!-- 微信 -->
+	<bean id="wechatAction" class="com.holley.wxemcp.ent.wechat.action.WechatAction" scope="prototype"/>
+	
+</beans>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:flex="http://www.springframework.org/schema/flex"
+	xsi:schemaLocation="       
+      http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd       
+      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd       
+      http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd       
+      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd       
+      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+      http://www.springframework.org/schema/flex
+      http://www.springframework.org/schema/flex/spring-flex-1.0.xsd"
+	default-autowire="byName">
+	<!-- 实时推送 -->
+ 	<bean id="sendWxMsgTask" class="com.holley.wxemcp.ent.task.SendWxMsgTask" scope="prototype" />
+
+	<bean id="sendWxMsgTaskTaskCreater" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="sendWxMsgTask" />
+		<property name="targetMethod" value="execute" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="sendWxMsgTaskTaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="sendWxMsgTaskTaskCreater" />
+		<property name="cronExpression" value="0 0/1 * * * ?" />
+	</bean>
+	<!-- rtu定制主副推送 -->
+	<bean id="sendRtuWxMsgPrincipalAndAssistantTask" class="com.holley.wxemcp.ent.task.SendRtuWxMsgPrincipalAndAssistantTask" scope="prototype" />
+
+	<bean id="sendRtuWxMsgPrincipalAndAssistantTaskCreater" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="sendRtuWxMsgPrincipalAndAssistantTask" />
+		<property name="targetMethod" value="execute" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="sendRtuWxMsgPrincipalAndAssistantTaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="sendRtuWxMsgPrincipalAndAssistantTaskCreater" />
+		<property name="cronExpression" value="30 0/2 * * * ?" />
+	</bean>
+	
+	<!-- point定制主副推送 -->
+	<bean id="sendPointWxMsgPrincipalAndAssistantTask" class="com.holley.wxemcp.ent.task.SendPointWxMsgPrincipalAndAssistantTask" scope="prototype" />
+
+	<bean id="sendPointWxMsgPrincipalAndAssistantTaskCreater" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="sendPointWxMsgPrincipalAndAssistantTask" />
+		<property name="targetMethod" value="execute" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="sendPointWxMsgPrincipalAndAssistantTaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="sendPointWxMsgPrincipalAndAssistantTaskCreater" />
+		<property name="cronExpression" value="40 0/3 * * * ? " />
+	</bean>
+	<bean id="schdulerFactory" lazy-init="false" class="org.springframework.scheduling.quartz.SchedulerFactoryBean"	autowire="no">
+		<property name="triggers">
+			<list>
+				 <ref bean="sendWxMsgTaskTaskTrigger"/>
+				 <ref bean="sendRtuWxMsgPrincipalAndAssistantTaskTrigger"/>
+				 <ref bean="sendPointWxMsgPrincipalAndAssistantTaskTrigger"/>
+			</list>
+		</property>
+	</bean>
+</beans>

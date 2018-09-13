@@ -1,0 +1,551 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.holley.wxemcp.ent.dao.ppf.PpfPriceRuleMapper" >
+  <resultMap id="BaseResultMap" type="com.holley.wxemcp.ent.model.ppf.PpfPriceRule" >
+    <id column="PRICEID" property="priceid" jdbcType="INTEGER" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="DECIMAL" />
+    <result column="VALUE1" property="value1" jdbcType="DECIMAL" />
+    <result column="VALUE2" property="value2" jdbcType="DECIMAL" />
+    <result column="VALUE3" property="value3" jdbcType="DECIMAL" />
+    <result column="VALUE4" property="value4" jdbcType="DECIMAL" />
+    <result column="VALUE5" property="value5" jdbcType="DECIMAL" />
+    <result column="ENERGY1" property="energy1" jdbcType="DECIMAL" />
+    <result column="ENERGY2" property="energy2" jdbcType="DECIMAL" />
+    <result column="ENERGY3" property="energy3" jdbcType="DECIMAL" />
+    <result column="ENERGY4" property="energy4" jdbcType="DECIMAL" />
+    <result column="ENERGY5" property="energy5" jdbcType="DECIMAL" />
+    <result column="ISFUND" property="isfund" jdbcType="SMALLINT" />
+    <result column="FUND1" property="fund1" jdbcType="DECIMAL" />
+    <result column="FUND2" property="fund2" jdbcType="DECIMAL" />
+    <result column="FUND3" property="fund3" jdbcType="DECIMAL" />
+    <result column="FUND4" property="fund4" jdbcType="DECIMAL" />
+    <result column="FUND5" property="fund5" jdbcType="DECIMAL" />
+    <result column="FUND6" property="fund6" jdbcType="DECIMAL" />
+    <result column="ISBASE" property="isbase" jdbcType="SMALLINT" />
+    <result column="BASETYPE" property="basetype" jdbcType="SMALLINT" />
+    <result column="BASEVALUE" property="basevalue" jdbcType="DECIMAL" />
+    <result column="ISPF" property="ispf" jdbcType="SMALLINT" />
+    <result column="STANDARDID" property="standardid" jdbcType="SMALLINT" />
+    <result column="EID" property="eid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    PRICEID, NAME, TYPE, VALUE1, VALUE2, VALUE3, VALUE4, VALUE5, ENERGY1, ENERGY2, ENERGY3, 
+    ENERGY4, ENERGY5, ISFUND, FUND1, FUND2, FUND3, FUND4, FUND5, FUND6, ISBASE, BASETYPE, 
+    BASEVALUE, ISPF, STANDARDID, EID
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.holley.wxemcp.ent.model.ppf.PpfPriceRuleExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ppf_price_rule
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ppf_price_rule
+    where PRICEID = #{priceid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ppf_price_rule
+    where PRICEID = #{priceid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.holley.wxemcp.ent.model.ppf.PpfPriceRuleExample" >
+    delete from ppf_price_rule
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.holley.wxemcp.ent.model.ppf.PpfPriceRule" >
+    insert into ppf_price_rule (PRICEID, NAME, TYPE, 
+      VALUE1, VALUE2, VALUE3, 
+      VALUE4, VALUE5, ENERGY1, 
+      ENERGY2, ENERGY3, ENERGY4, 
+      ENERGY5, ISFUND, FUND1, 
+      FUND2, FUND3, FUND4, 
+      FUND5, FUND6, ISBASE, 
+      BASETYPE, BASEVALUE, ISPF, 
+      STANDARDID, EID)
+    values (#{priceid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=DECIMAL}, 
+      #{value1,jdbcType=DECIMAL}, #{value2,jdbcType=DECIMAL}, #{value3,jdbcType=DECIMAL}, 
+      #{value4,jdbcType=DECIMAL}, #{value5,jdbcType=DECIMAL}, #{energy1,jdbcType=DECIMAL}, 
+      #{energy2,jdbcType=DECIMAL}, #{energy3,jdbcType=DECIMAL}, #{energy4,jdbcType=DECIMAL}, 
+      #{energy5,jdbcType=DECIMAL}, #{isfund,jdbcType=SMALLINT}, #{fund1,jdbcType=DECIMAL}, 
+      #{fund2,jdbcType=DECIMAL}, #{fund3,jdbcType=DECIMAL}, #{fund4,jdbcType=DECIMAL}, 
+      #{fund5,jdbcType=DECIMAL}, #{fund6,jdbcType=DECIMAL}, #{isbase,jdbcType=SMALLINT}, 
+      #{basetype,jdbcType=SMALLINT}, #{basevalue,jdbcType=DECIMAL}, #{ispf,jdbcType=SMALLINT}, 
+      #{standardid,jdbcType=SMALLINT}, #{eid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.holley.wxemcp.ent.model.ppf.PpfPriceRule" >
+    insert into ppf_price_rule
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="priceid != null" >
+        PRICEID,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="value1 != null" >
+        VALUE1,
+      </if>
+      <if test="value2 != null" >
+        VALUE2,
+      </if>
+      <if test="value3 != null" >
+        VALUE3,
+      </if>
+      <if test="value4 != null" >
+        VALUE4,
+      </if>
+      <if test="value5 != null" >
+        VALUE5,
+      </if>
+      <if test="energy1 != null" >
+        ENERGY1,
+      </if>
+      <if test="energy2 != null" >
+        ENERGY2,
+      </if>
+      <if test="energy3 != null" >
+        ENERGY3,
+      </if>
+      <if test="energy4 != null" >
+        ENERGY4,
+      </if>
+      <if test="energy5 != null" >
+        ENERGY5,
+      </if>
+      <if test="isfund != null" >
+        ISFUND,
+      </if>
+      <if test="fund1 != null" >
+        FUND1,
+      </if>
+      <if test="fund2 != null" >
+        FUND2,
+      </if>
+      <if test="fund3 != null" >
+        FUND3,
+      </if>
+      <if test="fund4 != null" >
+        FUND4,
+      </if>
+      <if test="fund5 != null" >
+        FUND5,
+      </if>
+      <if test="fund6 != null" >
+        FUND6,
+      </if>
+      <if test="isbase != null" >
+        ISBASE,
+      </if>
+      <if test="basetype != null" >
+        BASETYPE,
+      </if>
+      <if test="basevalue != null" >
+        BASEVALUE,
+      </if>
+      <if test="ispf != null" >
+        ISPF,
+      </if>
+      <if test="standardid != null" >
+        STANDARDID,
+      </if>
+      <if test="eid != null" >
+        EID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="priceid != null" >
+        #{priceid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=DECIMAL},
+      </if>
+      <if test="value1 != null" >
+        #{value1,jdbcType=DECIMAL},
+      </if>
+      <if test="value2 != null" >
+        #{value2,jdbcType=DECIMAL},
+      </if>
+      <if test="value3 != null" >
+        #{value3,jdbcType=DECIMAL},
+      </if>
+      <if test="value4 != null" >
+        #{value4,jdbcType=DECIMAL},
+      </if>
+      <if test="value5 != null" >
+        #{value5,jdbcType=DECIMAL},
+      </if>
+      <if test="energy1 != null" >
+        #{energy1,jdbcType=DECIMAL},
+      </if>
+      <if test="energy2 != null" >
+        #{energy2,jdbcType=DECIMAL},
+      </if>
+      <if test="energy3 != null" >
+        #{energy3,jdbcType=DECIMAL},
+      </if>
+      <if test="energy4 != null" >
+        #{energy4,jdbcType=DECIMAL},
+      </if>
+      <if test="energy5 != null" >
+        #{energy5,jdbcType=DECIMAL},
+      </if>
+      <if test="isfund != null" >
+        #{isfund,jdbcType=SMALLINT},
+      </if>
+      <if test="fund1 != null" >
+        #{fund1,jdbcType=DECIMAL},
+      </if>
+      <if test="fund2 != null" >
+        #{fund2,jdbcType=DECIMAL},
+      </if>
+      <if test="fund3 != null" >
+        #{fund3,jdbcType=DECIMAL},
+      </if>
+      <if test="fund4 != null" >
+        #{fund4,jdbcType=DECIMAL},
+      </if>
+      <if test="fund5 != null" >
+        #{fund5,jdbcType=DECIMAL},
+      </if>
+      <if test="fund6 != null" >
+        #{fund6,jdbcType=DECIMAL},
+      </if>
+      <if test="isbase != null" >
+        #{isbase,jdbcType=SMALLINT},
+      </if>
+      <if test="basetype != null" >
+        #{basetype,jdbcType=SMALLINT},
+      </if>
+      <if test="basevalue != null" >
+        #{basevalue,jdbcType=DECIMAL},
+      </if>
+      <if test="ispf != null" >
+        #{ispf,jdbcType=SMALLINT},
+      </if>
+      <if test="standardid != null" >
+        #{standardid,jdbcType=SMALLINT},
+      </if>
+      <if test="eid != null" >
+        #{eid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.holley.wxemcp.ent.model.ppf.PpfPriceRuleExample" resultType="java.lang.Integer" >
+    select count(*) from ppf_price_rule
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ppf_price_rule
+    <set >
+      <if test="record.priceid != null" >
+        PRICEID = #{record.priceid,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null" >
+        NAME = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        TYPE = #{record.type,jdbcType=DECIMAL},
+      </if>
+      <if test="record.value1 != null" >
+        VALUE1 = #{record.value1,jdbcType=DECIMAL},
+      </if>
+      <if test="record.value2 != null" >
+        VALUE2 = #{record.value2,jdbcType=DECIMAL},
+      </if>
+      <if test="record.value3 != null" >
+        VALUE3 = #{record.value3,jdbcType=DECIMAL},
+      </if>
+      <if test="record.value4 != null" >
+        VALUE4 = #{record.value4,jdbcType=DECIMAL},
+      </if>
+      <if test="record.value5 != null" >
+        VALUE5 = #{record.value5,jdbcType=DECIMAL},
+      </if>
+      <if test="record.energy1 != null" >
+        ENERGY1 = #{record.energy1,jdbcType=DECIMAL},
+      </if>
+      <if test="record.energy2 != null" >
+        ENERGY2 = #{record.energy2,jdbcType=DECIMAL},
+      </if>
+      <if test="record.energy3 != null" >
+        ENERGY3 = #{record.energy3,jdbcType=DECIMAL},
+      </if>
+      <if test="record.energy4 != null" >
+        ENERGY4 = #{record.energy4,jdbcType=DECIMAL},
+      </if>
+      <if test="record.energy5 != null" >
+        ENERGY5 = #{record.energy5,jdbcType=DECIMAL},
+      </if>
+      <if test="record.isfund != null" >
+        ISFUND = #{record.isfund,jdbcType=SMALLINT},
+      </if>
+      <if test="record.fund1 != null" >
+        FUND1 = #{record.fund1,jdbcType=DECIMAL},
+      </if>
+      <if test="record.fund2 != null" >
+        FUND2 = #{record.fund2,jdbcType=DECIMAL},
+      </if>
+      <if test="record.fund3 != null" >
+        FUND3 = #{record.fund3,jdbcType=DECIMAL},
+      </if>
+      <if test="record.fund4 != null" >
+        FUND4 = #{record.fund4,jdbcType=DECIMAL},
+      </if>
+      <if test="record.fund5 != null" >
+        FUND5 = #{record.fund5,jdbcType=DECIMAL},
+      </if>
+      <if test="record.fund6 != null" >
+        FUND6 = #{record.fund6,jdbcType=DECIMAL},
+      </if>
+      <if test="record.isbase != null" >
+        ISBASE = #{record.isbase,jdbcType=SMALLINT},
+      </if>
+      <if test="record.basetype != null" >
+        BASETYPE = #{record.basetype,jdbcType=SMALLINT},
+      </if>
+      <if test="record.basevalue != null" >
+        BASEVALUE = #{record.basevalue,jdbcType=DECIMAL},
+      </if>
+      <if test="record.ispf != null" >
+        ISPF = #{record.ispf,jdbcType=SMALLINT},
+      </if>
+      <if test="record.standardid != null" >
+        STANDARDID = #{record.standardid,jdbcType=SMALLINT},
+      </if>
+      <if test="record.eid != null" >
+        EID = #{record.eid,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ppf_price_rule
+    set PRICEID = #{record.priceid,jdbcType=INTEGER},
+      NAME = #{record.name,jdbcType=VARCHAR},
+      TYPE = #{record.type,jdbcType=DECIMAL},
+      VALUE1 = #{record.value1,jdbcType=DECIMAL},
+      VALUE2 = #{record.value2,jdbcType=DECIMAL},
+      VALUE3 = #{record.value3,jdbcType=DECIMAL},
+      VALUE4 = #{record.value4,jdbcType=DECIMAL},
+      VALUE5 = #{record.value5,jdbcType=DECIMAL},
+      ENERGY1 = #{record.energy1,jdbcType=DECIMAL},
+      ENERGY2 = #{record.energy2,jdbcType=DECIMAL},
+      ENERGY3 = #{record.energy3,jdbcType=DECIMAL},
+      ENERGY4 = #{record.energy4,jdbcType=DECIMAL},
+      ENERGY5 = #{record.energy5,jdbcType=DECIMAL},
+      ISFUND = #{record.isfund,jdbcType=SMALLINT},
+      FUND1 = #{record.fund1,jdbcType=DECIMAL},
+      FUND2 = #{record.fund2,jdbcType=DECIMAL},
+      FUND3 = #{record.fund3,jdbcType=DECIMAL},
+      FUND4 = #{record.fund4,jdbcType=DECIMAL},
+      FUND5 = #{record.fund5,jdbcType=DECIMAL},
+      FUND6 = #{record.fund6,jdbcType=DECIMAL},
+      ISBASE = #{record.isbase,jdbcType=SMALLINT},
+      BASETYPE = #{record.basetype,jdbcType=SMALLINT},
+      BASEVALUE = #{record.basevalue,jdbcType=DECIMAL},
+      ISPF = #{record.ispf,jdbcType=SMALLINT},
+      STANDARDID = #{record.standardid,jdbcType=SMALLINT},
+      EID = #{record.eid,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.holley.wxemcp.ent.model.ppf.PpfPriceRule" >
+    update ppf_price_rule
+    <set >
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        TYPE = #{type,jdbcType=DECIMAL},
+      </if>
+      <if test="value1 != null" >
+        VALUE1 = #{value1,jdbcType=DECIMAL},
+      </if>
+      <if test="value2 != null" >
+        VALUE2 = #{value2,jdbcType=DECIMAL},
+      </if>
+      <if test="value3 != null" >
+        VALUE3 = #{value3,jdbcType=DECIMAL},
+      </if>
+      <if test="value4 != null" >
+        VALUE4 = #{value4,jdbcType=DECIMAL},
+      </if>
+      <if test="value5 != null" >
+        VALUE5 = #{value5,jdbcType=DECIMAL},
+      </if>
+      <if test="energy1 != null" >
+        ENERGY1 = #{energy1,jdbcType=DECIMAL},
+      </if>
+      <if test="energy2 != null" >
+        ENERGY2 = #{energy2,jdbcType=DECIMAL},
+      </if>
+      <if test="energy3 != null" >
+        ENERGY3 = #{energy3,jdbcType=DECIMAL},
+      </if>
+      <if test="energy4 != null" >
+        ENERGY4 = #{energy4,jdbcType=DECIMAL},
+      </if>
+      <if test="energy5 != null" >
+        ENERGY5 = #{energy5,jdbcType=DECIMAL},
+      </if>
+      <if test="isfund != null" >
+        ISFUND = #{isfund,jdbcType=SMALLINT},
+      </if>
+      <if test="fund1 != null" >
+        FUND1 = #{fund1,jdbcType=DECIMAL},
+      </if>
+      <if test="fund2 != null" >
+        FUND2 = #{fund2,jdbcType=DECIMAL},
+      </if>
+      <if test="fund3 != null" >
+        FUND3 = #{fund3,jdbcType=DECIMAL},
+      </if>
+      <if test="fund4 != null" >
+        FUND4 = #{fund4,jdbcType=DECIMAL},
+      </if>
+      <if test="fund5 != null" >
+        FUND5 = #{fund5,jdbcType=DECIMAL},
+      </if>
+      <if test="fund6 != null" >
+        FUND6 = #{fund6,jdbcType=DECIMAL},
+      </if>
+      <if test="isbase != null" >
+        ISBASE = #{isbase,jdbcType=SMALLINT},
+      </if>
+      <if test="basetype != null" >
+        BASETYPE = #{basetype,jdbcType=SMALLINT},
+      </if>
+      <if test="basevalue != null" >
+        BASEVALUE = #{basevalue,jdbcType=DECIMAL},
+      </if>
+      <if test="ispf != null" >
+        ISPF = #{ispf,jdbcType=SMALLINT},
+      </if>
+      <if test="standardid != null" >
+        STANDARDID = #{standardid,jdbcType=SMALLINT},
+      </if>
+      <if test="eid != null" >
+        EID = #{eid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where PRICEID = #{priceid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.holley.wxemcp.ent.model.ppf.PpfPriceRule" >
+    update ppf_price_rule
+    set NAME = #{name,jdbcType=VARCHAR},
+      TYPE = #{type,jdbcType=DECIMAL},
+      VALUE1 = #{value1,jdbcType=DECIMAL},
+      VALUE2 = #{value2,jdbcType=DECIMAL},
+      VALUE3 = #{value3,jdbcType=DECIMAL},
+      VALUE4 = #{value4,jdbcType=DECIMAL},
+      VALUE5 = #{value5,jdbcType=DECIMAL},
+      ENERGY1 = #{energy1,jdbcType=DECIMAL},
+      ENERGY2 = #{energy2,jdbcType=DECIMAL},
+      ENERGY3 = #{energy3,jdbcType=DECIMAL},
+      ENERGY4 = #{energy4,jdbcType=DECIMAL},
+      ENERGY5 = #{energy5,jdbcType=DECIMAL},
+      ISFUND = #{isfund,jdbcType=SMALLINT},
+      FUND1 = #{fund1,jdbcType=DECIMAL},
+      FUND2 = #{fund2,jdbcType=DECIMAL},
+      FUND3 = #{fund3,jdbcType=DECIMAL},
+      FUND4 = #{fund4,jdbcType=DECIMAL},
+      FUND5 = #{fund5,jdbcType=DECIMAL},
+      FUND6 = #{fund6,jdbcType=DECIMAL},
+      ISBASE = #{isbase,jdbcType=SMALLINT},
+      BASETYPE = #{basetype,jdbcType=SMALLINT},
+      BASEVALUE = #{basevalue,jdbcType=DECIMAL},
+      ISPF = #{ispf,jdbcType=SMALLINT},
+      STANDARDID = #{standardid,jdbcType=SMALLINT},
+      EID = #{eid,jdbcType=INTEGER}
+    where PRICEID = #{priceid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByIdList" resultMap="BaseResultMap" parameterType="list">
+  	SELECT
+  	<include refid="Base_Column_List" />
+	FROM ppf_price_rule
+	WHERE PRICEID IN
+	<foreach collection="list" item="item" open="(" close=")" separator="," >
+    	#{item}
+    </foreach>
+  </select>
+</mapper>

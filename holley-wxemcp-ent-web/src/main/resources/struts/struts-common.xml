@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC  
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"  
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="common" namespace="/common" extends="struts-default">
+		<action name="initProductPage" class="commonAction" method="initProductPage">
+			<result name="success">/jsp/frame/login.jsp</result>
+		</action>
+		<action name="initHelpPage" class="commonAction" method="initHelpPage">
+			<result name="success">/jsp/frame/login.jsp</result>
+		</action>
+	</package>
+	<!-- json -->
+	<package name="common_json" namespace="/common" extends="json-default">
+		<action name="common_*" class="commonAction" method="{1}">
+			<result type="json">
+				<param name="root">wxemcpEntResultBean</param>   
+			</result>
+		</action>
+	</package>
+</struts>

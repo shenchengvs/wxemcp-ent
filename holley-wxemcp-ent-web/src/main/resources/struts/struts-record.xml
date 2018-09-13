@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC  
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"  
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="data" namespace="/data" extends="struts-base">
+		<!-- 空白页面 -->
+		<action name="initBlankPage" class="dataAction" method="initBlankPage">
+			<result name="success">/jsp/data/initDataBlankPage.jsp</result>
+		</action>
+		<!-- 实时电量企业/费控用户 -->
+		<action name="initRealPowerPage" class="dataAction" method="initRealPowerPage">
+			<result name="success">/jsp/data/tab_electric.jsp</result>
+		</action>
+		<!-- 实时水量企业/费控用户 -->
+		<action name="initRealWaterPage" class="dataAction" method="initRealWaterPage">
+			<result name="success">/jsp/data/tab_water.jsp</result>
+		</action>
+		<!-- 电费查询费控用户 -->
+		<action name="initPowerFeePage" class="dataAction" method="initPowerFeePage">
+			<result name="success">/jsp/data/tab_eletricFareSearch.jsp</result>
+		</action>
+		<!-- 水费查询费控用户 -->
+		<action name="initWaterFeePage" class="dataAction" method="initWaterFeePage">
+			<result name="success">/jsp/data/tab_waterFareSearch.jsp</result>
+		</action>
+		<!-- 电量查询企业用户 -->
+		<action name="initPowePage" class="dataAction" method="initPowePage">
+			<result name="success">/jsp/data/tab_electricQtySearch.jsp</result>
+		</action>
+		<!-- 水量查询企业用户 -->
+		<action name="initWaterPage" class="dataAction" method="initWaterPage">
+			<result name="success">/jsp/data/tab_waterQtySearch.jsp</result>
+		</action>
+		<!-- 电费详情 -->
+		<action name="initPowerFeeDetailPage" class="dataAction" method="initPowerFeeDetailPage">
+			<result name="success">/jsp/data/tab_electric_more.jsp</result>
+		</action>
+		<!-- 水费详情 -->
+		<action name="initWaterFeeDetailPage" class="dataAction" method="initWaterFeeDetailPage">
+			<result name="success">/jsp/data/tab_water_more.jsp</result>
+		</action>
+	</package>
+	
+	<package name="event" namespace="/event" extends="struts-base">
+		<!-- 空白页面 -->
+		<action name="initEventBlankPage" class="eventAction" method="initEventBlankPage">
+			<result name="success">/jsp/event/initEventBlankPage.jsp</result>
+		</action>
+		<!-- 事件提醒企业 -->
+		<action name="initParkEventPage" class="eventAction" method="initParkEventPage">
+			<result name="success">/jsp/event/timeReminderCom.jsp</result>
+		</action>
+		<!-- 事件提醒费控 -->
+		<action name="initPrepayEventPage" class="eventAction" method="initPrepayEventPage">
+			<result name="success">/jsp/event/timeReminder.jsp</result>
+		</action>
+	</package>
+	
+	<package name="stat" namespace="/stat" extends="struts-base">
+		<!-- 数据简报企业/费控用户 -->
+		<action name="initStatPage" class="statAction" method="initStatPage">
+			<result name="success">/jsp/stat/enterpriseInfo.jsp</result>
+		</action>
+		<!-- 事件详细（费控） -->
+		<action name="initEventDetailsPage" class="statAction" method="initEventDetailsPage">
+			<result name="success">/jsp/stat/eventDetails.jsp</result>
+		</action>
+		<!-- 电能用途详细（企业/费控） -->
+		<action name="initEnergyUseDetailsPage" class="statAction" method="initEnergyUseDetailsPage">
+			<result name="success">/jsp/stat/energyUseDetails.jsp</result>
+		</action>
+		
+		<!-- 部门用能详细（企业/费控） -->
+		<action name="initDepartmentUserDetailsPage" class="statAction" method="initDepartmentUserDetailsPage">
+			<result name="success">/jsp/stat/departmentUserDetails.jsp</result>
+		</action>
+	</package>
+	
+	<package name="device" namespace="/device" extends="struts-base">
+		<!-- 终端状态信息 -->
+		<action name="initRtuStatusPage" class="deviceAction" method="initRtuStatusPage">
+			<result name="success">/jsp/device/rtuStatus.jsp</result>
+		</action>
+	</package>
+	<!-- json -->
+	<package name="data_json" namespace="/data" extends="json-base">
+		<action name="data_*" class="dataAction" method="{1}">
+			<result type="json">
+				<param name="root">wxemcpEntResultBean</param>   
+			</result>
+		</action>
+	</package>
+	<package name="event_json" namespace="/event" extends="json-base">
+		<action name="event_*" class="eventAction" method="{1}">
+			<result type="json">
+				<param name="root">wxemcpEntResultBean</param>   
+			</result>
+		</action>
+	</package>
+	<package name="stat_json" namespace="/stat" extends="json-base">
+		<action name="stat_*" class="statAction" method="{1}">
+			<result type="json">
+				<param name="root">wxemcpEntResultBean</param>   
+			</result>
+		</action>
+	</package>
+	<package name="eventdetails_json" namespace="/eventdetails" extends="json-base">
+		<action name="eventdetails_*" class="eventdetailAction" method="{1}">
+			<result type="json">
+				<param name="root">wxemcpEntResultBean</param>   
+			</result>
+		</action>
+	</package>
+	<package name="device_json" namespace="/device" extends="json-base">
+		<action name="device_*" class="deviceAction" method="{1}">
+			<result type="json">
+				<param name="root">wxemcpEntResultBean</param>   
+			</result>
+		</action>
+	</package>
+</struts>

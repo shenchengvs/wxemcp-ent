@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC  
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"  
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<!--登陆与注册 -->
+	<package name="frame" namespace="/frame" extends="struts-default">
+		<!-- 请求验证码 -->
+		<action name="changecode" class="imageCodeAction" method="createCode">
+			<result name="success" type="stream">
+				<param name="inputName">imageStream</param>
+				<param name="bufferSize">4096</param>
+			</result>
+		</action>
+		<action name="initLoginPage" class="loginAction" method="initLoginPage">
+			<result name="success">/jsp/frame/login.jsp</result>
+			<!-- <result name="main" type="redirectAction">
+				<param name="namespace">/main</param>
+				<param name="actionName">main</param>
+			</result> -->
+		</action>
+		<!-- 体验账户登录页 -->
+		<action name="initExperiencePage" class="loginAction" method="initExperiencePage">
+			<result name="success">/jsp/frame/experience.jsp</result>
+			<!-- <result name="main" type="redirectAction">
+				<param name="namespace">/main</param>
+				<param name="actionName">main</param>
+			</result> -->
+		</action>
+	</package>
+
+	
+	<!-- json -->
+	<package name="frame_json" namespace="/frame" extends="json-default">
+		<action name="login_*" class="loginAction" method="{1}">
+			<result type="json">
+				<param name="root">wxemcpEntResultBean</param>   
+			</result>
+		</action>
+	</package>
+</struts>

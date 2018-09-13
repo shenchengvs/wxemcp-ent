@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.holley.wxemcp.ent.dao.obj.ObjPointMapper" >
+  <resultMap id="BaseResultMap" type="com.holley.wxemcp.ent.model.obj.ObjPoint" >
+    <id column="POINTID" property="pointid" jdbcType="INTEGER" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="RTUID" property="rtuid" jdbcType="DECIMAL" />
+    <result column="OWNERID" property="ownerid" jdbcType="DECIMAL" />
+    <result column="OWNERTYPE" property="ownertype" jdbcType="DECIMAL" />
+    <result column="EID" property="eid" jdbcType="DECIMAL" />
+    <result column="INPUTOUTPUT" property="inputoutput" jdbcType="DECIMAL" />
+    <result column="STATUS" property="status" jdbcType="DECIMAL" />
+    <result column="ENERGYTYPEID" property="energytypeid" jdbcType="DECIMAL" />
+    <result column="ENERGYPROP" property="energyprop" jdbcType="DECIMAL" />
+    <result column="ENERGYUSETYPEID" property="energyusetypeid" jdbcType="DECIMAL" />
+    <result column="ADDR" property="addr" jdbcType="VARCHAR" />
+    <result column="AUTOGATHER" property="autogather" jdbcType="DECIMAL" />
+    <result column="SAMPLEINTERVAL" property="sampleinterval" jdbcType="VARCHAR" />
+    <result column="DATAITEMFLAG" property="dataitemflag" jdbcType="DECIMAL" />
+    <result column="RATE" property="rate" jdbcType="DECIMAL" />
+    <result column="RATECHANGETIME" property="ratechangetime" jdbcType="TIMESTAMP" />
+    <result column="CAPABILITY" property="capability" jdbcType="VARCHAR" />
+    <result column="MEASUREMODE" property="measuremode" jdbcType="DECIMAL" />
+    <result column="ISPREPAID" property="isprepaid" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    POINTID, NAME, RTUID, OWNERID, OWNERTYPE, EID, INPUTOUTPUT, STATUS, ENERGYTYPEID, 
+    ENERGYPROP, ENERGYUSETYPEID, ADDR, AUTOGATHER, SAMPLEINTERVAL, DATAITEMFLAG, RATE, 
+    RATECHANGETIME, CAPABILITY, MEASUREMODE, ISPREPAID
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.holley.wxemcp.ent.model.obj.ObjPointExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from obj_point
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from obj_point
+    where POINTID = #{pointid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from obj_point
+    where POINTID = #{pointid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.holley.wxemcp.ent.model.obj.ObjPointExample" >
+    delete from obj_point
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.holley.wxemcp.ent.model.obj.ObjPoint" >
+    insert into obj_point (POINTID, NAME, RTUID, 
+      OWNERID, OWNERTYPE, EID, 
+      INPUTOUTPUT, STATUS, ENERGYTYPEID, 
+      ENERGYPROP, ENERGYUSETYPEID, ADDR, 
+      AUTOGATHER, SAMPLEINTERVAL, DATAITEMFLAG, 
+      RATE, RATECHANGETIME, CAPABILITY, 
+      MEASUREMODE, ISPREPAID)
+    values (#{pointid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{rtuid,jdbcType=DECIMAL}, 
+      #{ownerid,jdbcType=DECIMAL}, #{ownertype,jdbcType=DECIMAL}, #{eid,jdbcType=DECIMAL}, 
+      #{inputoutput,jdbcType=DECIMAL}, #{status,jdbcType=DECIMAL}, #{energytypeid,jdbcType=DECIMAL}, 
+      #{energyprop,jdbcType=DECIMAL}, #{energyusetypeid,jdbcType=DECIMAL}, #{addr,jdbcType=VARCHAR}, 
+      #{autogather,jdbcType=DECIMAL}, #{sampleinterval,jdbcType=VARCHAR}, #{dataitemflag,jdbcType=DECIMAL}, 
+      #{rate,jdbcType=DECIMAL}, #{ratechangetime,jdbcType=TIMESTAMP}, #{capability,jdbcType=VARCHAR}, 
+      #{measuremode,jdbcType=DECIMAL}, #{isprepaid,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.holley.wxemcp.ent.model.obj.ObjPoint" >
+    insert into obj_point
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pointid != null" >
+        POINTID,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="rtuid != null" >
+        RTUID,
+      </if>
+      <if test="ownerid != null" >
+        OWNERID,
+      </if>
+      <if test="ownertype != null" >
+        OWNERTYPE,
+      </if>
+      <if test="eid != null" >
+        EID,
+      </if>
+      <if test="inputoutput != null" >
+        INPUTOUTPUT,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="energytypeid != null" >
+        ENERGYTYPEID,
+      </if>
+      <if test="energyprop != null" >
+        ENERGYPROP,
+      </if>
+      <if test="energyusetypeid != null" >
+        ENERGYUSETYPEID,
+      </if>
+      <if test="addr != null" >
+        ADDR,
+      </if>
+      <if test="autogather != null" >
+        AUTOGATHER,
+      </if>
+      <if test="sampleinterval != null" >
+        SAMPLEINTERVAL,
+      </if>
+      <if test="dataitemflag != null" >
+        DATAITEMFLAG,
+      </if>
+      <if test="rate != null" >
+        RATE,
+      </if>
+      <if test="ratechangetime != null" >
+        RATECHANGETIME,
+      </if>
+      <if test="capability != null" >
+        CAPABILITY,
+      </if>
+      <if test="measuremode != null" >
+        MEASUREMODE,
+      </if>
+      <if test="isprepaid != null" >
+        ISPREPAID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pointid != null" >
+        #{pointid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="rtuid != null" >
+        #{rtuid,jdbcType=DECIMAL},
+      </if>
+      <if test="ownerid != null" >
+        #{ownerid,jdbcType=DECIMAL},
+      </if>
+      <if test="ownertype != null" >
+        #{ownertype,jdbcType=DECIMAL},
+      </if>
+      <if test="eid != null" >
+        #{eid,jdbcType=DECIMAL},
+      </if>
+      <if test="inputoutput != null" >
+        #{inputoutput,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="energytypeid != null" >
+        #{energytypeid,jdbcType=DECIMAL},
+      </if>
+      <if test="energyprop != null" >
+        #{energyprop,jdbcType=DECIMAL},
+      </if>
+      <if test="energyusetypeid != null" >
+        #{energyusetypeid,jdbcType=DECIMAL},
+      </if>
+      <if test="addr != null" >
+        #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="autogather != null" >
+        #{autogather,jdbcType=DECIMAL},
+      </if>
+      <if test="sampleinterval != null" >
+        #{sampleinterval,jdbcType=VARCHAR},
+      </if>
+      <if test="dataitemflag != null" >
+        #{dataitemflag,jdbcType=DECIMAL},
+      </if>
+      <if test="rate != null" >
+        #{rate,jdbcType=DECIMAL},
+      </if>
+      <if test="ratechangetime != null" >
+        #{ratechangetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="capability != null" >
+        #{capability,jdbcType=VARCHAR},
+      </if>
+      <if test="measuremode != null" >
+        #{measuremode,jdbcType=DECIMAL},
+      </if>
+      <if test="isprepaid != null" >
+        #{isprepaid,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.holley.wxemcp.ent.model.obj.ObjPointExample" resultType="java.lang.Integer" >
+    select count(*) from obj_point
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update obj_point
+    <set >
+      <if test="record.pointid != null" >
+        POINTID = #{record.pointid,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null" >
+        NAME = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rtuid != null" >
+        RTUID = #{record.rtuid,jdbcType=DECIMAL},
+      </if>
+      <if test="record.ownerid != null" >
+        OWNERID = #{record.ownerid,jdbcType=DECIMAL},
+      </if>
+      <if test="record.ownertype != null" >
+        OWNERTYPE = #{record.ownertype,jdbcType=DECIMAL},
+      </if>
+      <if test="record.eid != null" >
+        EID = #{record.eid,jdbcType=DECIMAL},
+      </if>
+      <if test="record.inputoutput != null" >
+        INPUTOUTPUT = #{record.inputoutput,jdbcType=DECIMAL},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=DECIMAL},
+      </if>
+      <if test="record.energytypeid != null" >
+        ENERGYTYPEID = #{record.energytypeid,jdbcType=DECIMAL},
+      </if>
+      <if test="record.energyprop != null" >
+        ENERGYPROP = #{record.energyprop,jdbcType=DECIMAL},
+      </if>
+      <if test="record.energyusetypeid != null" >
+        ENERGYUSETYPEID = #{record.energyusetypeid,jdbcType=DECIMAL},
+      </if>
+      <if test="record.addr != null" >
+        ADDR = #{record.addr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.autogather != null" >
+        AUTOGATHER = #{record.autogather,jdbcType=DECIMAL},
+      </if>
+      <if test="record.sampleinterval != null" >
+        SAMPLEINTERVAL = #{record.sampleinterval,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dataitemflag != null" >
+        DATAITEMFLAG = #{record.dataitemflag,jdbcType=DECIMAL},
+      </if>
+      <if test="record.rate != null" >
+        RATE = #{record.rate,jdbcType=DECIMAL},
+      </if>
+      <if test="record.ratechangetime != null" >
+        RATECHANGETIME = #{record.ratechangetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.capability != null" >
+        CAPABILITY = #{record.capability,jdbcType=VARCHAR},
+      </if>
+      <if test="record.measuremode != null" >
+        MEASUREMODE = #{record.measuremode,jdbcType=DECIMAL},
+      </if>
+      <if test="record.isprepaid != null" >
+        ISPREPAID = #{record.isprepaid,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update obj_point
+    set POINTID = #{record.pointid,jdbcType=INTEGER},
+      NAME = #{record.name,jdbcType=VARCHAR},
+      RTUID = #{record.rtuid,jdbcType=DECIMAL},
+      OWNERID = #{record.ownerid,jdbcType=DECIMAL},
+      OWNERTYPE = #{record.ownertype,jdbcType=DECIMAL},
+      EID = #{record.eid,jdbcType=DECIMAL},
+      INPUTOUTPUT = #{record.inputoutput,jdbcType=DECIMAL},
+      STATUS = #{record.status,jdbcType=DECIMAL},
+      ENERGYTYPEID = #{record.energytypeid,jdbcType=DECIMAL},
+      ENERGYPROP = #{record.energyprop,jdbcType=DECIMAL},
+      ENERGYUSETYPEID = #{record.energyusetypeid,jdbcType=DECIMAL},
+      ADDR = #{record.addr,jdbcType=VARCHAR},
+      AUTOGATHER = #{record.autogather,jdbcType=DECIMAL},
+      SAMPLEINTERVAL = #{record.sampleinterval,jdbcType=VARCHAR},
+      DATAITEMFLAG = #{record.dataitemflag,jdbcType=DECIMAL},
+      RATE = #{record.rate,jdbcType=DECIMAL},
+      RATECHANGETIME = #{record.ratechangetime,jdbcType=TIMESTAMP},
+      CAPABILITY = #{record.capability,jdbcType=VARCHAR},
+      MEASUREMODE = #{record.measuremode,jdbcType=DECIMAL},
+      ISPREPAID = #{record.isprepaid,jdbcType=DECIMAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.holley.wxemcp.ent.model.obj.ObjPoint" >
+    update obj_point
+    <set >
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="rtuid != null" >
+        RTUID = #{rtuid,jdbcType=DECIMAL},
+      </if>
+      <if test="ownerid != null" >
+        OWNERID = #{ownerid,jdbcType=DECIMAL},
+      </if>
+      <if test="ownertype != null" >
+        OWNERTYPE = #{ownertype,jdbcType=DECIMAL},
+      </if>
+      <if test="eid != null" >
+        EID = #{eid,jdbcType=DECIMAL},
+      </if>
+      <if test="inputoutput != null" >
+        INPUTOUTPUT = #{inputoutput,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="energytypeid != null" >
+        ENERGYTYPEID = #{energytypeid,jdbcType=DECIMAL},
+      </if>
+      <if test="energyprop != null" >
+        ENERGYPROP = #{energyprop,jdbcType=DECIMAL},
+      </if>
+      <if test="energyusetypeid != null" >
+        ENERGYUSETYPEID = #{energyusetypeid,jdbcType=DECIMAL},
+      </if>
+      <if test="addr != null" >
+        ADDR = #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="autogather != null" >
+        AUTOGATHER = #{autogather,jdbcType=DECIMAL},
+      </if>
+      <if test="sampleinterval != null" >
+        SAMPLEINTERVAL = #{sampleinterval,jdbcType=VARCHAR},
+      </if>
+      <if test="dataitemflag != null" >
+        DATAITEMFLAG = #{dataitemflag,jdbcType=DECIMAL},
+      </if>
+      <if test="rate != null" >
+        RATE = #{rate,jdbcType=DECIMAL},
+      </if>
+      <if test="ratechangetime != null" >
+        RATECHANGETIME = #{ratechangetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="capability != null" >
+        CAPABILITY = #{capability,jdbcType=VARCHAR},
+      </if>
+      <if test="measuremode != null" >
+        MEASUREMODE = #{measuremode,jdbcType=DECIMAL},
+      </if>
+      <if test="isprepaid != null" >
+        ISPREPAID = #{isprepaid,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where POINTID = #{pointid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.holley.wxemcp.ent.model.obj.ObjPoint" >
+    update obj_point
+    set NAME = #{name,jdbcType=VARCHAR},
+      RTUID = #{rtuid,jdbcType=DECIMAL},
+      OWNERID = #{ownerid,jdbcType=DECIMAL},
+      OWNERTYPE = #{ownertype,jdbcType=DECIMAL},
+      EID = #{eid,jdbcType=DECIMAL},
+      INPUTOUTPUT = #{inputoutput,jdbcType=DECIMAL},
+      STATUS = #{status,jdbcType=DECIMAL},
+      ENERGYTYPEID = #{energytypeid,jdbcType=DECIMAL},
+      ENERGYPROP = #{energyprop,jdbcType=DECIMAL},
+      ENERGYUSETYPEID = #{energyusetypeid,jdbcType=DECIMAL},
+      ADDR = #{addr,jdbcType=VARCHAR},
+      AUTOGATHER = #{autogather,jdbcType=DECIMAL},
+      SAMPLEINTERVAL = #{sampleinterval,jdbcType=VARCHAR},
+      DATAITEMFLAG = #{dataitemflag,jdbcType=DECIMAL},
+      RATE = #{rate,jdbcType=DECIMAL},
+      RATECHANGETIME = #{ratechangetime,jdbcType=TIMESTAMP},
+      CAPABILITY = #{capability,jdbcType=VARCHAR},
+      MEASUREMODE = #{measuremode,jdbcType=DECIMAL},
+      ISPREPAID = #{isprepaid,jdbcType=DECIMAL}
+    where POINTID = #{pointid,jdbcType=INTEGER}
+  </update>
+</mapper>

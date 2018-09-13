@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.holley.wxemcp.ent.dao.ppf.PpfRechargeMapper" >
+  <resultMap id="BaseResultMap" type="com.holley.wxemcp.ent.model.ppf.PpfRecharge" >
+    <id column="RECHARGEID" property="rechargeid" jdbcType="INTEGER" />
+    <result column="CUSTOMERID" property="customerid" jdbcType="DECIMAL" />
+    <result column="PAY_MONEY" property="payMoney" jdbcType="DECIMAL" />
+    <result column="ACTUAL_MONEY" property="actualMoney" jdbcType="DECIMAL" />
+    <result column="ADDTIME" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="ACCOUNT" property="account" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="SMALLINT" />
+    <result column="PAYWAY" property="payway" jdbcType="SMALLINT" />
+    <result column="TRADENO" property="tradeno" jdbcType="VARCHAR" />
+    <result column="USABLEMONEY" property="usablemoney" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    RECHARGEID, CUSTOMERID, PAY_MONEY, ACTUAL_MONEY, ADDTIME, ACCOUNT, STATUS, PAYWAY, 
+    TRADENO, USABLEMONEY
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.holley.wxemcp.ent.model.ppf.PpfRechargeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ppf_recharge
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ppf_recharge
+    where RECHARGEID = #{rechargeid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ppf_recharge
+    where RECHARGEID = #{rechargeid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.holley.wxemcp.ent.model.ppf.PpfRechargeExample" >
+    delete from ppf_recharge
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.holley.wxemcp.ent.model.ppf.PpfRecharge" >
+    insert into ppf_recharge (RECHARGEID, CUSTOMERID, PAY_MONEY, 
+      ACTUAL_MONEY, ADDTIME, ACCOUNT, 
+      STATUS, PAYWAY, TRADENO, 
+      USABLEMONEY)
+    values (#{rechargeid,jdbcType=INTEGER}, #{customerid,jdbcType=DECIMAL}, #{payMoney,jdbcType=DECIMAL}, 
+      #{actualMoney,jdbcType=DECIMAL}, #{addtime,jdbcType=TIMESTAMP}, #{account,jdbcType=VARCHAR}, 
+      #{status,jdbcType=SMALLINT}, #{payway,jdbcType=SMALLINT}, #{tradeno,jdbcType=VARCHAR}, 
+      #{usablemoney,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.holley.wxemcp.ent.model.ppf.PpfRecharge" >
+    insert into ppf_recharge
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rechargeid != null" >
+        RECHARGEID,
+      </if>
+      <if test="customerid != null" >
+        CUSTOMERID,
+      </if>
+      <if test="payMoney != null" >
+        PAY_MONEY,
+      </if>
+      <if test="actualMoney != null" >
+        ACTUAL_MONEY,
+      </if>
+      <if test="addtime != null" >
+        ADDTIME,
+      </if>
+      <if test="account != null" >
+        ACCOUNT,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="payway != null" >
+        PAYWAY,
+      </if>
+      <if test="tradeno != null" >
+        TRADENO,
+      </if>
+      <if test="usablemoney != null" >
+        USABLEMONEY,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rechargeid != null" >
+        #{rechargeid,jdbcType=INTEGER},
+      </if>
+      <if test="customerid != null" >
+        #{customerid,jdbcType=DECIMAL},
+      </if>
+      <if test="payMoney != null" >
+        #{payMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="actualMoney != null" >
+        #{actualMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="account != null" >
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="payway != null" >
+        #{payway,jdbcType=SMALLINT},
+      </if>
+      <if test="tradeno != null" >
+        #{tradeno,jdbcType=VARCHAR},
+      </if>
+      <if test="usablemoney != null" >
+        #{usablemoney,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.holley.wxemcp.ent.model.ppf.PpfRechargeExample" resultType="java.lang.Integer" >
+    select count(*) from ppf_recharge
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ppf_recharge
+    <set >
+      <if test="record.rechargeid != null" >
+        RECHARGEID = #{record.rechargeid,jdbcType=INTEGER},
+      </if>
+      <if test="record.customerid != null" >
+        CUSTOMERID = #{record.customerid,jdbcType=DECIMAL},
+      </if>
+      <if test="record.payMoney != null" >
+        PAY_MONEY = #{record.payMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.actualMoney != null" >
+        ACTUAL_MONEY = #{record.actualMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.addtime != null" >
+        ADDTIME = #{record.addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.account != null" >
+        ACCOUNT = #{record.account,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=SMALLINT},
+      </if>
+      <if test="record.payway != null" >
+        PAYWAY = #{record.payway,jdbcType=SMALLINT},
+      </if>
+      <if test="record.tradeno != null" >
+        TRADENO = #{record.tradeno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usablemoney != null" >
+        USABLEMONEY = #{record.usablemoney,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ppf_recharge
+    set RECHARGEID = #{record.rechargeid,jdbcType=INTEGER},
+      CUSTOMERID = #{record.customerid,jdbcType=DECIMAL},
+      PAY_MONEY = #{record.payMoney,jdbcType=DECIMAL},
+      ACTUAL_MONEY = #{record.actualMoney,jdbcType=DECIMAL},
+      ADDTIME = #{record.addtime,jdbcType=TIMESTAMP},
+      ACCOUNT = #{record.account,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=SMALLINT},
+      PAYWAY = #{record.payway,jdbcType=SMALLINT},
+      TRADENO = #{record.tradeno,jdbcType=VARCHAR},
+      USABLEMONEY = #{record.usablemoney,jdbcType=DECIMAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.holley.wxemcp.ent.model.ppf.PpfRecharge" >
+    update ppf_recharge
+    <set >
+      <if test="customerid != null" >
+        CUSTOMERID = #{customerid,jdbcType=DECIMAL},
+      </if>
+      <if test="payMoney != null" >
+        PAY_MONEY = #{payMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="actualMoney != null" >
+        ACTUAL_MONEY = #{actualMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="addtime != null" >
+        ADDTIME = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="account != null" >
+        ACCOUNT = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="payway != null" >
+        PAYWAY = #{payway,jdbcType=SMALLINT},
+      </if>
+      <if test="tradeno != null" >
+        TRADENO = #{tradeno,jdbcType=VARCHAR},
+      </if>
+      <if test="usablemoney != null" >
+        USABLEMONEY = #{usablemoney,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where RECHARGEID = #{rechargeid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.holley.wxemcp.ent.model.ppf.PpfRecharge" >
+    update ppf_recharge
+    set CUSTOMERID = #{customerid,jdbcType=DECIMAL},
+      PAY_MONEY = #{payMoney,jdbcType=DECIMAL},
+      ACTUAL_MONEY = #{actualMoney,jdbcType=DECIMAL},
+      ADDTIME = #{addtime,jdbcType=TIMESTAMP},
+      ACCOUNT = #{account,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=SMALLINT},
+      PAYWAY = #{payway,jdbcType=SMALLINT},
+      TRADENO = #{tradeno,jdbcType=VARCHAR},
+      USABLEMONEY = #{usablemoney,jdbcType=DECIMAL}
+    where RECHARGEID = #{rechargeid,jdbcType=INTEGER}
+  </update>
+  
+    <select id="selectRecordByPage" resultType="com.holley.wxemcp.ent.model.def.RechargeVo">
+    select 
+    a.CUSTOMERID customerid,a.PAY_MONEY payMoney,a.ACTUAL_MONEY actualMoney,
+    a.ADDTIME addtime,a.ACCOUNT account,a.STATUS status,a.PAYWAY payway,
+    a.TRADENO = tradeno,a.USABLEMONEY usablemoney,b.HM hm
+    from ppf_recharge a 
+    left join ppf_customer b 
+    on a.CUSTOMERID=b.CUSTOMERID
+    where a.STATUS = 1
+    <if test="paywayType != null" >
+     and a.PAYWAY= #{paywayType,jdbcType=INTEGER}
+    </if>
+    <if test="eid != null" >
+     and b.EID= #{eid,jdbcType=INTEGER}
+    </if>
+    <if test="firstDayOfMonth != null">
+     and a.ADDTIME &gt;=#{firstDayOfMonth}
+    </if>
+    <if test="lastDayOfMonth != null">
+     and a.ADDTIME &lt;=#{lastDayOfMonth}
+    </if>
+    order by a.ADDTIME DESC
+  </select>
+  <select id="queryMoneyCount" resultType="java.lang.Double">
+     SELECT IFNULL(SUM(a.PAY_MONEY),0) 
+     FROM ppf_recharge a
+     LEFT JOIN ppf_customer b 
+	 ON a.CUSTOMERID=b.CUSTOMERID
+     where b.EID=#{eid,jdbcType=INTEGER}
+     AND a.ADDTIME &gt;=#{tobeg} 
+     AND a.ADDTIME &lt;=#{toend}
+  </select>
+  <select id="queryLaMoneyCount" resultType="java.lang.Double">
+    SELECT IFNULL(SUM(a.PAY_MONEY),0) 
+    FROM ppf_recharge a
+    LEFT JOIN ppf_customer b 
+	ON a.CUSTOMERID=b.CUSTOMERID
+    where b.EID=#{eid,jdbcType=INTEGER}
+    AND a.ADDTIME &gt;=#{labeg} 
+    AND a.ADDTIME &lt; #{tobeg}
+  </select>
+  <select id="queryLaLaMoneyCount" resultType="java.lang.Double">
+     SELECT IFNULL(SUM(PAY_MONEY),0) 
+     FROM ppf_recharge a
+     LEFT JOIN ppf_customer b 
+	 ON a.CUSTOMERID=b.CUSTOMERID
+     where b.EID=#{eid,jdbcType=INTEGER}
+     AND a.ADDTIME &gt;=#{latobeg} 
+     AND a.ADDTIME &lt;= #{latoend}
+  </select>
+  <select id="queryCount" resultType="java.lang.Integer">
+     SELECT COUNT(*) 
+     FROM ppf_recharge 
+     a LEFT JOIN ppf_customer b 
+     ON a.CUSTOMERID=b.CUSTOMERID 
+     WHERE b.EID=#{eid} 
+     AND a.ADDTIME &gt;=#{tobeg} 
+     AND a.ADDTIME &lt;=#{toend}
+  </select>
+   <select id="queryLaCount" resultType="java.lang.Integer">
+     SELECT COUNT(*) 
+     FROM ppf_recharge 
+     a LEFT JOIN ppf_customer b 
+     ON a.CUSTOMERID=b.CUSTOMERID 
+     WHERE b.EID=#{eid} 
+     and a.ADDTIME &gt;=#{labeg} 
+     and a.ADDTIME &lt;#{tobeg} 
+  </select>
+   <select id="queryLaLaCount" resultType="java.lang.Integer">
+     SELECT COUNT(*) 
+     FROM ppf_recharge 
+     a LEFT JOIN ppf_customer b 
+     ON a.CUSTOMERID=b.CUSTOMERID 
+     WHERE b.EID=#{eid} 
+     AND a.ADDTIME &gt;=#{latobeg} 
+     AND a.ADDTIME &lt;#{latoend}
+  </select>
+  <select id="queryRechargeCount" resultType="java.lang.Integer">
+     SELECT COUNT(*) 
+     FROM ppf_recharge 
+     a LEFT JOIN ppf_customer b 
+     ON a.CUSTOMERID=b.CUSTOMERID 
+     WHERE b.EID=#{eid} 
+     AND a.ADDTIME &gt;#{tobeg} 
+     AND a.ADDTIME &lt;=#{toend}
+  </select>
+  <select id="queryNewRechargeCount" resultType="java.lang.Integer">
+      SELECT COUNT(1) 
+      FROM ppf_recharge a 
+      LEFT JOIN ppf_customer b 
+      ON a.CUSTOMERID=b.CUSTOMERID 
+      WHERE b.EID=#{eid} 
+      <if test="rechargeUpdateTime != null">
+       AND a.ADDTIME &gt;#{rechargeUpdateTime}
+      </if>
+  </select>
+</mapper>

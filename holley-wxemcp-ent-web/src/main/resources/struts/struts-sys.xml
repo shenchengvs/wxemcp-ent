@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC  
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"  
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="account" namespace="/account" extends="struts-base">
+		<action name="initAccountPage" class="accountAction" method="initAccountPage">
+			<result name="success">/jsp/account/home.jsp</result>
+		</action>
+	</package>
+	<!-- json -->
+	<package name="account_json" namespace="/account" extends="json-base">
+		<action name="account_*" class="accountAction" method="{1}">
+			<result type="json">
+				<param name="root">wxemcpEntResultBean</param>   
+			</result>
+		</action>
+	</package>
+</struts>

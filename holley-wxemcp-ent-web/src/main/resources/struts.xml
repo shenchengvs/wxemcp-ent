@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC  
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"  
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="struts-base" namespace="/" extends="struts-default">
+		<interceptors>
+			<interceptor name="permissionInterceptor"
+				class="com.holley.wxemcp.ent.web.interceptor.PermissionInterceptor">
+			</interceptor>
+			<interceptor-stack name="myDefault">
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack>
+			<interceptor-stack name="sessionDefault">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="permissionInterceptor" />
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="sessionDefault" />
+		<global-results>
+			<result name="relogin" type="redirectAction">
+				<param name="namespace">/frame</param>
+				<param name="actionName">initLoginPage</param>
+			</result>
+			<result name="msg">/jsp/common/msg.jsp</result>
+		</global-results>
+	</package>
+	
+	<package name="json-base" namespace="/" extends="json-default">
+		<interceptors>
+			<interceptor name="jsonInterceptor"
+				class="com.holley.wxemcp.ent.web.interceptor.JsonInterceptor">
+			</interceptor>
+			<interceptor-stack name="jsonDefault">
+				<interceptor-ref name="defaultStack"/>
+				<interceptor-ref name="json"/>
+				<interceptor-ref name="jsonInterceptor"/>
+			</interceptor-stack>
+		</interceptors>
+		<!-- 默认拦截器栈配置 -->
+		<default-interceptor-ref name="jsonDefault"/>
+		<global-results>
+			<result name="errorjson" type="json">
+			  <param name="root">wxemcpEntResultBean</param>     
+			</result>
+		</global-results>
+	</package>
+	
+	<include file="struts/struts-*.xml" />
+</struts>
